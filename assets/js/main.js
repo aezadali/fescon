@@ -75,9 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   handleParallax();
 
-  // Portfolio Category Filtering
+  // Portfolio Category Filtering & Marquee Control
   const filterBtns = document.querySelectorAll('.filter-btn');
   const projectCards = document.querySelectorAll('.project-card');
+  const projectsTrack = document.getElementById('projectsTrack');
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -86,16 +87,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const filterValue = btn.getAttribute('data-filter');
 
-      projectCards.forEach(card => {
-        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-          card.style.display = 'block';
-          setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 50);
-        } else {
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(20px)';
-          setTimeout(() => { card.style.display = 'none'; }, 300);
+      if (filterValue === 'all') {
+        if (projectsTrack) {
+          projectsTrack.style.animation = '';
+          projectsTrack.style.width = 'max-content';
+          projectsTrack.style.flexWrap = 'nowrap';
+          projectsTrack.style.justifyContent = 'flex-start';
         }
-      });
+        projectCards.forEach(card => {
+          card.style.display = 'block';
+          card.style.opacity = '1';
+          card.style.transform = 'none';
+        });
+      } else {
+        if (projectsTrack) {
+          projectsTrack.style.animation = 'none';
+          projectsTrack.style.width = '100%';
+          projectsTrack.style.flexWrap = 'wrap';
+          projectsTrack.style.justifyContent = 'center';
+        }
+        projectCards.forEach(card => {
+          if (!card.classList.contains('clone-card') && card.getAttribute('data-category') === filterValue) {
+            card.style.display = 'block';
+            card.style.opacity = '1';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
     });
   });
 

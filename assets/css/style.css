@@ -1304,6 +1304,57 @@ html[dir="rtl"] .executive-quote {
   box-shadow: var(--shadow-sm);
 }
 
+/* Projects Marquee Horizontal Continuous Scroll */
+.projects-marquee-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 1rem 0 2.5rem 0;
+  mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
+}
+
+.projects-marquee-track {
+  display: flex;
+  gap: 1.8rem;
+  width: max-content;
+  animation: marqueeContinuous 35s linear infinite;
+  will-change: transform;
+}
+
+.projects-marquee-wrapper:hover .projects-marquee-track {
+  animation-play-state: paused !important;
+}
+
+.projects-marquee-track .project-card {
+  width: 360px;
+  flex: 0 0 360px;
+  margin-bottom: 0;
+}
+
+@keyframes marqueeContinuous {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 0.9rem));
+  }
+}
+
+/* RTL Marquee Animation */
+html[dir="rtl"] .projects-marquee-track {
+  animation-name: marqueeContinuousRTL;
+}
+
+@keyframes marqueeContinuousRTL {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(50% + 0.9rem));
+  }
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
