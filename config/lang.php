@@ -36,7 +36,7 @@ $translations = [
         // Hero Section
         'hero_badge' => 'Power Transmission, Distribution & Street Lighting Experts',
         'hero_title' => 'Engineering Excellence Across the GCC',
-        'hero_subtitle' => 'Delivering integrated engineering, MEP, electrical distribution, street lighting, and civil infrastructure solutions across the GCC with uncompromising quality, safety, and innovation.',
+        'hero_subtitle' => 'Delivering integrated services, MEP, Electrical Distribution, Street Lighting, and Civil Infrastructure Solutions across the GCC with Uncompromising Quality, Safety, and Innovation.',
         'hero_cta_projects' => 'Explore Projects',
         'hero_cta_contact' => 'Get In Touch',
         'hero_stat_1_num' => '15+',
@@ -59,7 +59,7 @@ $translations = [
 
         // About Section
         'about_tag' => 'WHO WE ARE',
-        'about_title' => 'Powering Electrical Grid, Civil Infrastructure & MEP Work Across the Oil & Gas Sector',
+        'about_title' => 'Electrical Infrastructure, Civil Infrastructure, MEP Works, Oil & Gas',
         'about_branch_note' => 'Fescon International LLC leads turnkey projects in Electrical Grids, Civil Infrastructure, MEP Solutions, and Oil & Gas sector developments in Oman, supported by the extensive regional project execution portfolio of Fescon Pvt Ltd.',
         'about_mission_title' => 'Our Mission',
         'about_mission_text' => 'To deliver world-class engineering, construction, and infrastructure solutions through technical excellence, innovation, uncompromising quality, and a commitment to safety—creating lasting value for our clients, communities, and the nation.',
@@ -252,7 +252,7 @@ $translations = [
 
         // About Section
         'about_tag' => 'نبذة عن الشركة',
-        'about_title' => 'تزويد شبكات الكهرباء والبنية التحتية المدنية وأعمال الكهروميكانيكية (MEP) عبر قطاع النفط والغاز',
+        'about_title' => 'البنية التحتية الكهربائية، البنية التحتية المدنية، أعمال الكهروميكانيكية (MEP)، والنفط والغاز',
         'about_branch_note' => 'تقود شركة فيسكون العالمية ش م م مشاريع متكاملة في شبكات الكهرباء، البنية التحتية المدنية، حلول الكهروميكانيكية، ومشاريع قطاع النفط والغاز في سلطنة عمان، مدعومة بالسجل الحافل لفرعها الإقليمي شركة فيسكون الخاصة المحدودة.',
         'about_mission_title' => 'رسالتنا',
         'about_mission_text' => 'تقديم حلول هندسية وإنشائية وبنية تحتية عالمية المستوى من خلال التميز التقني والابتكار والجودة التي لا مساومة عليها والالتزام بالسلامة—مما يخلق قيمة مستدامة لعملائنا ومجتمعاتنا ووطننا.',
