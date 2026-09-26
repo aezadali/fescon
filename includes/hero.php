@@ -2,11 +2,7 @@
     <div class="container">
         <div class="hero-content">
             <h1 class="hero-title">
-                <?php if ($lang === 'ar'): ?>
-                    <span>هندسة لمستقبل أفضل</span>
-                <?php else: ?>
-                    <span>Engineering A Better Tomorrow</span>
-                <?php endif; ?>
+                <span><?php echo t('hero_title'); ?></span>
             </h1>
             
             <p class="hero-subtitle"><?php echo t('hero_subtitle'); ?></p>

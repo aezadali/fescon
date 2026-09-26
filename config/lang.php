@@ -35,8 +35,8 @@ $translations = [
         
         // Hero Section
         'hero_badge' => 'Power Transmission, Distribution & Street Lighting Experts',
-        'hero_title' => 'Powering Roads, Networks & Grid Infrastructure',
-        'hero_subtitle' => 'Fescon International LLC delivers engineering solutions in Street Lighting Systems, Medium & Low Voltage Electrical Distribution Networks, High-Voltage Grid Stations, MEP Solution, Civil Infrastructure(Road Network), Drainage Water supply, High Rise Building and Gas Field across Sultanate of Oman & regional operations.',
+        'hero_title' => 'Engineering Excellence Across the GCC',
+        'hero_subtitle' => 'Delivering integrated engineering, MEP, electrical distribution, street lighting, and civil infrastructure solutions across the GCC with uncompromising quality, safety, and innovation.',
         'hero_cta_projects' => 'Explore Projects',
         'hero_cta_contact' => 'Get In Touch',
         'hero_stat_1_num' => '15+',
@@ -236,8 +236,8 @@ $translations = [
         
         // Hero Section
         'hero_badge' => 'خبراء إنارة الشوارع، شبكات التوزيع ومحطات المحولات',
-        'hero_title' => 'إنارة الطرق، شبكات التوزيع ومحطات المحولات',
-        'hero_subtitle' => 'تقدم شركة فيسكون العالمية ش م م حلولاً هندسية في أنظمة إنارة الشوارع، شبكات التوزيع الكهربائي للجهد المتوسط والمنخفض، محطات المحولات والجهد العالي، حلول الكهروميكانيكية (MEP)، البنية التحتية المدنية (شبكة الطرق)، إمدادات شبكات الصرف والمياه، المباني الشاهقة وحقول الغاز عبر سلطنة عمان والعمليات الإقليمية.',
+        'hero_title' => 'التميز الهندسي في جميع دول مجلس التعاون الخليجي',
+        'hero_subtitle' => 'تقديم حلول هندسية متكاملة، الكهروميكانيكية (MEP)، التوزيع الكهربائي، إنارة الشوارع، والبنية التحتية المدنية في دول الخليج بجودة وسلامة وابتكار لا مساومة عليها.',
         'hero_cta_projects' => 'استعرض مشاريعنا',
         'hero_cta_contact' => 'تواصل معنا',
         'hero_stat_1_num' => '+١٥',
