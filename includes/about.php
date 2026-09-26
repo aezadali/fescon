@@ -2,12 +2,9 @@
     <div class="container">
         <div class="about-grid">
             <div class="about-text">
-                <span class="section-tag"><?php echo t('about_tag'); ?></span>
                 <h2 class="section-title"><?php echo t('about_title'); ?></h2>
-                <p><?php echo t('about_desc_1'); ?></p>
-                <p><?php echo t('about_desc_2'); ?></p>
                 
-                <div class="about-branch-box">
+                <div class="about-branch-box" style="margin-top:1.5rem;">
                     <i class="fas fa-network-wired text-red" style="margin-right:8px;"></i>
                     <?php echo t('about_branch_note'); ?>
                 </div>

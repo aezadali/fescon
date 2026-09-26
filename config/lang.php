@@ -59,10 +59,8 @@ $translations = [
 
         // About Section
         'about_tag' => 'WHO WE ARE',
-        'about_title' => 'Electrical Grid & Infrastructure Specialists in Oman',
-        'about_desc_1' => 'Fescon International LLC is an established engineering service provider in Muscat, Sultanate of Oman, delivering turnkey Street Lighting systems, Electrical Distribution Networks, and Grid Station development. Operating in synergy with Fescon Pvt Ltd, our execution branch, we deliver utility-grade power infrastructure.',
-        'about_desc_2' => 'From municipal highway street lighting projects to complex 132/33kV grid substations and underground electrical distribution feeders, Fescon combines engineering precision, modern computational design, and strict safety compliance.',
-        'about_branch_note' => 'Fescon International LLC leads turnkey projects in Street Lighting, Electrical Distribution Networks, and Grid Stations in Oman, supported by the extensive regional project portfolio of Fescon Pvt Ltd.',
+        'about_title' => 'Powering Electrical Grid, Civil Infrastructure & MEP Work Across the Oil & Gas Sector',
+        'about_branch_note' => 'Fescon International LLC leads turnkey projects in Electrical Grids, Civil Infrastructure, MEP Solutions, and Oil & Gas sector developments in Oman, supported by the extensive regional project execution portfolio of Fescon Pvt Ltd.',
         'about_mission_title' => 'Our Mission',
         'about_mission_text' => 'To deliver world-class engineering, construction, and infrastructure solutions through technical excellence, innovation, uncompromising quality, and a commitment to safety—creating lasting value for our clients, communities, and the nation.',
         'about_vision_title' => 'Our Vision',
@@ -254,10 +252,8 @@ $translations = [
 
         // About Section
         'about_tag' => 'نبذة عن الشركة',
-        'about_title' => 'متخصصون في محطات المحولات وشبكات التوزيع وإنارة الشوارع',
-        'about_desc_1' => 'تأسست شركة فيسكون العالمية ش م م في محافظة مسقط بسلطنة عمان، كـ مُزود خدمات هندسية متخصص في تنفيذ مشاريع إنارة الشوارع، شبكات التوزيع الكهربائي، ومحطات المحولات. وتعمل الشركة بتكامل تام مع فرعها التنفيذي (شركة فيسكون الخاصة المحدودة) لتقديم بنية تحتية كهربائية عالية الجودة.',
-        'about_desc_2' => 'ابتداءً من إنارة الطرق السريعة الحضرية وصولاً إلى محطات المحولات الرئيسية بجهد 132/33 كيلوفولت وشبكات التوزيع الكابلات الأرضية، تجمع فيسكون بين الدقة الهندسية والتصاميم الحديثة والالتزام الصارم بأعلى معايير السلامة.',
-        'about_branch_note' => 'تقود شركة فيسكون العالمية ش م م المشاريع المتكاملة في إنارة الشوارع وشبكات التوزيع الكهربائي ومحطات المحولات في سلطنة عمان، مدعومة بالسجل الحافل لفرعها الإقليمي شركة فيسكون الخاصة المحدودة.',
+        'about_title' => 'تزويد شبكات الكهرباء والبنية التحتية المدنية وأعمال الكهروميكانيكية (MEP) عبر قطاع النفط والغاز',
+        'about_branch_note' => 'تقود شركة فيسكون العالمية ش م م مشاريع متكاملة في شبكات الكهرباء، البنية التحتية المدنية، حلول الكهروميكانيكية، ومشاريع قطاع النفط والغاز في سلطنة عمان، مدعومة بالسجل الحافل لفرعها الإقليمي شركة فيسكون الخاصة المحدودة.',
         'about_mission_title' => 'رسالتنا',
         'about_mission_text' => 'تقديم حلول هندسية وإنشائية وبنية تحتية عالمية المستوى من خلال التميز التقني والابتكار والجودة التي لا مساومة عليها والالتزام بالسلامة—مما يخلق قيمة مستدامة لعملائنا ومجتمعاتنا ووطننا.',
         'about_vision_title' => 'رؤيتنا',
