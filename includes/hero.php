@@ -1,11 +1,6 @@
 <section class="hero-section" id="home">
     <div class="container">
         <div class="hero-content">
-            <div class="hero-badge-pill">
-                <i class="fas fa-certificate"></i>
-                <span><?php echo t('hero_badge'); ?></span>
-            </div>
-            
             <h1 class="hero-title">
                 <?php if ($lang === 'ar'): ?>
                     <span>هندسة لمستقبل أفضل</span>
@@ -29,27 +24,3 @@
         </div>
     </div>
 </section>
-
-<!-- Floating Hero Stats Bar -->
-<div class="container">
-    <div class="hero-stats-bar">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number"><?php echo t('hero_stat_1_num'); ?></div>
-                <div class="stat-label"><?php echo t('hero_stat_1_label'); ?></div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number"><?php echo t('hero_stat_2_num'); ?></div>
-                <div class="stat-label"><?php echo t('hero_stat_2_label'); ?></div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number"><?php echo t('hero_stat_3_num'); ?></div>
-                <div class="stat-label"><?php echo t('hero_stat_3_label'); ?></div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number"><?php echo t('hero_stat_4_num'); ?></div>
-                <div class="stat-label"><?php echo t('hero_stat_4_label'); ?></div>
-            </div>
-        </div>
-    </div>
-</div>
