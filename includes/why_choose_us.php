@@ -28,7 +28,7 @@
             <!-- Right Image Column -->
             <div class="why-img-col">
                 <div class="why-img-box">
-                    <img src="assets/images/project_civil.jpg" alt="Engineering Blueprint Design">
+                    <img src="assets/images/why_choose_us.jpg" alt="Fescon Civil & Electrical Engineering Blueprint">
                 </div>
             </div>
         </div>
