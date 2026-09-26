@@ -50,7 +50,7 @@ $translations = [
 
         // Why Choose Us Section
         'why_tag' => 'WHY CHOOSE FESCON',
-        'why_title' => 'Why Choose Us',
+        'why_title' => 'Why Choose Us?',
         'why_subtitle' => 'Our core principle guides every engineering project, substation build, and infrastructure deployment.',
         'why_motto' => 'No compromise on Quality, Quantity and Commitment',
         
@@ -251,7 +251,7 @@ $translations = [
 
         // Why Choose Us Section
         'why_tag' => 'لماذا تختار فيسكون',
-        'why_title' => 'لماذا تختارنا',
+        'why_title' => 'لماذا تختارنا؟',
         'why_subtitle' => 'مبدؤنا الأساسي يقود كل مشروع هندسي، محطة محولات، وتنفيذ شبكات البنية التحتية.',
         'why_motto' => 'لا مساومة على الجودة، الكمية، والالتزام',
         

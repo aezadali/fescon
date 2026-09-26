@@ -2,7 +2,6 @@
     <div class="container text-center">
         <span class="section-tag"><?php echo t('why_tag'); ?></span>
         <h2 class="section-title"><?php echo t('why_title'); ?></h2>
-        <p class="section-subtitle"><?php echo t('why_subtitle'); ?></p>
 
         <!-- Main Banner Highlight -->
         <div class="why-motto-banner">
