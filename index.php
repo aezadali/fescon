@@ -3,6 +3,7 @@
 require_once __DIR__ . '/config/lang.php';
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/hero.php';
+require_once __DIR__ . '/includes/why_choose_us.php';
 require_once __DIR__ . '/includes/about.php';
 require_once __DIR__ . '/includes/leadership.php';
 require_once __DIR__ . '/includes/services.php';

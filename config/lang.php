@@ -48,6 +48,21 @@ $translations = [
         'hero_stat_4_num' => 'Excellent',
         'hero_stat_4_label' => 'OCCI Oman Grade',
 
+        // Why Choose Us Section
+        'why_tag' => 'WHY CHOOSE FESCON',
+        'why_title' => 'Why Choose Us',
+        'why_subtitle' => 'Our core principle guides every engineering project, substation build, and infrastructure deployment.',
+        'why_motto' => 'No compromise on Quality, Quantity and Commitment',
+        
+        'why_1_title' => 'Uncompromised Quality',
+        'why_1_desc' => 'Adherence to Oman Grid Code, ISO standards, and high-grade utility materials to ensure long-lasting structural and electrical performance.',
+        
+        'why_2_title' => 'Exact Quantity & Precision',
+        'why_2_desc' => 'Transparent BOQ execution, precise design calculations, and strict delivery without shortcuts or material deviation.',
+        
+        'why_3_title' => 'Unwavering Commitment',
+        'why_3_desc' => 'Dedicated engineering teams focused on punctual energization, 24/7 technical support, and complete customer satisfaction.',
+
         // About Section
         'about_tag' => 'WHO WE ARE',
         'about_title' => 'Electrical Grid & Infrastructure Specialists in Oman',
@@ -233,6 +248,21 @@ $translations = [
         'hero_stat_3_label' => 'الالتزام بمعايير شبكات الكهرباء',
         'hero_stat_4_num' => 'الممتازة',
         'hero_stat_4_label' => 'درجة الغرفة التجارية بعمان',
+
+        // Why Choose Us Section
+        'why_tag' => 'لماذا تختار فيسكون',
+        'why_title' => 'لماذا تختارنا',
+        'why_subtitle' => 'مبدؤنا الأساسي يقود كل مشروع هندسي، محطة محولات، وتنفيذ شبكات البنية التحتية.',
+        'why_motto' => 'لا مساومة على الجودة، الكمية، والالتزام',
+        
+        'why_1_title' => 'جودة لا تنازل عنها',
+        'why_1_desc' => 'التزام صارم بكود شبكة عمان ومعايير الآيزو والمواد المعتمدة لضمان أعلى أداء كهربائي وهندسي.',
+        
+        'why_2_title' => 'دقة الكميات والشفافية',
+        'why_2_desc' => 'تنفيذ دقيق لجدول الكميات والمواصفات دون أي اختصار أو إنقاص في معايير المواد والتركيب.',
+        
+        'why_3_title' => 'التزام تام وراسخ',
+        'why_3_desc' => 'فرق هندسية متخصصة تضمن التشغيل في المواعيد المحددة والدعم الفني وتلبية كافة تطلعات العملاء.',
 
         // About Section
         'about_tag' => 'نبذة عن الشركة',

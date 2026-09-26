@@ -209,7 +209,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const revealElements = document.querySelectorAll(
     '.section-tag, .section-title, .section-subtitle, .about-text, .about-visual, ' +
     '.value-card, .executive-card, .service-card, .cert-card, .project-card, ' +
-    '.mv-card, .about-branch-box, .tagline-banner, .contact-info-box, .contact-form-box'
+    '.mv-card, .about-branch-box, .tagline-banner, .contact-info-box, .contact-form-box, ' +
+    '.why-card, .why-motto-banner'
   );
 
   const revealObserver = new IntersectionObserver((entries) => {
