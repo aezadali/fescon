@@ -52,11 +52,10 @@ $translations = [
         'why_tag' => 'WHY CHOOSE FESCON',
         'why_title' => 'Why Choose Us?',
         'why_desc' => 'At Fescon, we combine multidisciplinary expertise with innovative solutions to deliver excellence in every project. Our commitment to quality, sustainability, and client satisfaction sets us apart as a trusted partner in Engineering and Technology.',
-        'why_list_1' => 'Excellence in Innovation',
-        'why_list_2' => 'Client-Centric Collaboration',
-        'why_list_3' => 'Sustainability and Responsibility',
-        'why_list_4' => 'Integrity and Professionalism',
-        'why_list_5' => 'Continuous Learning and Growth',
+        'why_motto_header' => 'No compromise on:',
+        'why_list_1' => 'Quality',
+        'why_list_2' => 'Quantity',
+        'why_list_3' => 'Commitment',
 
         // About Section
         'about_tag' => 'WHO WE ARE',
@@ -248,11 +247,10 @@ $translations = [
         'why_tag' => 'لماذا تختار فيسكون',
         'why_title' => 'لماذا تختارنا؟',
         'why_desc' => 'في فيسكون، ندمج بين الخبرات متعددة التخصصات والحلول المبتكرة لتقديم التميز في كل مشروع. إن التزامنا بالجودة والاستدامة ورضا العملاء يميزنا كشريك موثوق في مجالات الهندسة والتكنولوجيا.',
-        'why_list_1' => 'التميز في الابتكار',
-        'why_list_2' => 'التعاون المحوري مع العملاء',
-        'why_list_3' => 'الاستدامة والمسؤولية',
-        'why_list_4' => 'النزاهة والاحترافية',
-        'why_list_5' => 'التعلم المستمر والنمو',
+        'why_motto_header' => 'لا مساومة على:',
+        'why_list_1' => 'الجودة (Quality)',
+        'why_list_2' => 'الكمية (Quantity)',
+        'why_list_3' => 'الالتزام (Commitment)',
 
         // About Section
         'about_tag' => 'نبذة عن الشركة',

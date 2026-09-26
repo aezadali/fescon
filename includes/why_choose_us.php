@@ -6,6 +6,7 @@
                 <h2 class="why-title-red"><?php echo t('why_title'); ?></h2>
                 <p class="why-lead-text"><?php echo t('why_desc'); ?></p>
                 
+                <h4 class="why-motto-header"><?php echo t('why_motto_header'); ?></h4>
                 <div class="why-checklist-wrapper">
                     <ul class="why-check-list">
                         <li>
@@ -19,14 +20,6 @@
                         <li>
                             <i class="fas fa-check"></i>
                             <span><?php echo t('why_list_3'); ?></span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span><?php echo t('why_list_4'); ?></span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span><?php echo t('why_list_5'); ?></span>
                         </li>
                     </ul>
                 </div>
