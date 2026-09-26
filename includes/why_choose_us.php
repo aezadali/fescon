@@ -1,42 +1,42 @@
 <section class="why-choose-section" id="why-choose-us">
-    <div class="container text-center">
-        <span class="section-tag"><?php echo t('why_tag'); ?></span>
-        <h2 class="section-title"><?php echo t('why_title'); ?></h2>
-
-        <!-- Main Banner Highlight -->
-        <div class="why-motto-banner">
-            <div class="why-motto-icon">
-                <i class="fas fa-gem"></i>
-            </div>
-            <div class="why-motto-text">
-                <h3><?php echo t('why_motto'); ?></h3>
-            </div>
-        </div>
-
-        <!-- 3 Core Pillars Cards -->
-        <div class="why-grid">
-            <div class="why-card">
-                <div class="why-card-icon red">
-                    <i class="fas fa-award"></i>
+    <div class="container">
+        <div class="why-split-grid">
+            <!-- Left Content Column -->
+            <div class="why-text-col">
+                <h2 class="why-title-red"><?php echo t('why_title'); ?></h2>
+                <p class="why-lead-text"><?php echo t('why_desc'); ?></p>
+                
+                <div class="why-checklist-wrapper">
+                    <ul class="why-check-list">
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span><?php echo t('why_list_1'); ?></span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span><?php echo t('why_list_2'); ?></span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span><?php echo t('why_list_3'); ?></span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span><?php echo t('why_list_4'); ?></span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span><?php echo t('why_list_5'); ?></span>
+                        </li>
+                    </ul>
                 </div>
-                <h3 class="why-card-title"><?php echo t('why_1_title'); ?></h3>
-                <p class="why-card-desc"><?php echo t('why_1_desc'); ?></p>
             </div>
 
-            <div class="why-card">
-                <div class="why-card-icon gold">
-                    <i class="fas fa-balance-scale"></i>
+            <!-- Right Image Column -->
+            <div class="why-img-col">
+                <div class="why-img-box">
+                    <img src="assets/images/project_civil.jpg" alt="Engineering Blueprint Design">
                 </div>
-                <h3 class="why-card-title"><?php echo t('why_2_title'); ?></h3>
-                <p class="why-card-desc"><?php echo t('why_2_desc'); ?></p>
-            </div>
-
-            <div class="why-card">
-                <div class="why-card-icon navy">
-                    <i class="fas fa-handshake"></i>
-                </div>
-                <h3 class="why-card-title"><?php echo t('why_3_title'); ?></h3>
-                <p class="why-card-desc"><?php echo t('why_3_desc'); ?></p>
             </div>
         </div>
     </div>
