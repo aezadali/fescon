@@ -10,11 +10,8 @@
                 <div class="executive-header">
                     <img src="assets/images/ehsan_ullah.jpg" alt="Engr. Ehsan Ullah" class="executive-avatar" style="cursor:pointer;" title="Click to view full photo" onclick="openModal('Engr. Ehsan Ullah - CEO & Director', 'assets/images/ehsan_ullah.jpg')">
                     <div class="executive-meta text-left">
-                        <h3><?php echo ($lang === 'ar') ? t('ceo_name_ar') : t('ceo_name'); ?></h3>
-                        <div class="executive-title"><?php echo ($lang === 'ar') ? t('ceo_title_ar') : t('ceo_title'); ?></div>
-                        <?php if ($lang === 'ar'): ?>
-                            <div class="executive-arabic"><?php echo t('ceo_name_ar'); ?> - <?php echo t('ceo_title_ar'); ?></div>
-                        <?php endif; ?>
+                        <h3><?php echo t('ceo_name'); ?></h3>
+                        <div class="executive-title"><?php echo t('ceo_title'); ?></div>
                     </div>
                 </div>
                 <div class="executive-body">
@@ -31,11 +28,8 @@
                 <div class="executive-header">
                     <img src="assets/images/abdullah_albasrawi.jpg" alt="Abdullah Muhammad Salim Al-Basrawi" class="executive-avatar" style="cursor:pointer;" title="Click to view full photo" onclick="openModal('Abdullah Muhammad Salim Al-Basrawi - Director', 'assets/images/abdullah_albasrawi.jpg')">
                     <div class="executive-meta text-left">
-                        <h3><?php echo ($lang === 'ar') ? t('dir_name_ar') : t('dir_name'); ?></h3>
-                        <div class="executive-title"><?php echo ($lang === 'ar') ? t('dir_title_ar') : t('dir_title'); ?></div>
-                        <?php if ($lang === 'ar'): ?>
-                            <div class="executive-arabic"><?php echo t('dir_name_ar'); ?> - <?php echo t('dir_title_ar'); ?></div>
-                        <?php endif; ?>
+                        <h3><?php echo t('dir_name'); ?></h3>
+                        <div class="executive-title"><?php echo t('dir_title'); ?></div>
                     </div>
                 </div>
                 <div class="executive-body">
