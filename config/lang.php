@@ -64,9 +64,9 @@ $translations = [
         'about_desc_2' => 'From municipal highway street lighting projects to complex 132/33kV grid substations and underground electrical distribution feeders, Fescon combines engineering precision, modern computational design, and strict safety compliance.',
         'about_branch_note' => 'Fescon International LLC leads turnkey projects in Street Lighting, Electrical Distribution Networks, and Grid Stations in Oman, supported by the extensive regional project portfolio of Fescon Pvt Ltd.',
         'about_mission_title' => 'Our Mission',
-        'about_mission_text' => 'To illuminate communities and power nations by constructing reliable Street Lighting networks, resilient Electrical Distribution systems, and state-of-the-art Grid Stations.',
+        'about_mission_text' => 'To deliver world-class engineering, construction, and infrastructure solutions through technical excellence, innovation, uncompromising quality, and a commitment to safety—creating lasting value for our clients, communities, and the nation.',
         'about_vision_title' => 'Our Vision',
-        'about_vision_text' => 'To be the benchmark power engineering service provider in Oman for street lighting, grid expansion, and electrical distribution infrastructure.',
+        'about_vision_text' => 'To become Oman’s most trusted engineering partner, recognized for delivering sustainable, high-quality projects across diverse sectors while setting new standards of professionalism, reliability, and engineering excellence.',
 
         // Core Values
         'val_prof_title' => 'Grid Precision & Safety',
@@ -259,9 +259,9 @@ $translations = [
         'about_desc_2' => 'ابتداءً من إنارة الطرق السريعة الحضرية وصولاً إلى محطات المحولات الرئيسية بجهد 132/33 كيلوفولت وشبكات التوزيع الكابلات الأرضية، تجمع فيسكون بين الدقة الهندسية والتصاميم الحديثة والالتزام الصارم بأعلى معايير السلامة.',
         'about_branch_note' => 'تقود شركة فيسكون العالمية ش م م المشاريع المتكاملة في إنارة الشوارع وشبكات التوزيع الكهربائي ومحطات المحولات في سلطنة عمان، مدعومة بالسجل الحافل لفرعها الإقليمي شركة فيسكون الخاصة المحدودة.',
         'about_mission_title' => 'رسالتنا',
-        'about_mission_text' => 'إضاءة الطرق والمجتمعات وتوفير الطاقة الموثوقة من خلال إنشاء شبكات إنارة شوارع متطورة، وشبكات توزيع كهربائي قوية، ومحطات محولات حديثة.',
+        'about_mission_text' => 'تقديم حلول هندسية وإنشائية وبنية تحتية عالمية المستوى من خلال التميز التقني والابتكار والجودة التي لا مساومة عليها والالتزام بالسلامة—مما يخلق قيمة مستدامة لعملائنا ومجتمعاتنا ووطننا.',
         'about_vision_title' => 'رؤيتنا',
-        'about_vision_text' => 'أن نكون مُزود الخدمات الهندسية الأول في سلطنة عمان لأنظمة إنارة الشوارع وتوسعة شبكات الكهرباء ومحطات المحولات.',
+        'about_vision_text' => 'أن نصبح الشريك الهندسي الأكثر ثقة في سلطنة عمان، والمشهود له بتنفيذ مشاريع مستدامة عالية الجودة عبر مختلف القطاعات مع إرساء معايير جديدة للاحترافية والموثوقية والتميز الهندسي.',
 
         // Core Values
         'val_prof_title' => 'دقة محطات المحولات والسلامة',
