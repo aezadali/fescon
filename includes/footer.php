@@ -28,6 +28,8 @@
                         <li><a href="#services"><?php echo t('serv_4_title'); ?></a></li>
                         <li><a href="#services"><?php echo t('serv_5_title'); ?></a></li>
                         <li><a href="#services"><?php echo t('serv_6_title'); ?></a></li>
+                        <li><a href="#services"><?php echo t('serv_7_title'); ?></a></li>
+                        <li><a href="#services"><?php echo t('serv_8_title'); ?></a></li>
                     </ul>
                 </div>
 

@@ -40,13 +40,5 @@
                 </div>
             </div>
         </div>
-
-        <!-- Tagline Banner -->
-        <div class="tagline-banner">
-            <div class="tagline-text text-center" style="width:100%;">
-                <h4><?php echo ($lang === 'ar') ? 'هندسة لمستقبل أفضل' : 'ENGINEERING A BETTER TOMORROW'; ?></h4>
-                <p><?php echo ($lang === 'ar') ? 'مستقبل بنيتنا التحتية يبدأ اليوم برؤية ودقة متكاملة' : 'Building tomorrow’s infrastructure through vision, precision, and excellence.'; ?></p>
-            </div>
-        </div>
     </div>
 </section>

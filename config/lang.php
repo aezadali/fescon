@@ -87,7 +87,7 @@ $translations = [
 
         // Leadership Section
         'lead_tag' => 'EXECUTIVE LEADERSHIP',
-        'lead_title' => 'Engineered for Electrical Power & Infrastructure Excellence',
+        'lead_title' => 'Leadership Behind Our Engineering Excellence',
         'lead_subtitle' => 'Led by veteran engineering executives with extensive experience in utility grid installations, street lighting, and electrical network deployment.',
         'ceo_name' => 'Engr. Ehsan Ullah',
         'ceo_title' => 'Chief Executive Officer',
@@ -103,7 +103,7 @@ $translations = [
 
         // Services Section
         'serv_tag' => 'OUR SERVICES',
-        'serv_title' => 'Street Lighting, Distribution Networks & Grid Stations',
+        'serv_title' => 'Electrical, Civil, MEP & Oil & Gas Engineering Services',
         'serv_subtitle' => 'Turnkey engineering solutions designed to power cities, electrical networks, and high-voltage substation grid stations.',
         
         'serv_1_title' => 'Street Lighting Systems',
@@ -115,14 +115,20 @@ $translations = [
         'serv_3_title' => 'Grid Stations & Substations',
         'serv_3_desc' => 'Engineering service execution of 132kV, 33kV, and 11kV Grid Substations, Gas-Insulated Switchgears (GIS), power transformers, control & protection relay panels, and SCADA integration.',
         
-        'serv_4_title' => 'Turnkey Electrical Engineering Services',
-        'serv_4_desc' => 'End-to-end Engineering, Procurement management, and Construction supervision for power transmission, substation civil works, and grid interconnections.',
+        'serv_4_title' => 'Civil Infrastructure & Construction',
+        'serv_4_desc' => 'Highways, arterial roads, structural foundations, earthworks, drainage systems, substation civil structures, and comprehensive municipal infrastructure.',
         
-        'serv_5_title' => 'Grid & Street Lighting O&M Services',
-        'serv_5_desc' => 'Comprehensive operation, preventive maintenance, thermographic imaging, relay calibration, and emergency repair for grid stations & street lighting assets.',
+        'serv_5_title' => 'MEP Engineering Solutions',
+        'serv_5_desc' => 'Integrated mechanical, electrical, and plumbing engineering, HVAC systems, fire protection, and comprehensive building utility installations for commercial and industrial facilities.',
         
-        'serv_6_title' => 'Substation Civil & Structural Works',
-        'serv_6_desc' => 'Specialized civil construction for grid control buildings, transformer foundations, cable trenches, gantry structures, and perimeter security fencing.',
+        'serv_6_title' => 'Oil & Gas Sector Services',
+        'serv_6_desc' => 'Specialized electrical, civil, piping, and instrumentation engineering support for upstream, downstream, and petrochemical oilfield facilities.',
+        
+        'serv_7_title' => 'Turnkey EPC Projects',
+        'serv_7_desc' => 'End-to-end Engineering, Procurement, and Construction management from computational design and civil execution to electrical commissioning and energization.',
+        
+        'serv_8_title' => 'Operation & Maintenance (O&M)',
+        'serv_8_desc' => '24/7 preventive, corrective, and predictive maintenance, thermographic imaging, relay calibration, and emergency repair for power grids, street lighting, and utility assets.',
 
         // Certifications Section
         'cert_tag' => 'OFFICIAL REGISTRATIONS & CREDENTIALS',
@@ -289,7 +295,7 @@ $translations = [
 
         // Leadership Section
         'lead_tag' => 'القيادة التنفيذية',
-        'lead_title' => 'قيادة متميزة في شبكات الكهرباء والبنية التحتية',
+        'lead_title' => 'القيادة وراء تميزنا الهندسي',
         'lead_subtitle' => 'يقود الشركة فريق تنفيذي هندسي يمتلك خبرات واسعة في تركيب محطات المحولات وشبكات إنارة الطرق وتوزيع الطاقة.',
         'ceo_name' => 'المهندس إحسان الله',
         'ceo_title' => 'الرئيس التنفيذي',
@@ -305,7 +311,7 @@ $translations = [
 
         // Services Section
         'serv_tag' => 'خدماتنا',
-        'serv_title' => 'إنارة الشوارع، شبكات التوزيع ومحطات المحولات',
+        'serv_title' => 'خدمات الهندسة الكهربائية، المدنية، الكهروميكانيكية والنفط والغاز',
         'serv_subtitle' => 'خدمات هندسية متكاملة لإنارة الشوارع والطرق العامة، شبكات التوزيع الكهربائي، ومحطات الجهد العالي والمتوسط.',
         
         'serv_1_title' => 'أنظمة إنارة الشوارع والطرق',
@@ -317,14 +323,20 @@ $translations = [
         'serv_3_title' => 'محطات المحولات والجهد العالي',
         'serv_3_desc' => 'خدمات هندسية لمحطات المحولات بجهد 132kV و 33kV و 11kV، مفاتيح المعزولة بالغاز (GIS)، محولات الطاقة، لوحات الحماية والتحكم، وأنظمة SCADA.',
         
-        'serv_4_title' => 'الخدمات الهندسية الكهربائية المتكاملة',
-        'serv_4_desc' => 'إدارة شاملة للهندسة والتوريد والإنشاء لمشاريع نقل الطاقة والأعمال المدنية للمحطات والربط الكهربائي.',
+        'serv_4_title' => 'البنية التحتية المدنية والإنشاءات',
+        'serv_4_desc' => 'إنشاء الطرق السريعة والرئيسية، الأساسات الإنشائية، الأعمال الترابية، شبكات تصريف المياه، والأعمال المدنية المتكاملة للمحطات والمرافق البلدية.',
         
-        'serv_5_title' => 'تشغيل وصيانة المحطات وإنارة الشوارع',
-        'serv_5_desc' => 'خدمات التشغيل والصيانة الوقائية الشاملة، الفحص الحراري، معايرة مرحلات الحماية، والإصلاح الطارئ لإنارة الشوارع ومحطات الكهرباء.',
+        'serv_5_title' => 'حلول الكهروميكانيكية (MEP)',
+        'serv_5_desc' => 'خدمات هندسية متكاملة للأعمال الميكانيكية والكهربائية والسباكة، أنظمة التكييف والتهوية (HVAC)، ومكافحة الحرائق للمنشآت التجارية والصناعية.',
         
-        'serv_6_title' => 'الأعمال المدنية والإنشائية للمحطات',
-        'serv_6_desc' => 'إنشاءات مدنية متخصصة لمباني تحكم المحطات، قواعد المحولات، خنادق الكابلات، الهياكل المعدنية، والسياج الأمني المحيط.',
+        'serv_6_title' => 'خدمات قطاع النفط والغاز',
+        'serv_6_desc' => 'خدمات هندسية متخصصة في الأعمال الكهربائية، المدنية، خطوط الأنابيب، وأجهزة القياس والتحكم لدعم منشآت النفط والغاز ومصافي التكرير.',
+        
+        'serv_7_title' => 'مشاريع تسليم المفتاح (EPC)',
+        'serv_7_desc' => 'إدارة شاملة للهندسة والتوريد والإنشاءات بدءاً من التصاميم الحسابية والأعمال المدنية وحتى الفحص والتشغيل وإطلاق التيار للمشاريع.',
+        
+        'serv_8_title' => 'خدمات التشغيل والصيانة (O&M)',
+        'serv_8_desc' => 'صيانة وقائية وعلاجية وتنبؤية على مدار الساعة، فحص حراري، معايرة مرحلات الحماية، واستجابة طارئة لشبكات الكهرباء والإنارة والمرافق.',
 
         // Certifications Section
         'cert_tag' => 'التسجيلات والشهادات الرسمية',

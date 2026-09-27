@@ -1201,14 +1201,24 @@ html[dir="rtl"] .executive-quote {
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+html[dir="rtl"] .services-grid {
+  text-align: right;
+}
+
+@media (max-width: 1100px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .service-card {
   background: #FFFFFF;
   border-radius: var(--radius-md);
-  padding: 2.5rem 2rem;
+  padding: 2.2rem 1.6rem;
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--border-color);
   transition: var(--transition);
