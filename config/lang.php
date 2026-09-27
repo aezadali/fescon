@@ -103,7 +103,7 @@ $translations = [
 
         // Services Section
         'serv_tag' => 'OUR SERVICES',
-        'serv_title' => 'Electrical, Civil, MEP & Oil & Gas Engineering Services',
+        'serv_title' => 'Integrated Engineering & Infrastructure Solutions',
         'serv_subtitle' => 'Turnkey engineering solutions designed to power cities, electrical networks, and high-voltage substation grid stations.',
         
         'serv_1_title' => 'Street Lighting Systems',
@@ -153,7 +153,7 @@ $translations = [
 
         // Projects Section
         'proj_tag' => 'OUR PROJECT PORTFOLIO',
-        'proj_title' => 'Street Lighting, Distribution & Grid Showcase',
+        'proj_title' => 'Engineering Projects & Infrastructure Solutions',
         'proj_subtitle' => 'Demonstrating proven track record in highway street lighting, power distribution feeder networks, and high-voltage grid stations.',
         'proj_filter_all' => 'All Projects',
         'proj_filter_lighting' => 'Street Lighting',
@@ -186,7 +186,7 @@ $translations = [
 
         // Contact Section
         'contact_tag' => 'GET IN TOUCH',
-        'contact_title' => 'Connect With Fescon Power Experts',
+        'contact_title' => 'Connect With Our Engineering Experts',
         'contact_subtitle' => 'Consult with our engineering team for Street Lighting tenders, Distribution Network inquiries, or Grid Station proposals.',
         'contact_info_title' => 'Muscat Head Office & Execution Branch',
         
@@ -311,7 +311,7 @@ $translations = [
 
         // Services Section
         'serv_tag' => 'خدماتنا',
-        'serv_title' => 'خدمات الهندسة الكهربائية، المدنية، الكهروميكانيكية والنفط والغاز',
+        'serv_title' => 'حلول هندسية وبنية تحتية متكاملة',
         'serv_subtitle' => 'خدمات هندسية متكاملة لإنارة الشوارع والطرق العامة، شبكات التوزيع الكهربائي، ومحطات الجهد العالي والمتوسط.',
         
         'serv_1_title' => 'أنظمة إنارة الشوارع والطرق',
@@ -361,7 +361,7 @@ $translations = [
 
         // Projects Section
         'proj_tag' => 'معرض مشاريعنا',
-        'proj_title' => 'مشاريع إنارة الشوارع وشبكات التوزيع والمحطات',
+        'proj_title' => 'المشاريع الهندسية وحلول البنية التحتية',
         'proj_subtitle' => 'استعراض لمشاريعنا المنجزة في إنارة طرق الشوارع السريعة، شبكات المغذيات الكهربائية، ومحطات المحولات ذات الجهد العالي.',
         'proj_filter_all' => 'جميع المشاريع',
         'proj_filter_lighting' => 'إنارة الشوارع',
@@ -394,7 +394,7 @@ $translations = [
 
         // Contact Section
         'contact_tag' => 'تواصل معنا',
-        'contact_title' => 'تواصل مع خبراء الكهرباء والمحطات',
+        'contact_title' => 'تواصل مع خبرائنا الهندسيين',
         'contact_subtitle' => 'استشر فريقنا الهندسي لمناقصات إنارة الشوارع، استفسارات شبكات التوزيع، أو عروض المحطات.',
         'contact_info_title' => 'المقر الرئيسي بمسقط وفرع التنفيذ',
         
