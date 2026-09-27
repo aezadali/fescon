@@ -60,6 +60,26 @@
                 <h4 class="value-title"><?php echo t('val_sust_title'); ?></h4>
                 <p class="value-desc"><?php echo t('val_sust_desc'); ?></p>
             </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-road"></i></div>
+                <h4 class="value-title"><?php echo t('val_civil_title'); ?></h4>
+                <p class="value-desc"><?php echo t('val_civil_desc'); ?></p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-screwdriver-wrench"></i></div>
+                <h4 class="value-title"><?php echo t('val_mep_title'); ?></h4>
+                <p class="value-desc"><?php echo t('val_mep_desc'); ?></p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-gas-pump"></i></div>
+                <h4 class="value-title"><?php echo t('val_oilgas_title'); ?></h4>
+                <p class="value-desc"><?php echo t('val_oilgas_desc'); ?></p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-network-wired"></i></div>
+                <h4 class="value-title"><?php echo t('val_dist_title'); ?></h4>
+                <p class="value-desc"><?php echo t('val_dist_desc'); ?></p>
+            </div>
         </div>
     </div>
 </section>

@@ -75,6 +75,15 @@ $translations = [
         'val_time_desc' => 'Punctual project energization and handover through systematic project management and testing.',
         'val_sust_title' => 'Energy Efficient Street Lighting',
         'val_sust_desc' => 'Integrating high-efficiency LED street lights, solar street lighting, and optimized distribution transformers.',
+        'val_civil_title' => 'Civil Infrastructure',
+        'val_civil_desc' => 'Highways, road networks, grading, structural foundations, and comprehensive municipal civil engineering works.',
+        'val_mep_title' => 'MEP Works',
+        'val_mep_desc' => 'Integrated mechanical, electrical, and plumbing engineering solutions for commercial, industrial, and residential projects.',
+        'val_oilgas_title' => 'Oil & Gas Sector',
+        'val_oilgas_desc' => 'Specialized electrical, civil, and instrumentation engineering support for upstream and downstream energy facilities.',
+        'val_dist_title' => 'Electrical Distribution',
+        'val_dist_desc' => 'Medium and low-voltage underground cabling, transformer substations, switchgear, and feeder network deployment.',
+
 
         // Leadership Section
         'lead_tag' => 'EXECUTIVE LEADERSHIP',
@@ -268,6 +277,15 @@ $translations = [
         'val_time_desc' => 'تشغيل المحولات وإطلاق التيار في المواعيد المحددة من خلال إدارة المشاريع واختبارات الجودة.',
         'val_sust_title' => 'كفاءة الطاقة وإنارة الشوارع',
         'val_sust_desc' => 'دمج أنظمة إنارة الشوارع الموفرة للطاقة والإنارة الشمسية لتقليل الاستهلاك وحماية البيئة.',
+        'val_civil_title' => 'البنية التحتية المدنية',
+        'val_civil_desc' => 'إنشاء الطرق السريعة، شبكات الطرق، الأساسات الإنشائية، والأعمال الهندسية المدنية والبلدية الشاملة.',
+        'val_mep_title' => 'أعمال الكهروميكانيكية (MEP)',
+        'val_mep_desc' => 'حلول هندسية متكاملة للأعمال الميكانيكية والكهربائية والسباكة للمشاريع التجارية والصناعية والسكنية.',
+        'val_oilgas_title' => 'قطاع النفط والغاز',
+        'val_oilgas_desc' => 'خدمات هندسية متخصصة في الأعمال الكهربائية والمدنية وأجهزة التحكم لمرافق ومنشآت الطاقة.',
+        'val_dist_title' => 'توزيع الطاقة الكهربائية',
+        'val_dist_desc' => 'كابلات أرضية للجهد المتوسط والمنخفض، محطات المحولات الفرعية، لوحات التوزيع وشبكات التغذية الكهربائية.',
+
 
         // Leadership Section
         'lead_tag' => 'القيادة التنفيذية',
