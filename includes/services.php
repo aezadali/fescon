@@ -2,7 +2,6 @@
     <div class="container text-center">
         <span class="section-tag"><?php echo t('serv_tag'); ?></span>
         <h2 class="section-title"><?php echo t('serv_title'); ?></h2>
-        <p class="section-subtitle"><?php echo t('serv_subtitle'); ?></p>
 
         <div class="services-grid text-left">
             <!-- Service 1: Street Lighting Systems -->

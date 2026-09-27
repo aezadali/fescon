@@ -3,7 +3,6 @@
         <div class="text-center">
             <span class="section-tag"><?php echo t('contact_tag'); ?></span>
             <h2 class="section-title"><?php echo t('contact_title'); ?></h2>
-            <p class="section-subtitle"><?php echo t('contact_subtitle'); ?></p>
         </div>
 
         <div class="contact-grid">

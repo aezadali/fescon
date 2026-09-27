@@ -2,7 +2,6 @@
     <div class="container text-center">
         <span class="section-tag"><?php echo t('lead_tag'); ?></span>
         <h2 class="section-title"><?php echo t('lead_title'); ?></h2>
-        <p class="section-subtitle"><?php echo t('lead_subtitle'); ?></p>
 
         <div class="leadership-grid">
             <!-- CEO Card -->

@@ -2,7 +2,6 @@
     <div class="container text-center">
         <span class="section-tag" style="background:rgba(255,255,255,0.1); color:var(--accent-gold-light); border-color:rgba(197,155,39,0.3);"><?php echo t('cert_tag'); ?></span>
         <h2 class="section-title"><?php echo t('cert_title'); ?></h2>
-        <p class="section-subtitle"><?php echo t('cert_subtitle'); ?></p>
 
         <div class="cert-grid text-left">
             <!-- Cert 1: Oman Chamber of Commerce -->

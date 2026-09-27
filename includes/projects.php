@@ -3,7 +3,6 @@
         <div style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;">
             <span class="section-tag"><?php echo t('proj_tag'); ?></span>
             <h2 class="section-title"><?php echo t('proj_title'); ?></h2>
-            <p class="section-subtitle"><?php echo t('proj_subtitle'); ?></p>
 
             <!-- Category Filters -->
             <div class="portfolio-filter">
