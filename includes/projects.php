@@ -16,12 +16,6 @@
                 <button class="filter-btn" data-filter="epc"><?php echo t('proj_filter_epc'); ?></button>
                 <button class="filter-btn" data-filter="om"><?php echo t('proj_filter_om'); ?></button>
             </div>
-
-            <!-- Scroll Controls -->
-            <div class="projects-nav-controls">
-                <button type="button" class="proj-nav-btn prev-btn" id="projPrevBtn" aria-label="Previous Projects" title="Scroll Left"><i class="fas fa-chevron-left"></i></button>
-                <button type="button" class="proj-nav-btn next-btn" id="projNextBtn" aria-label="Next Projects" title="Scroll Right"><i class="fas fa-chevron-right"></i></button>
-            </div>
         </div>
 
         <!-- Horizontal Marquee Track Wrapper with drag-to-scroll & auto-move -->
@@ -123,6 +117,12 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Scroll Controls placed below the project row -->
+        <div class="projects-nav-controls">
+            <button type="button" class="proj-nav-btn prev-btn" id="projPrevBtn" aria-label="Previous Projects" title="Scroll Left"><i class="fas fa-chevron-left"></i></button>
+            <button type="button" class="proj-nav-btn next-btn" id="projNextBtn" aria-label="Next Projects" title="Scroll Right"><i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 </section>
