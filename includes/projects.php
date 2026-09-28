@@ -7,16 +7,19 @@
             <!-- Category Filters -->
             <div class="portfolio-filter">
                 <button class="filter-btn active" data-filter="all"><?php echo t('proj_filter_all'); ?></button>
-                <button class="filter-btn" data-filter="lighting"><?php echo t('proj_filter_lighting'); ?></button>
-                <button class="filter-btn" data-filter="dist"><?php echo t('proj_filter_dist'); ?></button>
                 <button class="filter-btn" data-filter="grid"><?php echo t('proj_filter_grid'); ?></button>
+                <button class="filter-btn" data-filter="dist"><?php echo t('proj_filter_dist'); ?></button>
+                <button class="filter-btn" data-filter="lighting"><?php echo t('proj_filter_lighting'); ?></button>
+                <button class="filter-btn" data-filter="civil"><?php echo t('proj_filter_civil'); ?></button>
+                <button class="filter-btn" data-filter="mep"><?php echo t('proj_filter_mep'); ?></button>
+                <button class="filter-btn" data-filter="oilgas"><?php echo t('proj_filter_oilgas'); ?></button>
             </div>
         </div>
 
         <!-- Horizontal Marquee Track Wrapper -->
         <div class="projects-marquee-wrapper">
             <div class="projects-marquee-track text-left" id="projectsTrack">
-                <!-- Original 6 Project Cards -->
+                <!-- Original 9 Project Cards -->
                 <div class="project-card" data-category="lighting">
                     <div class="project-img-wrapper">
                         <img src="assets/images/street_lighting.jpg" alt="Expressway LED Street Lighting">
@@ -80,6 +83,42 @@
                     <div class="project-content">
                         <h3 class="project-title"><?php echo t('proj_6_title'); ?></h3>
                         <p class="project-desc"><?php echo t('proj_6_desc'); ?></p>
+                    </div>
+                </div>
+
+                <!-- Project 7: Civil Infrastructure -->
+                <div class="project-card" data-category="civil">
+                    <div class="project-img-wrapper">
+                        <img src="assets/images/project_civil_infra.jpg" alt="Civil Infrastructure Development">
+                        <span class="project-cat-tag"><?php echo t('proj_7_cat'); ?></span>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title"><?php echo t('proj_7_title'); ?></h3>
+                        <p class="project-desc"><?php echo t('proj_7_desc'); ?></p>
+                    </div>
+                </div>
+
+                <!-- Project 8: MEP Works -->
+                <div class="project-card" data-category="mep">
+                    <div class="project-img-wrapper">
+                        <img src="assets/images/project_mep.jpg" alt="Commercial & Industrial MEP Works">
+                        <span class="project-cat-tag"><?php echo t('proj_8_cat'); ?></span>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title"><?php echo t('proj_8_title'); ?></h3>
+                        <p class="project-desc"><?php echo t('proj_8_desc'); ?></p>
+                    </div>
+                </div>
+
+                <!-- Project 9: Oil & Gas -->
+                <div class="project-card" data-category="oilgas">
+                    <div class="project-img-wrapper">
+                        <img src="assets/images/project_oilgas.jpg" alt="Oil & Gas Facility Electrical & Instrumentation">
+                        <span class="project-cat-tag"><?php echo t('proj_9_cat'); ?></span>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title"><?php echo t('proj_9_title'); ?></h3>
+                        <p class="project-desc"><?php echo t('proj_9_desc'); ?></p>
                     </div>
                 </div>
 
@@ -147,6 +186,39 @@
                     <div class="project-content">
                         <h3 class="project-title"><?php echo t('proj_6_title'); ?></h3>
                         <p class="project-desc"><?php echo t('proj_6_desc'); ?></p>
+                    </div>
+                </div>
+
+                <div class="project-card clone-card" data-category="civil">
+                    <div class="project-img-wrapper">
+                        <img src="assets/images/project_civil_infra.jpg" alt="Civil Infrastructure Development">
+                        <span class="project-cat-tag"><?php echo t('proj_7_cat'); ?></span>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title"><?php echo t('proj_7_title'); ?></h3>
+                        <p class="project-desc"><?php echo t('proj_7_desc'); ?></p>
+                    </div>
+                </div>
+
+                <div class="project-card clone-card" data-category="mep">
+                    <div class="project-img-wrapper">
+                        <img src="assets/images/project_mep.jpg" alt="Commercial & Industrial MEP Works">
+                        <span class="project-cat-tag"><?php echo t('proj_8_cat'); ?></span>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title"><?php echo t('proj_8_title'); ?></h3>
+                        <p class="project-desc"><?php echo t('proj_8_desc'); ?></p>
+                    </div>
+                </div>
+
+                <div class="project-card clone-card" data-category="oilgas">
+                    <div class="project-img-wrapper">
+                        <img src="assets/images/project_oilgas.jpg" alt="Oil & Gas Facility Electrical & Instrumentation">
+                        <span class="project-cat-tag"><?php echo t('proj_9_cat'); ?></span>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title"><?php echo t('proj_9_title'); ?></h3>
+                        <p class="project-desc"><?php echo t('proj_9_desc'); ?></p>
                     </div>
                 </div>
             </div>

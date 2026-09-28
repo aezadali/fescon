@@ -1415,7 +1415,7 @@ html[dir="rtl"] .services-grid {
   display: flex;
   gap: 1.8rem;
   width: max-content;
-  animation: marqueeContinuous 35s linear infinite;
+  animation: marqueeContinuous 50s linear infinite;
   will-change: transform;
 }
 

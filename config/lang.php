@@ -159,14 +159,17 @@ $translations = [
         'proj_filter_lighting' => 'Street Lighting',
         'proj_filter_dist' => 'Distribution Networks',
         'proj_filter_grid' => 'Grid Stations',
+        'proj_filter_civil' => 'Civil Infrastructure',
+        'proj_filter_mep' => 'MEP Works',
+        'proj_filter_oilgas' => 'Oil & Gas',
         
         'proj_1_title' => 'Expressway LED Street Lighting Project',
         'proj_1_cat' => 'Street Lighting',
         'proj_1_desc' => 'Installation of 12m octagonal lighting poles, energy-efficient LED luminaires, photocell feeder control panels, and 45km underground cables.',
         
-        'proj_2_title' => '33/11kV Primary Grid Station Services',
+        'proj_2_title' => '132kV Primary Grid Station Services',
         'proj_2_cat' => 'Grid Stations',
-        'proj_2_desc' => 'Turnkey engineering services for 2x20MVA primary grid station including GIS switchgear room, power transformers, DC battery systems, and SCADA interface.',
+        'proj_2_desc' => 'Turnkey engineering services for 132kV primary grid station including GIS switchgear room, power transformers, DC battery systems, and SCADA interface.',
         
         'proj_3_title' => 'Urban MV/LV Electrical Distribution Expansion',
         'proj_3_cat' => 'Distribution Networks',
@@ -183,6 +186,18 @@ $translations = [
         'proj_6_title' => 'Industrial Zone Distribution Network & O&M',
         'proj_6_cat' => 'Distribution Networks',
         'proj_6_desc' => 'Complete overhead & underground power distribution network development, feeder management, and 24/7 emergency response maintenance.',
+
+        'proj_7_title' => 'Highway & Roadway Civil Infrastructure Development',
+        'proj_7_cat' => 'Civil Infrastructure',
+        'proj_7_desc' => 'Grading, heavy earthworks, asphalt paving, concrete drainage culverts, and structural foundation development for major expressway corridors.',
+
+        'proj_8_title' => 'Commercial & Industrial Facility MEP Integration',
+        'proj_8_cat' => 'MEP Works',
+        'proj_8_desc' => 'Integrated HVAC central plant, fire alarm and suppression systems, electrical busways, LV switchgear, and sanitary plumbing networks.',
+
+        'proj_9_title' => 'Oil & Gas Facility Electrical & Instrumentation Support',
+        'proj_9_cat' => 'Oil & Gas Sector',
+        'proj_9_desc' => 'High-reliability electrical distribution feeds, process instrumentation, explosion-proof installations, pipeline support foundations, and site sub-stations.',
 
         // Contact Section
         'contact_tag' => 'GET IN TOUCH',
@@ -367,14 +382,17 @@ $translations = [
         'proj_filter_lighting' => 'إنارة الشوارع',
         'proj_filter_dist' => 'شبكات التوزيع',
         'proj_filter_grid' => 'محطات المحولات',
+        'proj_filter_civil' => 'البنية التحتية المدنية',
+        'proj_filter_mep' => 'أعمال الكهروميكانيكية',
+        'proj_filter_oilgas' => 'النفط والغاز',
         
         'proj_1_title' => 'مشروع إنارة الشوارع للطريق السريع',
         'proj_1_cat' => 'إنارة الشوارع',
         'proj_1_desc' => 'تركيب أعمدة إنارة بارتفاع ١٢ متر، كشافات LED موفرة للطاقة، لوحات تغذية وتحكم، ومد ٤٥ كم من كابلات التغذية الأرضية.',
         
-        'proj_2_title' => 'خدمات محطة محولات رئيسية جهد ٣٣/١١ كيلوفولت',
+        'proj_2_title' => 'خدمات محطة محولات رئيسية جهد ١٣٢ كيلوفولت',
         'proj_2_cat' => 'محطات المحولات',
-        'proj_2_desc' => 'تنفيذ خدمات هندسية لمحطة محولات سعة 2x20MVA تشمل مبنى مفاتيح GIS، محولات الطاقة، أنظمة البطاريات، وربط SCADA.',
+        'proj_2_desc' => 'تنفيذ خدمات هندسية لمحطة محولات رئيسية جهد 132kV تشمل مبنى مفاتيح GIS، محولات الطاقة، أنظمة البطاريات، وربط SCADA.',
         
         'proj_3_title' => 'توسعة شبكة التوزيع الكهربائي الجهد المتوسط والمنخفض',
         'proj_3_cat' => 'شبكات التوزيع',
@@ -391,6 +409,18 @@ $translations = [
         'proj_6_title' => 'شبكة توزيع المنطقة الصناعية والصيانة',
         'proj_6_cat' => 'شبكات التوزيع',
         'proj_6_desc' => 'تطوير شبكة توزيع الطاقة الهوائية والأرضية للمنطقة الصناعية، وإدارة المغذيات وصيانة طوارئ على مدار الساعة.',
+
+        'proj_7_title' => 'تطوير البنية التحتية المدنية للطرق السريعة',
+        'proj_7_cat' => 'البنية التحتية المدنية',
+        'proj_7_desc' => 'أعمال تمهيد وتسوية ترابية ثقيلة، سفلتة الطرق، قنوات تصريف مياه الأمطار والجسور الإنشائية لمحاور الطرق السريعة الرئيسية.',
+
+        'proj_8_title' => 'الأعمال الكهروميكانيكية المتكاملة للمنشآت التجارية والصناعية',
+        'proj_8_cat' => 'أعمال الكهروميكانيكية (MEP)',
+        'proj_8_desc' => 'تنفيذ متكامل لمحطات التبريد والتكييف المركزي (HVAC)، أنظمة الإنذار ومكافحة الحرائق، مسارات الكابلات الكهربائية، ولوحات التوزيع وشبكات السباكة.',
+
+        'proj_9_title' => 'دعم الأعمال الكهربائية والتحكم لمنشآت النفط والغاز',
+        'proj_9_cat' => 'قطاع النفط والغاز',
+        'proj_9_desc' => 'تمديد شبكات التغذية الكهربائية عالية الموثوقية، أجهزة القياس والتحكم، تمديدات مقاومة للانفجار، وقواعد الأنابيب ومحطات التشغيل الحقلية.',
 
         // Contact Section
         'contact_tag' => 'تواصل معنا',
