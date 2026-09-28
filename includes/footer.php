@@ -46,7 +46,7 @@
             </div>
 
             <div class="footer-bottom">
-                <div>&copy; <?php echo date('Y'); ?> <?php echo t('footer_rights'); ?></div>
+                <div>&copy; <?php echo date('Y'); ?> <?php echo t('footer_rights'); ?> &bull; <a href="admin/" style="color: inherit; text-decoration: none; opacity: 0.6; font-size: 0.85em;" title="Admin Portal"><i class="fas fa-lock" style="font-size: 0.8em;"></i> Admin</a></div>
                 <div class="text-gold" style="font-weight:700;"><?php echo t('footer_tagline'); ?></div>
             </div>
         </div>

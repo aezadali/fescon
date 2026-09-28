@@ -1,0 +1,122 @@
+[
+    {
+        "id": 1,
+        "category": "lighting",
+        "image": "assets/images/street_lighting.jpg",
+        "en": {
+            "title": "Expressway LED Street Lighting Infrastructure",
+            "category_label": "Street Lighting",
+            "desc": "Installation of 12m octagonal lighting poles, energy-efficient LED luminaires, photocell feeder control panels, and 45km underground cabling."
+        },
+        "ar": {
+            "title": "مشروع إنارة الشوارع للطريق السريع",
+            "category_label": "إنارة الشوارع",
+            "desc": "تركيب أعمدة إنارة بارتفاع ١٢ متر، كشافات LED موفرة للطاقة، لوحات تغذية وتحكم، ومد ٤٥ كم من كابلات التغذية الأرضية."
+        }
+    },
+    {
+        "id": 2,
+        "category": "grid",
+        "image": "assets/images/project_substation.jpg",
+        "en": {
+            "title": "132kV Primary Grid Station Turnkey Services",
+            "category_label": "Grid Stations",
+            "desc": "Turnkey engineering execution for 132kV primary grid station including GIS switchgear rooms, 2x20MVA power transformers, protection relays, and SCADA integration."
+        },
+        "ar": {
+            "title": "خدمات محطة محولات رئيسية جهد ١٣٢ كيلوفولت",
+            "category_label": "محطات المحولات",
+            "desc": "تنفيذ خدمات هندسية لمحطة محولات رئيسية جهد 132kV تشمل مبنى مفاتيح GIS، محولات الطاقة، أنظمة البطاريات، وربط SCADA."
+        }
+    },
+    {
+        "id": 3,
+        "category": "dist",
+        "image": "assets/images/project_distribution.jpg",
+        "en": {
+            "title": "Urban MV/LV Underground Power Distribution",
+            "category_label": "Distribution Networks",
+            "desc": "Laying 11kV XLPE cables, Ring Main Units (RMU), compact package transformer substations, and low-voltage distribution feeder pillars."
+        },
+        "ar": {
+            "title": "تمديد شبكة التوزيع الكهربائي الجهد المتوسط والمنخفض",
+            "category_label": "شبكات التوزيع",
+            "desc": "تمديد كابلات جهد ١١ كيلوفولت، تركيب وحدات RMU، محطات مدمجة سعة 1000kVA، وكبائن توزيع للمنطقة التجارية."
+        }
+    },
+    {
+        "id": 4,
+        "category": "civil",
+        "image": "assets/images/project_civil_infra.jpg",
+        "en": {
+            "title": "Highway & Arterial Road Civil Infrastructure",
+            "category_label": "Civil Infrastructure",
+            "desc": "Heavy earthworks, highway grading, asphalt paving, concrete stormwater culverts, bridges, and municipal roadway infrastructure."
+        },
+        "ar": {
+            "title": "تطوير البنية التحتية المدنية للطرق السريعة",
+            "category_label": "البنية التحتية المدنية",
+            "desc": "أعمال تمهيد وتسوية ترابية ثقيلة، سفلتة الطرق، قنوات تصريف مياه الأمطار والجسور الإنشائية لمحاور الطرق السريعة الرئيسية."
+        }
+    },
+    {
+        "id": 5,
+        "category": "mep",
+        "image": "assets/images/project_mep.jpg",
+        "en": {
+            "title": "Commercial Complex & Facility MEP Integration",
+            "category_label": "MEP Works",
+            "desc": "Complete HVAC central chiller plant, fire suppression systems, electrical busways, LV switchgear, and sanitary plumbing networks."
+        },
+        "ar": {
+            "title": "الأعمال الكهروميكانيكية المتكاملة للمنشآت التجارية والصناعية",
+            "category_label": "أعمال الكهروميكانيكية (MEP)",
+            "desc": "تنفيذ متكامل لمحطات التبريد والتكييف المركزي (HVAC)، أنظمة الإنذار ومكافحة الحرائق، مسارات الكابلات الكهربائية، ولوحات التوزيع وشبكات السباكة."
+        }
+    },
+    {
+        "id": 6,
+        "category": "oilgas",
+        "image": "assets/images/project_oilgas.jpg",
+        "en": {
+            "title": "Oilfield & Refinery Electrical & Instrumentation",
+            "category_label": "Oil & Gas",
+            "desc": "High-reliability electrical power feeds, process instrumentation, explosion-proof installations, pipeline support foundations, and site sub-stations."
+        },
+        "ar": {
+            "title": "دعم الأعمال الكهربائية والتحكم لمنشآت النفط والغاز",
+            "category_label": "قطاع النفط والغاز",
+            "desc": "تمديد شبكات التغذية الكهربائية عالية الموثوقية، أجهزة القياس والتحكم، تمديدات مقاومة للانفجار، وقواعد الأنابيب ومحطات التشغيل الحقلية."
+        }
+    },
+    {
+        "id": 7,
+        "category": "epc",
+        "image": "assets/images/project_transmission_epc.jpg",
+        "en": {
+            "title": "High-Voltage Power Transmission Line EPC",
+            "category_label": "Turnkey EPC",
+            "desc": "Turnkey EPC engineering for high-voltage overhead power transmission lines, lattice towers, stringing, and substation grid interconnections."
+        },
+        "ar": {
+            "title": "مشروع متكامل (EPC) لخطوط نقل الطاقة الهوائية",
+            "category_label": "مشاريع تسليم المفتاح (EPC)",
+            "desc": "تنفيذ متكامل (EPC) لخطوط نقل الطاقة الكهربائية ذات الجهد العالي، الأبراج الفولاذية، شد الكابلات وربط المحطات بالشبكة الرئيسية."
+        }
+    },
+    {
+        "id": 8,
+        "category": "om",
+        "image": "assets/images/project_om_maintenance.jpg",
+        "en": {
+            "title": "Utility Substation & Industrial Plant O&M",
+            "category_label": "Operation & Maintenance",
+            "desc": "24/7 preventive maintenance, FLIR thermographic diagnostic imaging, protection relay calibration, and emergency grid restoration."
+        },
+        "ar": {
+            "title": "تشغيل وصيانة المحطات والمرافق الصناعية",
+            "category_label": "التشغيل والصيانة (O&M)",
+            "desc": "صيانة وقائية على مدار الساعة، فحص وتشخيص حراري بأشعة FLIR، معايرة مرحلات الحماية، واستجابة طارئة لإعادة تشغيل الشبكة."
+        }
+    }
+]
