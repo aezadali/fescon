@@ -1,6 +1,6 @@
 <?php
 /**
- * FESCON Oman - Admin Dashboard (Project CRUD Management)
+ * FESCON Oman - Admin Dashboard (Project & Category CRUD Management)
  */
 require_once __DIR__ . '/auth.php';
 requireAdminLogin();
@@ -9,7 +9,7 @@ requireAdminLogin();
 header('Content-Type: text/html; charset=UTF-8');
 
 $projects = loadProjects();
-$categories = getStandardCategories();
+$categories = loadCategories();
 $csrfToken = getCsrfToken();
 
 $message = $_SESSION['flash_message'] ?? '';
@@ -28,7 +28,7 @@ if (is_dir($assetsImgDir)) {
     }
 }
 
-// Handle POST actions (Create, Update, Delete, Reorder)
+// Handle POST actions (Projects & Categories CRUD)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     $token = $_POST['csrf_token'] ?? '';
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Helper for image handling
+    // Helper for project image upload/selection
     $handleImageUpload = function($currentImage = '') use ($assetsImgDir) {
         if (!empty($_FILES['image_file']['name']) && $_FILES['image_file']['error'] === UPLOAD_ERR_OK) {
             $tmpName = $_FILES['image_file']['tmp_name'];
@@ -70,7 +70,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         return ['path' => !empty($currentImage) ? $currentImage : 'assets/images/project_civil_infra.jpg'];
     };
 
-    // 1. CREATE ACTION
+    // ==========================================
+    // PROJECTS CRUD
+    // ==========================================
+
+    // 1. CREATE PROJECT
     if ($action === 'create') {
         $category = trim($_POST['category'] ?? 'civil');
         $enTitle = trim($_POST['en_title'] ?? '');
@@ -80,7 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $arCatLabel = trim($_POST['ar_cat_label'] ?? '');
         $arDesc = trim($_POST['ar_desc'] ?? '');
 
-        // Validation: At least one title must be present
         if (empty($enTitle) && empty($arTitle)) {
             $_SESSION['flash_message'] = 'Please enter a project title (English or Arabic). / يرجى إدخال عنوان المشروع';
             $_SESSION['flash_type'] = 'error';
@@ -88,7 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // Automatic cross-fill if one language is provided
         if (empty($enTitle)) {
             $enTitle = $arTitle;
         }
@@ -103,7 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $arDesc = $enDesc;
         }
 
-        // Category label fallbacks
         if (empty($enCatLabel) && isset($categories[$category])) {
             $enCatLabel = $categories[$category]['en'];
         }
@@ -119,7 +120,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // Find max ID
         $maxId = 0;
         foreach ($projects as $p) {
             if (isset($p['id']) && (int)$p['id'] > $maxId) {
@@ -153,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // 2. UPDATE ACTION
+    // 2. UPDATE PROJECT
     elseif ($action === 'update') {
         $id = (int)($_POST['id'] ?? 0);
         $foundIndex = -1;
@@ -228,15 +228,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // 3. DELETE ACTION
+    // 3. DELETE PROJECT
     elseif ($action === 'delete') {
         $id = (int)($_POST['id'] ?? 0);
         $newProjects = [];
-        $deletedTitle = '';
 
         foreach ($projects as $p) {
             if (isset($p['id']) && (int)$p['id'] === $id) {
-                $deletedTitle = $p['ar']['title'] ?? $p['en']['title'] ?? ('Project #' . $id);
                 continue;
             }
             $newProjects[] = $p;
@@ -249,7 +247,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // 4. REORDER (MOVE UP / DOWN)
+    // 4. REORDER PROJECT
     elseif ($action === 'move') {
         $id = (int)($_POST['id'] ?? 0);
         $direction = $_POST['direction'] ?? 'up';
@@ -276,6 +274,137 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: index.php');
         exit;
     }
+
+    // ==========================================
+    // CATEGORIES CRUD
+    // ==========================================
+
+    // 5. CREATE CATEGORY
+    elseif ($action === 'create_category') {
+        $rawKey = trim($_POST['cat_key'] ?? '');
+        $catKey = preg_replace('/[^a-z0-9_\-]/', '', strtolower($rawKey));
+        $catEn = trim($_POST['cat_en'] ?? '');
+        $catAr = trim($_POST['cat_ar'] ?? '');
+        $catColor = trim($_POST['cat_color'] ?? '#3b82f6');
+
+        if (empty($catKey)) {
+            $_SESSION['flash_message'] = 'Category key/code is required (letters and numbers only).';
+            $_SESSION['flash_type'] = 'error';
+            header('Location: index.php?manage_cats=1');
+            exit;
+        }
+
+        if (isset($categories[$catKey])) {
+            $_SESSION['flash_message'] = 'Category code "' . htmlspecialchars($catKey) . '" already exists.';
+            $_SESSION['flash_type'] = 'error';
+            header('Location: index.php?manage_cats=1');
+            exit;
+        }
+
+        if (empty($catEn) && empty($catAr)) {
+            $_SESSION['flash_message'] = 'Please enter category name in English or Arabic.';
+            $_SESSION['flash_type'] = 'error';
+            header('Location: index.php?manage_cats=1');
+            exit;
+        }
+
+        if (empty($catEn)) $catEn = $catAr;
+        if (empty($catAr)) $catAr = $catEn;
+        if (empty($catColor)) $catColor = '#3b82f6';
+
+        $categories[$catKey] = [
+            'en' => $catEn,
+            'ar' => $catAr,
+            'color' => $catColor
+        ];
+
+        saveCategories($categories);
+        $_SESSION['flash_message'] = 'New category "' . htmlspecialchars($catEn) . '" created successfully!';
+        $_SESSION['flash_type'] = 'success';
+        header('Location: index.php?manage_cats=1');
+        exit;
+    }
+
+    // 6. UPDATE CATEGORY
+    elseif ($action === 'update_category') {
+        $catKey = trim($_POST['cat_key'] ?? '');
+        $catEn = trim($_POST['cat_en'] ?? '');
+        $catAr = trim($_POST['cat_ar'] ?? '');
+        $catColor = trim($_POST['cat_color'] ?? '#3b82f6');
+
+        if (!isset($categories[$catKey])) {
+            $_SESSION['flash_message'] = 'Category not found.';
+            $_SESSION['flash_type'] = 'error';
+            header('Location: index.php?manage_cats=1');
+            exit;
+        }
+
+        if (empty($catEn) && empty($catAr)) {
+            $_SESSION['flash_message'] = 'Please enter category name in English or Arabic.';
+            $_SESSION['flash_type'] = 'error';
+            header('Location: index.php?manage_cats=1');
+            exit;
+        }
+
+        if (empty($catEn)) $catEn = $catAr;
+        if (empty($catAr)) $catAr = $catEn;
+        if (empty($catColor)) $catColor = '#3b82f6';
+
+        $categories[$catKey] = [
+            'en' => $catEn,
+            'ar' => $catAr,
+            'color' => $catColor
+        ];
+
+        saveCategories($categories);
+        $_SESSION['flash_message'] = 'Category "' . htmlspecialchars($catEn) . '" updated successfully!';
+        $_SESSION['flash_type'] = 'success';
+        header('Location: index.php?manage_cats=1');
+        exit;
+    }
+
+    // 7. DELETE CATEGORY
+    elseif ($action === 'delete_category') {
+        $catKey = trim($_POST['cat_key'] ?? '');
+
+        if (!isset($categories[$catKey])) {
+            $_SESSION['flash_message'] = 'Category not found.';
+            $_SESSION['flash_type'] = 'error';
+            header('Location: index.php?manage_cats=1');
+            exit;
+        }
+
+        // Reassign any projects using this category to another valid category
+        $otherKeys = array_keys($categories);
+        $fallbackKey = 'general';
+        foreach ($otherKeys as $k) {
+            if ($k !== $catKey) {
+                $fallbackKey = $k;
+                break;
+            }
+        }
+
+        $projectsUpdated = false;
+        foreach ($projects as $idx => $p) {
+            if (($p['category'] ?? '') === $catKey) {
+                $projects[$idx]['category'] = $fallbackKey;
+                $projectsUpdated = true;
+            }
+        }
+
+        if ($projectsUpdated) {
+            saveProjects($projects);
+        }
+
+        $delName = $categories[$catKey]['en'] ?? $catKey;
+        unset($categories[$catKey]);
+        saveCategories($categories);
+
+        $_SESSION['flash_message'] = 'Category "' . htmlspecialchars($delName) . '" deleted successfully.';
+        $_SESSION['flash_type'] = 'success';
+        header('Location: index.php?manage_cats=1');
+        exit;
+    }
 }
 
 // Calculate stats
@@ -291,7 +420,7 @@ foreach ($projects as $p) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects Dashboard - FESCON Oman Administration</title>
+    <title>Projects & Categories Dashboard - FESCON Oman Administration</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -550,12 +679,13 @@ foreach ($projects as $p) {
             gap: 1rem;
             flex: 1;
             min-width: 280px;
+            flex-wrap: wrap;
         }
 
         .search-box {
             position: relative;
             width: 100%;
-            max-width: 380px;
+            max-width: 320px;
         }
 
         .search-box input {
@@ -618,13 +748,42 @@ foreach ($projects as $p) {
             border-color: var(--accent-gold);
         }
 
+        .toolbar-right-btns {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-manage-cats {
+            background: rgba(197, 160, 89, 0.12);
+            color: var(--accent-gold-light);
+            border: 1px solid var(--border-gold);
+            padding: 0.65rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.25s;
+            white-space: nowrap;
+        }
+
+        .btn-manage-cats:hover {
+            background: var(--accent-gold);
+            color: #08121f;
+            transform: translateY(-1px);
+        }
+
         .btn-add-project {
             background: linear-gradient(135deg, var(--accent-gold) 0%, #aa853c 100%);
             color: #08121f;
             border: none;
-            padding: 0.7rem 1.4rem;
+            padding: 0.65rem 1.35rem;
             border-radius: 8px;
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             font-weight: 700;
             display: inline-flex;
             align-items: center;
@@ -818,15 +977,17 @@ foreach ($projects as $p) {
             color: #ffffff;
         }
 
-        /* Modal Styles */
+        /* =========================================
+           MODAL STYLES (Fixed scrollability)
+           ========================================= */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(6px);
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(8px);
             z-index: 1000;
             display: flex;
             align-items: center;
@@ -834,7 +995,8 @@ foreach ($projects as $p) {
             padding: 1.5rem;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+            overflow-y: auto;
         }
 
         .modal-overlay.active {
@@ -848,17 +1010,26 @@ foreach ($projects as $p) {
             border-radius: 16px;
             width: 100%;
             max-width: 820px;
-            max-height: 90vh;
+            max-height: 88vh;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+            transform: scale(0.96);
+            transition: transform 0.25s ease;
+            overflow: hidden; /* Header and Footer are fixed, Body scrolls */
         }
 
         .modal-overlay.active .modal-card {
             transform: scale(1);
+        }
+
+        /* Critical: form must be a flex container that shares height */
+        .modal-card form {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow: hidden;
         }
 
         .modal-header {
@@ -867,7 +1038,8 @@ foreach ($projects as $p) {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(11, 25, 44, 0.6);
+            background: rgba(11, 25, 44, 0.7);
+            flex-shrink: 0;
         }
 
         .modal-header h3 {
@@ -887,7 +1059,7 @@ foreach ($projects as $p) {
             background: none;
             border: none;
             color: var(--text-muted);
-            font-size: 1.25rem;
+            font-size: 1.35rem;
             cursor: pointer;
             padding: 0.25rem;
             line-height: 1;
@@ -899,19 +1071,35 @@ foreach ($projects as $p) {
         }
 
         .modal-body {
-            padding: 1.75rem;
-            overflow-y: auto;
-            flex: 1;
+            padding: 1.5rem 1.75rem;
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch;
+            flex: 1 1 auto;
+            min-height: 0;
+        }
+
+        /* Custom scrollbar for modal-body */
+        .modal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+        .modal-body::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+        .modal-body::-webkit-scrollbar-thumb {
+            background: var(--accent-gold);
+            border-radius: 4px;
         }
 
         .modal-footer {
-            padding: 1.25rem 1.75rem;
+            padding: 1.1rem 1.75rem;
             border-top: 1px solid var(--border-color);
-            background: rgba(11, 25, 44, 0.6);
+            background: rgba(11, 25, 44, 0.7);
             display: flex;
             align-items: center;
             justify-content: flex-end;
             gap: 1rem;
+            flex-shrink: 0;
         }
 
         /* Language Tabs inside Modal */
@@ -1029,15 +1217,15 @@ foreach ($projects as $p) {
             align-items: center;
             gap: 1rem;
             margin-top: 0.5rem;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.25);
             padding: 0.75rem;
             border-radius: 8px;
             border: 1px dashed var(--border-color);
         }
 
         .img-preview-box img {
-            width: 70px;
-            height: 50px;
+            width: 75px;
+            height: 52px;
             object-fit: cover;
             border-radius: 6px;
             border: 1px solid var(--border-color);
@@ -1131,6 +1319,44 @@ foreach ($projects as $p) {
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
         }
 
+        /* Categories Table & Badges inside Modal */
+        .cats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .cats-table th {
+            background: rgba(11, 25, 44, 0.6);
+            padding: 0.75rem 1rem;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .cats-table td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.88rem;
+            vertical-align: middle;
+        }
+
+        .cats-table tr:hover td {
+            background: var(--bg-hover);
+        }
+
+        .cat-color-dot {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+
         /* Responsive */
         @media (max-width: 900px) {
             .form-grid {
@@ -1162,7 +1388,7 @@ foreach ($projects as $p) {
             </div>
             <div class="nav-title-group">
                 <h1>FESCON <span>CONTROL</span></h1>
-                <p>Project Portfolio Management</p>
+                <p>Project & Category Management</p>
             </div>
         </a>
 
@@ -1188,7 +1414,7 @@ foreach ($projects as $p) {
                     <i class="fas <?php echo ($messageType === 'success') ? 'fa-check-circle' : 'fa-exclamation-circle'; ?>" style="margin-right: 8px;"></i>
                     <?php echo htmlspecialchars($message); ?>
                 </span>
-                <button type="button" onclick="document.getElementById('flashToast').remove();" style="background: none; border: none; color: inherit; cursor: pointer; font-size: 1rem;">&times;</button>
+                <button type="button" onclick="document.getElementById('flashToast').remove();" style="background: none; border: none; color: inherit; cursor: pointer; font-size: 1.1rem;">&times;</button>
             </div>
         <?php endif; ?>
 
@@ -1205,6 +1431,16 @@ foreach ($projects as $p) {
             </div>
 
             <div class="stat-card">
+                <div class="stat-icon" style="background: rgba(197, 160, 89, 0.15); color: var(--accent-gold);">
+                    <i class="fas fa-tags"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-label">Active Categories</div>
+                    <div class="stat-val"><?php echo count($categories); ?></div>
+                </div>
+            </div>
+
+            <div class="stat-card">
                 <div class="stat-icon" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa;">
                     <i class="fas fa-bolt"></i>
                 </div>
@@ -1215,22 +1451,12 @@ foreach ($projects as $p) {
             </div>
 
             <div class="stat-card">
-                <div class="stat-icon" style="background: rgba(234, 88, 12, 0.15); color: #fb923c;">
+                <div class="stat-icon" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">
                     <i class="fas fa-road"></i>
                 </div>
                 <div class="stat-content">
-                    <div class="stat-label">Civil & Lighting</div>
-                    <div class="stat-val"><?php echo ($categoryCounts['civil'] ?? 0) + ($categoryCounts['lighting'] ?? 0); ?></div>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">
-                    <i class="fas fa-tools"></i>
-                </div>
-                <div class="stat-content">
-                    <div class="stat-label">MEP, EPC & Oil/Gas</div>
-                    <div class="stat-val"><?php echo ($categoryCounts['mep'] ?? 0) + ($categoryCounts['epc'] ?? 0) + ($categoryCounts['oilgas'] ?? 0) + ($categoryCounts['om'] ?? 0); ?></div>
+                    <div class="stat-label">Civil & Infrastructure</div>
+                    <div class="stat-val"><?php echo ($categoryCounts['civil'] ?? 0) + ($categoryCounts['lighting'] ?? 0) + ($categoryCounts['mep'] ?? 0); ?></div>
                 </div>
             </div>
         </div>
@@ -1246,17 +1472,23 @@ foreach ($projects as $p) {
                 <div class="filter-pills">
                     <button class="pill-btn active" data-filter="all">All (<?php echo $totalProjects; ?>)</button>
                     <?php foreach ($categories as $catKey => $catInfo): ?>
-                        <button class="pill-btn" data-filter="<?php echo $catKey; ?>">
+                        <button class="pill-btn" data-filter="<?php echo htmlspecialchars($catKey); ?>">
                             <?php echo htmlspecialchars($catInfo['en']); ?> (<?php echo $categoryCounts[$catKey] ?? 0; ?>)
                         </button>
                     <?php endforeach; ?>
                 </div>
             </div>
 
-            <button type="button" class="btn-add-project" id="openAddModalBtn">
-                <i class="fas fa-plus-circle"></i>
-                <span>Add New Project</span>
-            </button>
+            <div class="toolbar-right-btns">
+                <button type="button" class="btn-manage-cats" id="openCategoriesModalBtn">
+                    <i class="fas fa-tags"></i>
+                    <span>Manage Categories (<?php echo count($categories); ?>)</span>
+                </button>
+                <button type="button" class="btn-add-project" id="openAddModalBtn">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Add New Project</span>
+                </button>
+            </div>
         </div>
 
         <!-- Projects Data Table -->
@@ -1369,7 +1601,9 @@ foreach ($projects as $p) {
 
     </main>
 
-    <!-- ADD PROJECT MODAL -->
+    <!-- ==========================================
+         ADD PROJECT MODAL
+         ========================================== -->
     <div class="modal-overlay" id="addProjectModal">
         <div class="modal-card">
             <div class="modal-header">
@@ -1386,7 +1620,9 @@ foreach ($projects as $p) {
                         <label class="modal-form-label">Category / تصنيف المشروع *</label>
                         <select name="category" class="modal-form-control" required id="addCategorySelect" onchange="autoFillCategoryLabels('add')">
                             <?php foreach ($categories as $catKey => $catInfo): ?>
-                                <option value="<?php echo $catKey; ?>"><?php echo htmlspecialchars($catInfo['en']); ?> (<?php echo htmlspecialchars($catInfo['ar']); ?>)</option>
+                                <option value="<?php echo htmlspecialchars($catKey); ?>">
+                                    <?php echo htmlspecialchars($catInfo['en']); ?> (<?php echo htmlspecialchars($catInfo['ar']); ?>)
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -1468,7 +1704,9 @@ foreach ($projects as $p) {
         </div>
     </div>
 
-    <!-- EDIT PROJECT MODAL -->
+    <!-- ==========================================
+         EDIT PROJECT MODAL
+         ========================================== -->
     <div class="modal-overlay" id="editProjectModal">
         <div class="modal-card">
             <div class="modal-header">
@@ -1486,7 +1724,9 @@ foreach ($projects as $p) {
                         <label class="modal-form-label">Category / تصنيف المشروع *</label>
                         <select name="category" class="modal-form-control" required id="edit_category">
                             <?php foreach ($categories as $catKey => $catInfo): ?>
-                                <option value="<?php echo $catKey; ?>"><?php echo htmlspecialchars($catInfo['en']); ?> (<?php echo htmlspecialchars($catInfo['ar']); ?>)</option>
+                                <option value="<?php echo htmlspecialchars($catKey); ?>">
+                                    <?php echo htmlspecialchars($catInfo['en']); ?> (<?php echo htmlspecialchars($catInfo['ar']); ?>)
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -1579,7 +1819,148 @@ foreach ($projects as $p) {
         </div>
     </div>
 
-    <!-- DELETE CONFIRMATION MODAL -->
+    <!-- ==========================================
+         MANAGE CATEGORIES MODAL (Category CRUD)
+         ========================================== -->
+    <div class="modal-overlay" id="categoriesModal">
+        <div class="modal-card" style="max-width: 860px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-tags"></i> Manage Project Categories / إدارة التصنيفات</h3>
+                <button type="button" class="btn-close-modal" onclick="closeModal('categoriesModal')">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Add New Category Form Box -->
+                <div style="background: rgba(8, 18, 30, 0.6); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+                    <div class="form-section-title" id="catFormTitle">
+                        <i class="fas fa-plus-circle"></i> Add New Category / إضافة تصنيف جديد
+                    </div>
+
+                    <form method="POST" action="index.php" accept-charset="UTF-8" id="categoryForm">
+                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
+                        <input type="hidden" name="action" id="cat_action" value="create_category">
+
+                        <div class="form-grid">
+                            <div class="modal-form-group">
+                                <label class="modal-form-label">Category Code / Key * (e.g. solar, marine)</label>
+                                <input type="text" name="cat_key" id="cat_key_input" class="modal-form-control" placeholder="e.g. solar" required pattern="[a-zA-Z0-9_\-]+" title="Letters, numbers and hyphens only">
+                            </div>
+
+                            <div class="modal-form-group">
+                                <label class="modal-form-label">Badge Color *</label>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <input type="color" name="cat_color" id="cat_color_input" value="#3b82f6" style="width: 44px; height: 38px; border: none; border-radius: 6px; cursor: pointer; background: transparent;">
+                                    <input type="text" id="cat_color_hex" class="modal-form-control" value="#3b82f6" style="width: 110px;" oninput="document.getElementById('cat_color_input').value = this.value">
+                                </div>
+                            </div>
+
+                            <div class="modal-form-group">
+                                <label class="modal-form-label">English Name *</label>
+                                <input type="text" name="cat_en" id="cat_en_input" class="modal-form-control" placeholder="e.g. Solar Power Systems" required>
+                            </div>
+
+                            <div class="modal-form-group">
+                                <label class="modal-form-label">الاسم بالعربية (Arabic Name) *</label>
+                                <input type="text" name="cat_ar" id="cat_ar_input" class="modal-form-control rtl-input" placeholder="مثال: أنظمة الطاقة الشمسية" required>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 0.5rem;">
+                            <button type="button" class="btn-cancel" id="cancelCatEditBtn" style="display: none;" onclick="resetCategoryForm()">Cancel Edit</button>
+                            <button type="submit" class="btn-save" id="saveCatBtn"><i class="fas fa-save"></i> Save Category</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Existing Categories Table -->
+                <div class="form-section-title">
+                    <i class="fas fa-list"></i> Existing Categories (<?php echo count($categories); ?>)
+                </div>
+
+                <table class="cats-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 140px;">Badge & Color</th>
+                            <th>Code</th>
+                            <th>English Name</th>
+                            <th>Arabic Name</th>
+                            <th style="width: 80px; text-align: center;">Projects</th>
+                            <th style="width: 140px; text-align: right;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($categories as $cKey => $cInfo): 
+                            $pCount = $categoryCounts[$cKey] ?? 0;
+                        ?>
+                            <tr>
+                                <td>
+                                    <span class="cat-badge" style="background: <?php echo htmlspecialchars($cInfo['color']); ?>22; color: <?php echo htmlspecialchars($cInfo['color']); ?>; border: 1px solid <?php echo htmlspecialchars($cInfo['color']); ?>66;">
+                                        <span class="cat-color-dot" style="background: <?php echo htmlspecialchars($cInfo['color']); ?>;"></span>
+                                        <?php echo htmlspecialchars($cInfo['en']); ?>
+                                    </span>
+                                </td>
+                                <td><code><?php echo htmlspecialchars($cKey); ?></code></td>
+                                <td style="font-weight: 600; color: #ffffff;"><?php echo htmlspecialchars($cInfo['en']); ?></td>
+                                <td class="rtl-input" style="font-weight: 600; color: #94a3b8;"><?php echo htmlspecialchars($cInfo['ar']); ?></td>
+                                <td style="text-align: center;">
+                                    <span style="background: rgba(255,255,255,0.06); padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.78rem; font-weight: 700;">
+                                        <?php echo $pCount; ?>
+                                    </span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <div class="action-btns" style="justify-content: flex-end;">
+                                        <button type="button" class="btn-action btn-edit" title="Edit Category" onclick='editCategory(<?php echo json_encode($cKey); ?>, <?php echo json_encode($cInfo['en']); ?>, <?php echo json_encode($cInfo['ar']); ?>, <?php echo json_encode($cInfo['color']); ?>)'>
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn-action btn-delete" title="Delete Category" onclick="confirmDeleteCategory('<?php echo htmlspecialchars(addslashes($cKey)); ?>', '<?php echo htmlspecialchars(addslashes($cInfo['en'])); ?>', <?php echo $pCount; ?>)">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" onclick="closeModal('categoriesModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         DELETE CATEGORY CONFIRMATION MODAL
+         ========================================== -->
+    <div class="modal-overlay" id="deleteCategoryModal">
+        <div class="modal-card" style="max-width: 480px;">
+            <div class="modal-header" style="background: rgba(239, 68, 68, 0.1);">
+                <h3 style="color: #fca5a5;"><i class="fas fa-exclamation-triangle" style="color: #ef4444;"></i> Delete Category</h3>
+                <button type="button" class="btn-close-modal" onclick="closeModal('deleteCategoryModal')">&times;</button>
+            </div>
+            <form method="POST" action="index.php">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
+                <input type="hidden" name="action" value="delete_category">
+                <input type="hidden" name="cat_key" id="delete_cat_key" value="">
+
+                <div class="modal-body" style="padding: 1.5rem; text-align: center;">
+                    <i class="fas fa-trash-alt" style="font-size: 2.8rem; color: #ef4444; margin-bottom: 1rem; opacity: 0.85;"></i>
+                    <p style="font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; color: #ffffff;">Are you sure you want to delete this category?</p>
+                    <p id="delete_cat_name" style="color: var(--accent-gold); font-size: 1rem; font-weight: 700; margin-bottom: 1rem;"></p>
+                    <p id="delete_cat_warning" style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.4;"></p>
+                </div>
+
+                <div class="modal-footer" style="justify-content: center; gap: 1rem;">
+                    <button type="button" class="btn-cancel" onclick="closeModal('deleteCategoryModal')">Cancel</button>
+                    <button type="submit" class="btn-confirm-delete"><i class="fas fa-trash-alt"></i> Yes, Delete Category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         DELETE PROJECT CONFIRMATION MODAL
+         ========================================== -->
     <div class="modal-overlay" id="deleteProjectModal">
         <div class="modal-card" style="max-width: 480px;">
             <div class="modal-header" style="background: rgba(239, 68, 68, 0.1);">
@@ -1627,26 +2008,89 @@ foreach ($projects as $p) {
 
         // Switch Language Tabs inside Modals
         function switchLangTab(prefix, lang) {
-            const tabs = document.querySelectorAll('#' + prefix + 'ProjectModal .modal-tab-btn');
+            const modalEl = document.getElementById(prefix + 'ProjectModal');
+            const tabs = modalEl.querySelectorAll('.modal-tab-btn');
             tabs.forEach(t => t.classList.remove('active'));
 
-            const panels = document.querySelectorAll('#' + prefix + 'ProjectModal .tab-content-panel');
+            const panels = modalEl.querySelectorAll('.tab-content-panel');
             panels.forEach(p => p.classList.remove('active'));
 
-            const activeBtn = event.currentTarget;
-            if (activeBtn) activeBtn.classList.add('active');
+            event.currentTarget.classList.add('active');
 
             const activePanel = document.getElementById(prefix + '_tab_' + lang);
             if (activePanel) activePanel.classList.add('active');
         }
 
-        // Add modal trigger
+        // Add Project modal trigger
         document.getElementById('openAddModalBtn').addEventListener('click', () => {
             autoFillCategoryLabels('add');
             openModal('addProjectModal');
         });
 
-        // Autofill labels based on category
+        // Manage Categories modal trigger
+        document.getElementById('openCategoriesModalBtn').addEventListener('click', () => {
+            openModal('categoriesModal');
+        });
+
+        // Check if URL has ?manage_cats=1
+        if (window.location.search.includes('manage_cats=1')) {
+            openModal('categoriesModal');
+        }
+
+        // Sync color picker with hex input
+        document.getElementById('cat_color_input').addEventListener('input', function() {
+            document.getElementById('cat_color_hex').value = this.value;
+        });
+
+        // Category Edit Setup
+        function editCategory(key, en, ar, color) {
+            document.getElementById('catFormTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Category: <code>' + key + '</code>';
+            document.getElementById('cat_action').value = 'update_category';
+            const keyInput = document.getElementById('cat_key_input');
+            keyInput.value = key;
+            keyInput.readOnly = true;
+            keyInput.style.opacity = '0.6';
+            document.getElementById('cat_en_input').value = en;
+            document.getElementById('cat_ar_input').value = ar;
+            document.getElementById('cat_color_input').value = color || '#3b82f6';
+            document.getElementById('cat_color_hex').value = color || '#3b82f6';
+            document.getElementById('cancelCatEditBtn').style.display = 'inline-flex';
+            document.getElementById('saveCatBtn').innerHTML = '<i class="fas fa-check"></i> Update Category';
+            
+            // Scroll to form inside modal
+            document.querySelector('#categoriesModal .modal-body').scrollTop = 0;
+        }
+
+        // Reset Category Form
+        function resetCategoryForm() {
+            document.getElementById('catFormTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Add New Category / إضافة تصنيف جديد';
+            document.getElementById('cat_action').value = 'create_category';
+            const keyInput = document.getElementById('cat_key_input');
+            keyInput.value = '';
+            keyInput.readOnly = false;
+            keyInput.style.opacity = '1';
+            document.getElementById('cat_en_input').value = '';
+            document.getElementById('cat_ar_input').value = '';
+            document.getElementById('cat_color_input').value = '#3b82f6';
+            document.getElementById('cat_color_hex').value = '#3b82f6';
+            document.getElementById('cancelCatEditBtn').style.display = 'none';
+            document.getElementById('saveCatBtn').innerHTML = '<i class="fas fa-save"></i> Save Category';
+        }
+
+        // Confirm Delete Category
+        function confirmDeleteCategory(key, name, count) {
+            document.getElementById('delete_cat_key').value = key;
+            document.getElementById('delete_cat_name').textContent = name + ' (' + key + ')';
+            
+            let warningText = 'This category will be permanently removed.';
+            if (count > 0) {
+                warningText = 'Notice: ' + count + ' project(s) currently use this category. If deleted, those projects will be safely reassigned so they remain visible.';
+            }
+            document.getElementById('delete_cat_warning').textContent = warningText;
+            openModal('deleteCategoryModal');
+        }
+
+        // Autofill labels based on category in Add/Edit Project modals
         function autoFillCategoryLabels(prefix) {
             const catSelect = document.getElementById(prefix === 'add' ? 'addCategorySelect' : 'edit_category');
             const enLabel = document.getElementById(prefix + '_en_cat_label');
@@ -1661,7 +2105,7 @@ foreach ($projects as $p) {
             }
         }
 
-        // Validate form has at least one title before submission
+        // Validate project form has at least one title before submission
         function validateProjectForm(prefix) {
             const arTitle = document.getElementById(prefix + '_ar_title').value.trim();
             const enTitle = document.getElementById(prefix + '_en_title').value.trim();
@@ -1672,7 +2116,7 @@ foreach ($projects as $p) {
             return true;
         }
 
-        // Edit Modal Setup using ID lookup from allProjectsData
+        // Edit Project Modal Setup using ID lookup from allProjectsData
         function openEditModal(id) {
             const project = allProjectsData.find(p => parseInt(p.id) === parseInt(id));
             if (!project) return;
@@ -1698,7 +2142,7 @@ foreach ($projects as $p) {
             openModal('editProjectModal');
         }
 
-        // Delete Modal Setup using ID lookup
+        // Delete Project Modal Setup using ID lookup
         function openDeleteModal(id) {
             const project = allProjectsData.find(p => parseInt(p.id) === parseInt(id));
             const title = project ? ((project.ar && project.ar.title) ? project.ar.title : (project.en && project.en.title ? project.en.title : 'Project #' + id)) : ('Project #' + id);

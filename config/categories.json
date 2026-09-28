@@ -1,0 +1,42 @@
+{
+    "grid": {
+        "en": "Grid Stations",
+        "ar": "محطات المحولات",
+        "color": "#1e40af"
+    },
+    "dist": {
+        "en": "Distribution Networks",
+        "ar": "شبكات التوزيع",
+        "color": "#7c3aed"
+    },
+    "lighting": {
+        "en": "Street Lighting",
+        "ar": "إنارة الشوارع",
+        "color": "#d97706"
+    },
+    "civil": {
+        "en": "Civil Infrastructure",
+        "ar": "البنية التحتية المدنية",
+        "color": "#ea580c"
+    },
+    "mep": {
+        "en": "MEP Works",
+        "ar": "الأعمال الكهروميكانيكية",
+        "color": "#0d9488"
+    },
+    "oilgas": {
+        "en": "Oil & Gas",
+        "ar": "النفط والغاز",
+        "color": "#dc2626"
+    },
+    "epc": {
+        "en": "Turnkey EPC",
+        "ar": "مشاريع تسليم المفتاح EPC",
+        "color": "#059669"
+    },
+    "om": {
+        "en": "Operation & Maintenance",
+        "ar": "التشغيل والصيانة",
+        "color": "#4f46e5"
+    }
+}

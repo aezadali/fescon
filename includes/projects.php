@@ -9,7 +9,16 @@ if (file_exists($projectsJsonFile)) {
     }
 }
 
-// Category translation labels map
+// Category translation labels map with dynamic categories.json support
+$categoriesJsonFile = __DIR__ . '/../config/categories.json';
+$categoryStore = [];
+if (file_exists($categoriesJsonFile)) {
+    $rawCats = json_decode(file_get_contents($categoriesJsonFile), true);
+    if (is_array($rawCats)) {
+        $categoryStore = $rawCats;
+    }
+}
+
 $categoryMap = [
     'grid' => t('proj_filter_grid'),
     'dist' => t('proj_filter_dist'),
@@ -20,6 +29,15 @@ $categoryMap = [
     'epc' => t('proj_filter_epc'),
     'om' => t('proj_filter_om'),
 ];
+
+// Merge custom or updated categories from store
+foreach ($categoryStore as $cKey => $cVal) {
+    if (!empty($cVal[$lang])) {
+        $categoryMap[$cKey] = $cVal[$lang];
+    } elseif (!empty($cVal['en'])) {
+        $categoryMap[$cKey] = $cVal['en'];
+    }
+}
 
 // Determine active categories for filters
 $activeCategories = [];

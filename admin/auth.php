@@ -13,11 +13,12 @@ if (function_exists('mb_internal_encoding')) {
     mb_internal_encoding('UTF-8');
 }
 
-// Admin Credentials - Only one password: fescon@2026
+// Admin Credentials - Strictly fescon@2026
 define('ADMIN_USER', 'admin');
 define('ADMIN_PASS', 'fescon@2026');
 
 define('PROJECTS_JSON_PATH', dirname(__DIR__) . '/config/projects.json');
+define('CATEGORIES_JSON_PATH', dirname(__DIR__) . '/config/categories.json');
 define('IMAGES_UPLOAD_DIR', dirname(__DIR__) . '/assets/images/');
 
 /**
@@ -62,41 +63,9 @@ function verifyCsrfToken(?string $token): bool {
 }
 
 /**
- * Load all projects from JSON file
+ * Default categories
  */
-function loadProjects(): array {
-    $filePath = PROJECTS_JSON_PATH;
-    if (!file_exists($filePath)) {
-        return [];
-    }
-    $raw = file_get_contents($filePath);
-    $data = json_decode($raw, true);
-    return is_array($data) ? $data : [];
-}
-
-/**
- * Save all projects to JSON file with automatic backup
- */
-function saveProjects(array $projects): bool {
-    $filePath = PROJECTS_JSON_PATH;
-    $dir = dirname($filePath);
-    if (!is_dir($dir)) {
-        mkdir($dir, 0755, true);
-    }
-    
-    // Create backup if existing
-    if (file_exists($filePath)) {
-        @copy($filePath, $filePath . '.bak');
-    }
-    
-    $json = json_encode(array_values($projects), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    return (file_put_contents($filePath, $json, LOCK_EX) !== false);
-}
-
-/**
- * Get standard categories list with display labels
- */
-function getStandardCategories(): array {
+function getDefaultCategories(): array {
     return [
         'grid' => [
             'en' => 'Grid Stations',
@@ -139,4 +108,76 @@ function getStandardCategories(): array {
             'color' => '#4f46e5'
         ]
     ];
+}
+
+/**
+ * Load categories from JSON file, initialize with defaults if missing
+ */
+function loadCategories(): array {
+    $filePath = CATEGORIES_JSON_PATH;
+    if (file_exists($filePath)) {
+        $raw = file_get_contents($filePath);
+        $data = json_decode($raw, true);
+        if (is_array($data) && !empty($data)) {
+            return $data;
+        }
+    }
+    $defaults = getDefaultCategories();
+    saveCategories($defaults);
+    return $defaults;
+}
+
+/**
+ * Save categories to JSON file with backup
+ */
+function saveCategories(array $categories): bool {
+    $filePath = CATEGORIES_JSON_PATH;
+    $dir = dirname($filePath);
+    if (!is_dir($dir)) {
+        mkdir($dir, 0755, true);
+    }
+    if (file_exists($filePath)) {
+        @copy($filePath, $filePath . '.bak');
+    }
+    $json = json_encode($categories, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    return (file_put_contents($filePath, $json, LOCK_EX) !== false);
+}
+
+/**
+ * Alias for loadCategories
+ */
+function getStandardCategories(): array {
+    return loadCategories();
+}
+
+/**
+ * Load all projects from JSON file
+ */
+function loadProjects(): array {
+    $filePath = PROJECTS_JSON_PATH;
+    if (!file_exists($filePath)) {
+        return [];
+    }
+    $raw = file_get_contents($filePath);
+    $data = json_decode($raw, true);
+    return is_array($data) ? $data : [];
+}
+
+/**
+ * Save all projects to JSON file with automatic backup
+ */
+function saveProjects(array $projects): bool {
+    $filePath = PROJECTS_JSON_PATH;
+    $dir = dirname($filePath);
+    if (!is_dir($dir)) {
+        mkdir($dir, 0755, true);
+    }
+    
+    // Create backup if existing
+    if (file_exists($filePath)) {
+        @copy($filePath, $filePath . '.bak');
+    }
+    
+    $json = json_encode(array_values($projects), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    return (file_put_contents($filePath, $json, LOCK_EX) !== false);
 }
