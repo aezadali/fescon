@@ -1678,20 +1678,10 @@ foreach ($projects as $p) {
                         <div class="form-section-title"><i class="fas fa-image"></i> Project Image / صورة المشروع</div>
                     </div>
 
-                    <div class="form-grid">
+                    <div class="form-full">
                         <div class="modal-form-group">
-                            <label class="modal-form-label">Upload New Photo (JPG, PNG, WEBP)</label>
+                            <label class="modal-form-label">Upload Project Photo (JPG, PNG, WEBP)</label>
                             <input type="file" name="image_file" class="modal-form-control" accept="image/jpeg,image/png,image/webp">
-                        </div>
-
-                        <div class="modal-form-group">
-                            <label class="modal-form-label">OR Choose From Assets Library</label>
-                            <select name="existing_image" class="modal-form-control">
-                                <option value="">-- Select Existing Image Asset --</option>
-                                <?php foreach ($existingImages as $imgAsset): ?>
-                                    <option value="<?php echo htmlspecialchars($imgAsset); ?>"><?php echo htmlspecialchars(basename($imgAsset)); ?></option>
-                                <?php endforeach; ?>
-                            </select>
                         </div>
                     </div>
                 </div>
@@ -1782,20 +1772,10 @@ foreach ($projects as $p) {
                         <div class="form-section-title"><i class="fas fa-image"></i> Project Image / صورة المشروع</div>
                     </div>
 
-                    <div class="form-grid">
+                    <div class="form-full">
                         <div class="modal-form-group">
                             <label class="modal-form-label">Replace with New Photo (JPG, PNG, WEBP)</label>
                             <input type="file" name="image_file" class="modal-form-control" accept="image/jpeg,image/png,image/webp">
-                        </div>
-
-                        <div class="modal-form-group">
-                            <label class="modal-form-label">OR Select Asset from Library</label>
-                            <select name="existing_image" id="edit_existing_image" class="modal-form-control">
-                                <option value="">-- Keep Current Image --</option>
-                                <?php foreach ($existingImages as $imgAsset): ?>
-                                    <option value="<?php echo htmlspecialchars($imgAsset); ?>"><?php echo htmlspecialchars(basename($imgAsset)); ?></option>
-                                <?php endforeach; ?>
-                            </select>
                         </div>
                     </div>
 
@@ -1805,7 +1785,7 @@ foreach ($projects as $p) {
                             <img id="edit_preview_img" src="../assets/images/project_civil_infra.jpg" alt="Current Image">
                             <div class="img-preview-info">
                                 <strong id="edit_preview_name">assets/images/project_civil_infra.jpg</strong><br>
-                                <span>Leave upload & dropdown blank to preserve this photo.</span>
+                                <span>Leave photo upload empty to preserve this current image.</span>
                             </div>
                         </div>
                     </div>

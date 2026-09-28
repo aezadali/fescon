@@ -75,21 +75,6 @@
         }
     },
     {
-        "id": 6,
-        "category": "oilgas",
-        "image": "assets/images/project_oilgas.jpg",
-        "en": {
-            "title": "Oilfield & Refinery Electrical & Instrumentation",
-            "category_label": "Oil & Gas",
-            "desc": "High-reliability electrical power feeds, process instrumentation, explosion-proof installations, pipeline support foundations, and site sub-stations."
-        },
-        "ar": {
-            "title": "دعم الأعمال الكهربائية والتحكم لمنشآت النفط والغاز",
-            "category_label": "قطاع النفط والغاز",
-            "desc": "تمديد شبكات التغذية الكهربائية عالية الموثوقية، أجهزة القياس والتحكم، تمديدات مقاومة للانفجار، وقواعد الأنابيب ومحطات التشغيل الحقلية."
-        }
-    },
-    {
         "id": 7,
         "category": "epc",
         "image": "assets/images/project_transmission_epc.jpg",
@@ -102,6 +87,21 @@
             "title": "مشروع متكامل (EPC) لخطوط نقل الطاقة الهوائية",
             "category_label": "مشاريع تسليم المفتاح (EPC)",
             "desc": "تنفيذ متكامل (EPC) لخطوط نقل الطاقة الكهربائية ذات الجهد العالي، الأبراج الفولاذية، شد الكابلات وربط المحطات بالشبكة الرئيسية."
+        }
+    },
+    {
+        "id": 6,
+        "category": "oilgas",
+        "image": "assets/images/project_oilgas.jpg",
+        "en": {
+            "title": "Oilfield & Refinery Electrical & Instrumentation",
+            "category_label": "Oil & Gas",
+            "desc": "High-reliability electrical power feeds, process instrumentation, explosion-proof installations, pipeline support foundations, and site sub-stations."
+        },
+        "ar": {
+            "title": "دعم الأعمال الكهربائية والتحكم لمنشآت النفط والغاز",
+            "category_label": "قطاع النفط والغاز",
+            "desc": "تمديد شبكات التغذية الكهربائية عالية الموثوقية، أجهزة القياس والتحكم، تمديدات مقاومة للانفجار، وقواعد الأنابيب ومحطات التشغيل الحقلية."
         }
     },
     {
