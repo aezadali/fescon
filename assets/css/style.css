@@ -1401,26 +1401,35 @@ html[dir="rtl"] .services-grid {
   box-shadow: var(--shadow-sm);
 }
 
-/* Projects Marquee Horizontal Continuous Scroll */
+/* Projects Marquee Horizontal Continuous & Interactive Scroll */
 .projects-marquee-wrapper {
   width: 100%;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   position: relative;
   padding: 1rem 0 2.5rem 0;
   mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.projects-marquee-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.projects-marquee-wrapper.is-dragging {
+  cursor: grabbing;
 }
 
 .projects-marquee-track {
   display: flex;
   gap: 1.8rem;
   width: max-content;
-  animation: marqueeContinuous 50s linear infinite;
-  will-change: transform;
-}
-
-.projects-marquee-wrapper:hover .projects-marquee-track {
-  animation-play-state: paused !important;
+  will-change: transform, scroll-position;
 }
 
 .projects-marquee-track .project-card {
@@ -1429,27 +1438,44 @@ html[dir="rtl"] .services-grid {
   margin-bottom: 0;
 }
 
-@keyframes marqueeContinuous {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(calc(-50% - 0.9rem));
-  }
+.projects-nav-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.2rem;
+  margin-bottom: 0.5rem;
 }
 
-/* RTL Marquee Animation */
-html[dir="rtl"] .projects-marquee-track {
-  animation-name: marqueeContinuousRTL;
+.proj-nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid rgba(27, 42, 74, 0.15);
+  color: var(--primary-navy);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
 }
 
-@keyframes marqueeContinuousRTL {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(calc(50% + 0.9rem));
-  }
+.proj-nav-btn:hover {
+  background: var(--primary-navy);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+html[dir="rtl"] .proj-nav-btn.prev-btn i {
+  transform: rotate(180deg);
+}
+
+html[dir="rtl"] .proj-nav-btn.next-btn i {
+  transform: rotate(180deg);
 }
 
 .projects-grid {

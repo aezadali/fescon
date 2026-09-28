@@ -75,48 +75,180 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   handleParallax();
 
-  // Portfolio Category Filtering & Marquee Control
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const projectCards = document.querySelectorAll('.project-card');
+  // Portfolio Continuous Infinite Marquee & Drag-to-Scroll Control
+  const marqueeWrapper = document.getElementById('projectsMarqueeWrapper');
   const projectsTrack = document.getElementById('projectsTrack');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const projPrevBtn = document.getElementById('projPrevBtn');
+  const projNextBtn = document.getElementById('projNextBtn');
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+  if (marqueeWrapper && projectsTrack) {
+    const originalCards = Array.from(projectsTrack.querySelectorAll('.project-card'));
+    let isCloned = false;
+    let isAutoScrolling = true;
+    let isDragging = false;
+    let startX = 0;
+    let startScrollLeft = 0;
+    let isPaused = false;
+    let pauseTimeout = null;
+    let currentFilter = 'all';
+    const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
 
-      const filterValue = btn.getAttribute('data-filter');
+    // Clone unique cards in JS for seamless infinite wrap
+    function initClones() {
+      if (isCloned) return;
+      originalCards.forEach(card => {
+        const clone = card.cloneNode(true);
+        clone.classList.add('clone-card');
+        projectsTrack.appendChild(clone);
+      });
+      isCloned = true;
+    }
 
-      if (filterValue === 'all') {
-        if (projectsTrack) {
-          projectsTrack.style.animation = '';
-          projectsTrack.style.width = 'max-content';
-          projectsTrack.style.flexWrap = 'nowrap';
-          projectsTrack.style.justifyContent = 'flex-start';
-        }
-        projectCards.forEach(card => {
-          card.style.display = 'block';
-          card.style.opacity = '1';
-          card.style.transform = 'none';
-        });
-      } else {
-        if (projectsTrack) {
-          projectsTrack.style.animation = 'none';
-          projectsTrack.style.width = '100%';
-          projectsTrack.style.flexWrap = 'wrap';
-          projectsTrack.style.justifyContent = 'center';
-        }
-        projectCards.forEach(card => {
-          if (!card.classList.contains('clone-card') && card.getAttribute('data-category') === filterValue) {
-            card.style.display = 'block';
-            card.style.opacity = '1';
+    initClones();
+
+    // Auto-scroll loop
+    const scrollSpeed = 0.8;
+    function autoScroll() {
+      if (currentFilter === 'all' && isAutoScrolling && !isPaused && !isDragging) {
+        const halfWidth = projectsTrack.scrollWidth / 2;
+        if (halfWidth > 0) {
+          if (!isRTL) {
+            marqueeWrapper.scrollLeft += scrollSpeed;
+            if (marqueeWrapper.scrollLeft >= halfWidth) {
+              marqueeWrapper.scrollLeft -= halfWidth;
+            }
           } else {
-            card.style.display = 'none';
+            marqueeWrapper.scrollLeft -= scrollSpeed;
+            if (Math.abs(marqueeWrapper.scrollLeft) >= halfWidth) {
+              marqueeWrapper.scrollLeft += halfWidth;
+            }
           }
-        });
+        }
+      }
+      requestAnimationFrame(autoScroll);
+    }
+    requestAnimationFrame(autoScroll);
+
+    // Pause on hover
+    marqueeWrapper.addEventListener('mouseenter', () => { isPaused = true; });
+    marqueeWrapper.addEventListener('mouseleave', () => {
+      if (!isDragging) {
+        clearTimeout(pauseTimeout);
+        isPaused = false;
       }
     });
-  });
+
+    // Drag to scroll (mouse)
+    marqueeWrapper.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      isPaused = true;
+      marqueeWrapper.classList.add('is-dragging');
+      startX = e.pageX - marqueeWrapper.offsetLeft;
+      startScrollLeft = marqueeWrapper.scrollLeft;
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        marqueeWrapper.classList.remove('is-dragging');
+        clearTimeout(pauseTimeout);
+        pauseTimeout = setTimeout(() => { isPaused = false; }, 1500);
+      }
+    });
+
+    marqueeWrapper.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - marqueeWrapper.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      marqueeWrapper.scrollLeft = startScrollLeft - walk;
+
+      if (currentFilter === 'all') {
+        const halfWidth = projectsTrack.scrollWidth / 2;
+        if (halfWidth > 0) {
+          if (marqueeWrapper.scrollLeft >= halfWidth) {
+            marqueeWrapper.scrollLeft -= halfWidth;
+            startScrollLeft -= halfWidth;
+          } else if (marqueeWrapper.scrollLeft <= 0) {
+            marqueeWrapper.scrollLeft += halfWidth;
+            startScrollLeft += halfWidth;
+          }
+        }
+      }
+    });
+
+    // Touch support (mobile / touch devices)
+    marqueeWrapper.addEventListener('touchstart', () => {
+      isPaused = true;
+    }, { passive: true });
+
+    marqueeWrapper.addEventListener('touchend', () => {
+      clearTimeout(pauseTimeout);
+      pauseTimeout = setTimeout(() => { isPaused = false; }, 1500);
+    }, { passive: true });
+
+    // Prev / Next button controls
+    if (projPrevBtn) {
+      projPrevBtn.addEventListener('click', () => {
+        isPaused = true;
+        const scrollDelta = isRTL ? 380 : -380;
+        marqueeWrapper.scrollBy({ left: scrollDelta, behavior: 'smooth' });
+        clearTimeout(pauseTimeout);
+        pauseTimeout = setTimeout(() => { isPaused = false; }, 2500);
+      });
+    }
+
+    if (projNextBtn) {
+      projNextBtn.addEventListener('click', () => {
+        isPaused = true;
+        const scrollDelta = isRTL ? -380 : 380;
+        marqueeWrapper.scrollBy({ left: scrollDelta, behavior: 'smooth' });
+        clearTimeout(pauseTimeout);
+        pauseTimeout = setTimeout(() => { isPaused = false; }, 2500);
+      });
+    }
+
+    // Category Filtering
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        currentFilter = btn.getAttribute('data-filter');
+        const allCards = projectsTrack.querySelectorAll('.project-card');
+
+        if (currentFilter === 'all') {
+          allCards.forEach(card => {
+            card.style.display = 'block';
+            card.style.opacity = '1';
+          });
+          projectsTrack.style.width = 'max-content';
+          projectsTrack.style.justifyContent = 'flex-start';
+          projectsTrack.style.flexWrap = 'nowrap';
+          isAutoScrolling = true;
+          isPaused = false;
+        } else {
+          isAutoScrolling = false;
+          isPaused = true;
+          allCards.forEach(card => {
+            if (card.classList.contains('clone-card')) {
+              card.style.display = 'none';
+            } else if (card.getAttribute('data-category') === currentFilter) {
+              card.style.display = 'block';
+              card.style.opacity = '1';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+          projectsTrack.style.width = '100%';
+          projectsTrack.style.justifyContent = 'center';
+          projectsTrack.style.flexWrap = 'wrap';
+          marqueeWrapper.scrollLeft = 0;
+        }
+      });
+    });
+  }
 
   // Modal Viewer (Leadership Card & Certificates)
   const modalOverlay = document.getElementById('modalOverlay');
