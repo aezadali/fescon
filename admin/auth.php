@@ -7,11 +7,15 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Configuration
+// UTF-8 settings
+ini_set('default_charset', 'UTF-8');
+if (function_exists('mb_internal_encoding')) {
+    mb_internal_encoding('UTF-8');
+}
+
+// Admin Credentials - Only one password: fescon@2026
 define('ADMIN_USER', 'admin');
-// Default password: fescon@2026 (also accepts admin123 as fallback)
-define('ADMIN_PASS_PRIMARY', 'fescon@2026');
-define('ADMIN_PASS_SECONDARY', 'admin123');
+define('ADMIN_PASS', 'fescon@2026');
 
 define('PROJECTS_JSON_PATH', dirname(__DIR__) . '/config/projects.json');
 define('IMAGES_UPLOAD_DIR', dirname(__DIR__) . '/assets/images/');
@@ -34,12 +38,10 @@ function requireAdminLogin(): void {
 }
 
 /**
- * Validate admin credentials
+ * Validate admin credentials - Strictly fescon@2026
  */
 function verifyAdminCredentials(string $username, string $password): bool {
-    $userMatch = (trim($username) === ADMIN_USER);
-    $passMatch = ($password === ADMIN_PASS_PRIMARY || $password === ADMIN_PASS_SECONDARY);
-    return $userMatch && $passMatch;
+    return (trim($username) === ADMIN_USER && $password === ADMIN_PASS);
 }
 
 /**

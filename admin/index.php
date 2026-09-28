@@ -5,6 +5,9 @@
 require_once __DIR__ . '/auth.php';
 requireAdminLogin();
 
+// Set UTF-8 header
+header('Content-Type: text/html; charset=UTF-8');
+
 $projects = loadProjects();
 $categories = getStandardCategories();
 $csrfToken = getCsrfToken();
@@ -39,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Helper for image handling
     $handleImageUpload = function($currentImage = '') use ($assetsImgDir) {
-        // Check if new file was uploaded
         if (!empty($_FILES['image_file']['name']) && $_FILES['image_file']['error'] === UPLOAD_ERR_OK) {
             $tmpName = $_FILES['image_file']['tmp_name'];
             $origName = $_FILES['image_file']['name'];
@@ -50,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 return ['error' => 'Invalid image format. Allowed: JPG, PNG, WEBP.'];
             }
 
-            // Clean filename
             $safeName = 'proj_' . time() . '_' . preg_replace('/[^a-zA-Z0-9_\-]/', '', pathinfo($origName, PATHINFO_FILENAME)) . '.' . $ext;
             $destPath = $assetsImgDir . $safeName;
 
@@ -61,13 +62,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        // Check if selected existing image from dropdown
         $selectedExisting = trim($_POST['existing_image'] ?? '');
         if (!empty($selectedExisting)) {
             return ['path' => $selectedExisting];
         }
 
-        // Return current image or default
         return ['path' => !empty($currentImage) ? $currentImage : 'assets/images/project_civil_infra.jpg'];
     };
 
@@ -81,14 +80,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $arCatLabel = trim($_POST['ar_cat_label'] ?? '');
         $arDesc = trim($_POST['ar_desc'] ?? '');
 
-        if (empty($enTitle)) {
-            $_SESSION['flash_message'] = 'English title is required.';
+        // Validation: At least one title must be present
+        if (empty($enTitle) && empty($arTitle)) {
+            $_SESSION['flash_message'] = 'Please enter a project title (English or Arabic). / يرجى إدخال عنوان المشروع';
             $_SESSION['flash_type'] = 'error';
             header('Location: index.php');
             exit;
         }
 
-        // If category label empty, fallback to category map
+        // Automatic cross-fill if one language is provided
+        if (empty($enTitle)) {
+            $enTitle = $arTitle;
+        }
+        if (empty($arTitle)) {
+            $arTitle = $enTitle;
+        }
+
+        if (empty($enDesc) && !empty($arDesc)) {
+            $enDesc = $arDesc;
+        }
+        if (empty($arDesc) && !empty($enDesc)) {
+            $arDesc = $enDesc;
+        }
+
+        // Category label fallbacks
         if (empty($enCatLabel) && isset($categories[$category])) {
             $enCatLabel = $categories[$category]['en'];
         }
@@ -123,17 +138,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'desc' => $enDesc
             ],
             'ar' => [
-                'title' => $arTitle ?: $enTitle,
+                'title' => $arTitle,
                 'category_label' => $arCatLabel ?: ($categories[$category]['ar'] ?? ucfirst($category)),
-                'desc' => $arDesc ?: $enDesc
+                'desc' => $arDesc
             ]
         ];
 
-        // Add to projects list
         $projects[] = $newProject;
         saveProjects($projects);
 
-        $_SESSION['flash_message'] = 'New project "' . htmlspecialchars($enTitle) . '" created successfully!';
+        $_SESSION['flash_message'] = 'Project added successfully! / تم إضافة المشروع بنجاح';
         $_SESSION['flash_type'] = 'success';
         header('Location: index.php');
         exit;
@@ -166,11 +180,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $arCatLabel = trim($_POST['ar_cat_label'] ?? '');
         $arDesc = trim($_POST['ar_desc'] ?? '');
 
-        if (empty($enTitle)) {
-            $_SESSION['flash_message'] = 'English title is required.';
+        if (empty($enTitle) && empty($arTitle)) {
+            $_SESSION['flash_message'] = 'Please enter a project title (English or Arabic). / يرجى إدخال عنوان المشروع';
             $_SESSION['flash_type'] = 'error';
             header('Location: index.php');
             exit;
+        }
+
+        if (empty($enTitle)) {
+            $enTitle = $arTitle;
+        }
+        if (empty($arTitle)) {
+            $arTitle = $enTitle;
+        }
+
+        if (empty($enDesc) && !empty($arDesc)) {
+            $enDesc = $arDesc;
+        }
+        if (empty($arDesc) && !empty($enDesc)) {
+            $arDesc = $enDesc;
         }
 
         $currImg = $projects[$foundIndex]['image'] ?? '';
@@ -188,13 +216,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $projects[$foundIndex]['en']['category_label'] = $enCatLabel ?: ($categories[$category]['en'] ?? ucfirst($category));
         $projects[$foundIndex]['en']['desc'] = $enDesc;
 
-        $projects[$foundIndex]['ar']['title'] = $arTitle ?: $enTitle;
+        $projects[$foundIndex]['ar']['title'] = $arTitle;
         $projects[$foundIndex]['ar']['category_label'] = $arCatLabel ?: ($categories[$category]['ar'] ?? $projects[$foundIndex]['en']['category_label']);
-        $projects[$foundIndex]['ar']['desc'] = $arDesc ?: $enDesc;
+        $projects[$foundIndex]['ar']['desc'] = $arDesc;
 
         saveProjects($projects);
 
-        $_SESSION['flash_message'] = 'Project #' . $id . ' updated successfully!';
+        $_SESSION['flash_message'] = 'Project #' . $id . ' updated successfully! / تم تحديث المشروع بنجاح';
         $_SESSION['flash_type'] = 'success';
         header('Location: index.php');
         exit;
@@ -208,14 +236,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         foreach ($projects as $p) {
             if (isset($p['id']) && (int)$p['id'] === $id) {
-                $deletedTitle = $p['en']['title'] ?? ('Project #' . $id);
+                $deletedTitle = $p['ar']['title'] ?? $p['en']['title'] ?? ('Project #' . $id);
                 continue;
             }
             $newProjects[] = $p;
         }
 
         saveProjects($newProjects);
-        $_SESSION['flash_message'] = 'Project "' . htmlspecialchars($deletedTitle) . '" has been removed.';
+        $_SESSION['flash_message'] = 'Project has been removed. / تم حذف المشروع';
         $_SESSION['flash_type'] = 'success';
         header('Location: index.php');
         exit;
@@ -267,7 +295,7 @@ foreach ($projects as $p) {
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -732,7 +760,7 @@ foreach ($projects as $p) {
 
         .title-ar {
             font-family: 'Tajawal', sans-serif;
-            font-size: 0.88rem;
+            font-size: 0.92rem;
             color: #94a3b8;
             direction: rtl;
             text-align: left;
@@ -819,7 +847,7 @@ foreach ($projects as $p) {
             border: 1px solid var(--border-gold);
             border-radius: 16px;
             width: 100%;
-            max-width: 780px;
+            max-width: 820px;
             max-height: 90vh;
             display: flex;
             flex-direction: column;
@@ -886,6 +914,49 @@ foreach ($projects as $p) {
             gap: 1rem;
         }
 
+        /* Language Tabs inside Modal */
+        .modal-lang-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.75rem;
+        }
+
+        .modal-tab-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .modal-tab-btn:hover {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .modal-tab-btn.active {
+            background: var(--accent-gold);
+            color: #08121f;
+            border-color: var(--accent-gold);
+        }
+
+        .tab-content-panel {
+            display: none;
+        }
+
+        .tab-content-panel.active {
+            display: block;
+        }
+
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -942,13 +1013,15 @@ foreach ($projects as $p) {
 
         textarea.modal-form-control {
             resize: vertical;
-            min-height: 80px;
+            min-height: 85px;
         }
 
         .rtl-input {
             direction: rtl;
             font-family: 'Tajawal', sans-serif;
             text-align: right;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
         .img-preview-box {
@@ -1167,7 +1240,7 @@ foreach ($projects as $p) {
             <div class="toolbar-left">
                 <div class="search-box">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="projectSearchInput" placeholder="Search by title, category, description...">
+                    <input type="text" id="projectSearchInput" placeholder="Search projects by title, category, description...">
                 </div>
 
                 <div class="filter-pills">
@@ -1218,9 +1291,9 @@ foreach ($projects as $p) {
                             $en = $proj['en'] ?? [];
                             $ar = $proj['ar'] ?? [];
                             $img = !empty($proj['image']) ? '../' . $proj['image'] : '../assets/images/project_civil_infra.jpg';
-                            $projId = $proj['id'] ?? ($index + 1);
+                            $projId = (int)($proj['id'] ?? ($index + 1));
                         ?>
-                            <tr class="project-row" data-category="<?php echo htmlspecialchars($catKey); ?>" data-search="<?php echo htmlspecialchars(strtolower(($en['title'] ?? '') . ' ' . ($ar['title'] ?? '') . ' ' . ($catBadge['en'] ?? '') . ' ' . ($en['desc'] ?? ''))); ?>">
+                            <tr class="project-row" data-category="<?php echo htmlspecialchars($catKey); ?>" data-search="<?php echo htmlspecialchars(strtolower(($en['title'] ?? '') . ' ' . ($ar['title'] ?? '') . ' ' . ($catBadge['en'] ?? '') . ' ' . ($en['desc'] ?? '') . ' ' . ($ar['desc'] ?? ''))); ?>">
                                 <!-- Order Up / Down -->
                                 <td style="text-align: center;">
                                     <div class="proj-order-controls">
@@ -1269,19 +1342,19 @@ foreach ($projects as $p) {
 
                                 <!-- Description -->
                                 <td>
-                                    <div class="desc-preview" title="<?php echo htmlspecialchars($en['desc'] ?? ''); ?>">
-                                        <?php echo htmlspecialchars($en['desc'] ?? 'No description provided.'); ?>
+                                    <div class="desc-preview" title="<?php echo htmlspecialchars($en['desc'] ?? $ar['desc'] ?? ''); ?>">
+                                        <?php echo htmlspecialchars($en['desc'] ?? $ar['desc'] ?? 'No description provided.'); ?>
                                     </div>
                                 </td>
 
                                 <!-- Actions -->
                                 <td style="text-align: right;">
                                     <div class="action-btns" style="justify-content: flex-end;">
-                                        <button type="button" class="btn-action btn-edit" onclick='openEditModal(<?php echo json_encode($proj, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>)'>
+                                        <button type="button" class="btn-action btn-edit" onclick="openEditModal(<?php echo $projId; ?>)">
                                             <i class="fas fa-edit"></i>
                                             <span>Edit</span>
                                         </button>
-                                        <button type="button" class="btn-action btn-delete" onclick="openDeleteModal(<?php echo $projId; ?>, '<?php echo htmlspecialchars(addslashes($en['title'] ?? 'Project #' . $projId)); ?>')">
+                                        <button type="button" class="btn-action btn-delete" onclick="openDeleteModal(<?php echo $projId; ?>)">
                                             <i class="fas fa-trash-alt"></i>
                                             <span>Delete</span>
                                         </button>
@@ -1303,30 +1376,54 @@ foreach ($projects as $p) {
                 <h3><i class="fas fa-plus-circle"></i> Add New Showcase Project</h3>
                 <button type="button" class="btn-close-modal" onclick="closeModal('addProjectModal')">&times;</button>
             </div>
-            <form method="POST" action="index.php" enctype="multipart/form-data">
+            <form method="POST" action="index.php" enctype="multipart/form-data" accept-charset="UTF-8" id="addProjectForm" onsubmit="return validateProjectForm('add')">
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                 <input type="hidden" name="action" value="create">
 
                 <div class="modal-body">
-                    <div class="form-grid">
-                        <!-- Category Selection -->
-                        <div class="modal-form-group form-full">
-                            <label class="modal-form-label">Category</label>
-                            <select name="category" class="modal-form-control" required id="addCategorySelect" onchange="autoFillCategoryLabels('add')">
-                                <?php foreach ($categories as $catKey => $catInfo): ?>
-                                    <option value="<?php echo $catKey; ?>"><?php echo htmlspecialchars($catInfo['en']); ?> (<?php echo htmlspecialchars($catInfo['ar']); ?>)</option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
+                    <!-- Category Selection -->
+                    <div class="modal-form-group" style="margin-bottom: 1.25rem;">
+                        <label class="modal-form-label">Category / تصنيف المشروع *</label>
+                        <select name="category" class="modal-form-control" required id="addCategorySelect" onchange="autoFillCategoryLabels('add')">
+                            <?php foreach ($categories as $catKey => $catInfo): ?>
+                                <option value="<?php echo $catKey; ?>"><?php echo htmlspecialchars($catInfo['en']); ?> (<?php echo htmlspecialchars($catInfo['ar']); ?>)</option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
 
-                        <!-- English Section -->
-                        <div class="form-full">
-                            <div class="form-section-title"><i class="fas fa-globe"></i> English Content</div>
+                    <!-- Language Tabs -->
+                    <div class="modal-lang-tabs">
+                        <button type="button" class="modal-tab-btn active" onclick="switchLangTab('add', 'ar')">
+                            <i class="fas fa-language"></i> 🇴🇲 المحتوى العربي (Arabic)
+                        </button>
+                        <button type="button" class="modal-tab-btn" onclick="switchLangTab('add', 'en')">
+                            <i class="fas fa-globe"></i> 🇬🇧 English Details
+                        </button>
+                    </div>
+
+                    <!-- Arabic Tab Content -->
+                    <div class="tab-content-panel active" id="add_tab_ar">
+                        <div class="modal-form-group">
+                            <label class="modal-form-label">عنوان المشروع (بالعربية) *</label>
+                            <input type="text" name="ar_title" id="add_ar_title" class="modal-form-control rtl-input" placeholder="مثال: محطة محولات رئيسية جهد 132 كيلوفولت">
                         </div>
 
                         <div class="modal-form-group">
-                            <label class="modal-form-label">Project Title (English) *</label>
-                            <input type="text" name="en_title" class="modal-form-control" placeholder="e.g. 132kV Substation Transmission..." required>
+                            <label class="modal-form-label">مسمى التصنيف (بالعربية)</label>
+                            <input type="text" name="ar_cat_label" id="add_ar_cat_label" class="modal-form-control rtl-input" placeholder="محطات المحولات">
+                        </div>
+
+                        <div class="modal-form-group">
+                            <label class="modal-form-label">وصف وتفاصيل المشروع (بالعربية)</label>
+                            <textarea name="ar_desc" id="add_ar_desc" class="modal-form-control rtl-input" placeholder="وصف الأعمال الهندسية، المعدات المنفذة، ونطاق المشروع..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- English Tab Content -->
+                    <div class="tab-content-panel" id="add_tab_en">
+                        <div class="modal-form-group">
+                            <label class="modal-form-label">Project Title (English)</label>
+                            <input type="text" name="en_title" id="add_en_title" class="modal-form-control" placeholder="e.g. 132kV Primary Grid Station Turnkey Services">
                         </div>
 
                         <div class="modal-form-group">
@@ -1334,45 +1431,27 @@ foreach ($projects as $p) {
                             <input type="text" name="en_cat_label" id="add_en_cat_label" class="modal-form-control" placeholder="Grid Stations">
                         </div>
 
-                        <div class="modal-form-group form-full">
+                        <div class="modal-form-group">
                             <label class="modal-form-label">Description (English)</label>
-                            <textarea name="en_desc" class="modal-form-control" placeholder="Detailed engineering summary, specs, equipment installed..."></textarea>
+                            <textarea name="en_desc" id="add_en_desc" class="modal-form-control" placeholder="Detailed engineering summary, technical specifications, equipment installed..."></textarea>
                         </div>
+                    </div>
 
-                        <!-- Arabic Section -->
-                        <div class="form-full">
-                            <div class="form-section-title"><i class="fas fa-language"></i> Arabic Content (المحتوى العربي)</div>
-                        </div>
+                    <!-- Image Section -->
+                    <div class="form-full" style="margin-top: 1rem;">
+                        <div class="form-section-title"><i class="fas fa-image"></i> Project Image / صورة المشروع</div>
+                    </div>
 
-                        <div class="modal-form-group">
-                            <label class="modal-form-label">عنوان المشروع (بالعربية)</label>
-                            <input type="text" name="ar_title" class="modal-form-control rtl-input" placeholder="اسم المشروع بالعربية">
-                        </div>
-
-                        <div class="modal-form-group">
-                            <label class="modal-form-label">تصنيف المشروع (بالعربية)</label>
-                            <input type="text" name="ar_cat_label" id="add_ar_cat_label" class="modal-form-control rtl-input" placeholder="محطات المحولات">
-                        </div>
-
-                        <div class="modal-form-group form-full">
-                            <label class="modal-form-label">تفاصيل ووصف المشروع (بالعربية)</label>
-                            <textarea name="ar_desc" class="modal-form-control rtl-input" placeholder="تفاصيل الأعمال الهندسية والتنفيذية..."></textarea>
-                        </div>
-
-                        <!-- Image Section -->
-                        <div class="form-full">
-                            <div class="form-section-title"><i class="fas fa-image"></i> Project Image</div>
-                        </div>
-
+                    <div class="form-grid">
                         <div class="modal-form-group">
                             <label class="modal-form-label">Upload New Photo (JPG, PNG, WEBP)</label>
                             <input type="file" name="image_file" class="modal-form-control" accept="image/jpeg,image/png,image/webp">
                         </div>
 
                         <div class="modal-form-group">
-                            <label class="modal-form-label">OR Pick From Existing Assets</label>
+                            <label class="modal-form-label">OR Choose From Assets Library</label>
                             <select name="existing_image" class="modal-form-control">
-                                <option value="">-- Choose Existing Image --</option>
+                                <option value="">-- Select Existing Image Asset --</option>
                                 <?php foreach ($existingImages as $imgAsset): ?>
                                     <option value="<?php echo htmlspecialchars($imgAsset); ?>"><?php echo htmlspecialchars(basename($imgAsset)); ?></option>
                                 <?php endforeach; ?>
@@ -1396,31 +1475,55 @@ foreach ($projects as $p) {
                 <h3><i class="fas fa-edit"></i> Edit Showcase Project</h3>
                 <button type="button" class="btn-close-modal" onclick="closeModal('editProjectModal')">&times;</button>
             </div>
-            <form method="POST" action="index.php" enctype="multipart/form-data">
+            <form method="POST" action="index.php" enctype="multipart/form-data" accept-charset="UTF-8" id="editProjectForm" onsubmit="return validateProjectForm('edit')">
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                 <input type="hidden" name="action" value="update">
                 <input type="hidden" name="id" id="edit_id" value="">
 
                 <div class="modal-body">
-                    <div class="form-grid">
-                        <!-- Category Selection -->
-                        <div class="modal-form-group form-full">
-                            <label class="modal-form-label">Category</label>
-                            <select name="category" class="modal-form-control" required id="edit_category">
-                                <?php foreach ($categories as $catKey => $catInfo): ?>
-                                    <option value="<?php echo $catKey; ?>"><?php echo htmlspecialchars($catInfo['en']); ?> (<?php echo htmlspecialchars($catInfo['ar']); ?>)</option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
+                    <!-- Category Selection -->
+                    <div class="modal-form-group" style="margin-bottom: 1.25rem;">
+                        <label class="modal-form-label">Category / تصنيف المشروع *</label>
+                        <select name="category" class="modal-form-control" required id="edit_category">
+                            <?php foreach ($categories as $catKey => $catInfo): ?>
+                                <option value="<?php echo $catKey; ?>"><?php echo htmlspecialchars($catInfo['en']); ?> (<?php echo htmlspecialchars($catInfo['ar']); ?>)</option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
 
-                        <!-- English Section -->
-                        <div class="form-full">
-                            <div class="form-section-title"><i class="fas fa-globe"></i> English Content</div>
+                    <!-- Language Tabs -->
+                    <div class="modal-lang-tabs">
+                        <button type="button" class="modal-tab-btn active" onclick="switchLangTab('edit', 'ar')">
+                            <i class="fas fa-language"></i> 🇴🇲 المحتوى العربي (Arabic)
+                        </button>
+                        <button type="button" class="modal-tab-btn" onclick="switchLangTab('edit', 'en')">
+                            <i class="fas fa-globe"></i> 🇬🇧 English Details
+                        </button>
+                    </div>
+
+                    <!-- Arabic Tab Content -->
+                    <div class="tab-content-panel active" id="edit_tab_ar">
+                        <div class="modal-form-group">
+                            <label class="modal-form-label">عنوان المشروع (بالعربية) *</label>
+                            <input type="text" name="ar_title" id="edit_ar_title" class="modal-form-control rtl-input" placeholder="اسم المشروع بالعربية">
                         </div>
 
                         <div class="modal-form-group">
-                            <label class="modal-form-label">Project Title (English) *</label>
-                            <input type="text" name="en_title" id="edit_en_title" class="modal-form-control" required>
+                            <label class="modal-form-label">تصنيف المشروع (بالعربية)</label>
+                            <input type="text" name="ar_cat_label" id="edit_ar_cat_label" class="modal-form-control rtl-input" placeholder="محطات المحولات">
+                        </div>
+
+                        <div class="modal-form-group">
+                            <label class="modal-form-label">تفاصيل ووصف المشروع (بالعربية)</label>
+                            <textarea name="ar_desc" id="edit_ar_desc" class="modal-form-control rtl-input" placeholder="تفاصيل الأعمال الهندسية والتنفيذية..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- English Tab Content -->
+                    <div class="tab-content-panel" id="edit_tab_en">
+                        <div class="modal-form-group">
+                            <label class="modal-form-label">Project Title (English)</label>
+                            <input type="text" name="en_title" id="edit_en_title" class="modal-form-control">
                         </div>
 
                         <div class="modal-form-group">
@@ -1428,43 +1531,25 @@ foreach ($projects as $p) {
                             <input type="text" name="en_cat_label" id="edit_en_cat_label" class="modal-form-control">
                         </div>
 
-                        <div class="modal-form-group form-full">
+                        <div class="modal-form-group">
                             <label class="modal-form-label">Description (English)</label>
                             <textarea name="en_desc" id="edit_en_desc" class="modal-form-control"></textarea>
                         </div>
+                    </div>
 
-                        <!-- Arabic Section -->
-                        <div class="form-full">
-                            <div class="form-section-title"><i class="fas fa-language"></i> Arabic Content (المحتوى العربي)</div>
-                        </div>
+                    <!-- Image Section -->
+                    <div class="form-full" style="margin-top: 1rem;">
+                        <div class="form-section-title"><i class="fas fa-image"></i> Project Image / صورة المشروع</div>
+                    </div>
 
-                        <div class="modal-form-group">
-                            <label class="modal-form-label">عنوان المشروع (بالعربية)</label>
-                            <input type="text" name="ar_title" id="edit_ar_title" class="modal-form-control rtl-input">
-                        </div>
-
-                        <div class="modal-form-group">
-                            <label class="modal-form-label">تصنيف المشروع (بالعربية)</label>
-                            <input type="text" name="ar_cat_label" id="edit_ar_cat_label" class="modal-form-control rtl-input">
-                        </div>
-
-                        <div class="modal-form-group form-full">
-                            <label class="modal-form-label">تفاصيل ووصف المشروع (بالعربية)</label>
-                            <textarea name="ar_desc" id="edit_ar_desc" class="modal-form-control rtl-input"></textarea>
-                        </div>
-
-                        <!-- Image Section -->
-                        <div class="form-full">
-                            <div class="form-section-title"><i class="fas fa-image"></i> Project Image</div>
-                        </div>
-
+                    <div class="form-grid">
                         <div class="modal-form-group">
                             <label class="modal-form-label">Replace with New Photo (JPG, PNG, WEBP)</label>
                             <input type="file" name="image_file" class="modal-form-control" accept="image/jpeg,image/png,image/webp">
                         </div>
 
                         <div class="modal-form-group">
-                            <label class="modal-form-label">OR Choose Another Asset</label>
+                            <label class="modal-form-label">OR Select Asset from Library</label>
                             <select name="existing_image" id="edit_existing_image" class="modal-form-control">
                                 <option value="">-- Keep Current Image --</option>
                                 <?php foreach ($existingImages as $imgAsset): ?>
@@ -1472,15 +1557,15 @@ foreach ($projects as $p) {
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                    </div>
 
-                        <div class="form-full">
-                            <label class="modal-form-label">Current Image:</label>
-                            <div class="img-preview-box">
-                                <img id="edit_preview_img" src="../assets/images/project_civil_infra.jpg" alt="Current Image">
-                                <div class="img-preview-info">
-                                    <strong id="edit_preview_name">assets/images/project_civil_infra.jpg</strong><br>
-                                    <span>To keep this current photo unchanged, leave the upload & dropdown fields empty.</span>
-                                </div>
+                    <div class="form-full">
+                        <label class="modal-form-label">Current Active Image:</label>
+                        <div class="img-preview-box">
+                            <img id="edit_preview_img" src="../assets/images/project_civil_infra.jpg" alt="Current Image">
+                            <div class="img-preview-info">
+                                <strong id="edit_preview_name">assets/images/project_civil_infra.jpg</strong><br>
+                                <span>Leave upload & dropdown blank to preserve this photo.</span>
                             </div>
                         </div>
                     </div>
@@ -1509,7 +1594,7 @@ foreach ($projects as $p) {
                 <div class="modal-body" style="padding: 1.5rem; text-align: center;">
                     <i class="fas fa-trash-alt" style="font-size: 2.8rem; color: #ef4444; margin-bottom: 1rem; opacity: 0.85;"></i>
                     <p style="font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; color: #ffffff;">Are you sure you want to delete this project?</p>
-                    <p id="delete_proj_title" style="color: var(--accent-gold); font-size: 0.95rem; font-weight: 700; margin-bottom: 1rem;"></p>
+                    <p id="delete_proj_title" style="color: var(--accent-gold); font-size: 1rem; font-weight: 700; margin-bottom: 1rem;"></p>
                     <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.4;">This will immediately remove the project card from the continuous marquee and portfolio section of the public website.</p>
                 </div>
 
@@ -1528,15 +1613,31 @@ foreach ($projects as $p) {
 
     <!-- Client-side Scripts -->
     <script>
-        const categoriesMap = <?php echo json_encode($categories); ?>;
+        const categoriesMap = <?php echo json_encode($categories, JSON_UNESCAPED_UNICODE); ?>;
+        const allProjectsData = <?php echo json_encode($projects, JSON_UNESCAPED_UNICODE); ?>;
 
-        // Open & Close Modals
+        // Modal Management
         function openModal(id) {
             document.getElementById(id).classList.add('active');
         }
 
         function closeModal(id) {
             document.getElementById(id).classList.remove('active');
+        }
+
+        // Switch Language Tabs inside Modals
+        function switchLangTab(prefix, lang) {
+            const tabs = document.querySelectorAll('#' + prefix + 'ProjectModal .modal-tab-btn');
+            tabs.forEach(t => t.classList.remove('active'));
+
+            const panels = document.querySelectorAll('#' + prefix + 'ProjectModal .tab-content-panel');
+            panels.forEach(p => p.classList.remove('active'));
+
+            const activeBtn = event.currentTarget;
+            if (activeBtn) activeBtn.classList.add('active');
+
+            const activePanel = document.getElementById(prefix + '_tab_' + lang);
+            if (activePanel) activePanel.classList.add('active');
         }
 
         // Add modal trigger
@@ -1560,21 +1661,35 @@ foreach ($projects as $p) {
             }
         }
 
-        // Edit Modal Setup
-        function openEditModal(project) {
+        // Validate form has at least one title before submission
+        function validateProjectForm(prefix) {
+            const arTitle = document.getElementById(prefix + '_ar_title').value.trim();
+            const enTitle = document.getElementById(prefix + '_en_title').value.trim();
+            if (!arTitle && !enTitle) {
+                alert('Please enter at least a project title in Arabic or English.\nيرجى إدخال عنوان المشروع بالعربية أو الإنجليزية.');
+                return false;
+            }
+            return true;
+        }
+
+        // Edit Modal Setup using ID lookup from allProjectsData
+        function openEditModal(id) {
+            const project = allProjectsData.find(p => parseInt(p.id) === parseInt(id));
+            if (!project) return;
+
             document.getElementById('edit_id').value = project.id;
             document.getElementById('edit_category').value = project.category || 'civil';
             
             const en = project.en || {};
             const ar = project.ar || {};
 
-            document.getElementById('edit_en_title').value = en.title || '';
-            document.getElementById('edit_en_cat_label').value = en.category_label || (categoriesMap[project.category] ? categoriesMap[project.category].en : '');
-            document.getElementById('edit_en_desc').value = en.desc || '';
-
             document.getElementById('edit_ar_title').value = ar.title || '';
             document.getElementById('edit_ar_cat_label').value = ar.category_label || (categoriesMap[project.category] ? categoriesMap[project.category].ar : '');
             document.getElementById('edit_ar_desc').value = ar.desc || '';
+
+            document.getElementById('edit_en_title').value = en.title || '';
+            document.getElementById('edit_en_cat_label').value = en.category_label || (categoriesMap[project.category] ? categoriesMap[project.category].en : '');
+            document.getElementById('edit_en_desc').value = en.desc || '';
 
             const imgPath = project.image ? ('../' + project.image) : '../assets/images/project_civil_infra.jpg';
             document.getElementById('edit_preview_img').src = imgPath;
@@ -1583,8 +1698,11 @@ foreach ($projects as $p) {
             openModal('editProjectModal');
         }
 
-        // Delete Modal Setup
-        function openDeleteModal(id, title) {
+        // Delete Modal Setup using ID lookup
+        function openDeleteModal(id) {
+            const project = allProjectsData.find(p => parseInt(p.id) === parseInt(id));
+            const title = project ? ((project.ar && project.ar.title) ? project.ar.title : (project.en && project.en.title ? project.en.title : 'Project #' + id)) : ('Project #' + id);
+            
             document.getElementById('delete_proj_id').value = id;
             document.getElementById('delete_proj_title').textContent = title;
             openModal('deleteProjectModal');

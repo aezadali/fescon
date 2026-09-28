@@ -264,27 +264,6 @@ $csrfToken = getCsrfToken();
             background: linear-gradient(135deg, #d4af37 0%, #ba9343 100%);
         }
 
-        .login-hints {
-            margin-top: 1.75rem;
-            padding: 0.9rem;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 8px;
-            border: 1px dashed rgba(197, 160, 89, 0.2);
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-align: center;
-            line-height: 1.5;
-        }
-
-        .login-hints code {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 0.15rem 0.4rem;
-            border-radius: 4px;
-            color: var(--accent-gold);
-            font-weight: 600;
-            font-family: monospace;
-        }
-
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -334,7 +313,7 @@ $csrfToken = getCsrfToken();
             <div class="form-group">
                 <label class="form-label" for="username">Username</label>
                 <div class="input-group">
-                    <input type="text" id="username" name="username" class="form-control" placeholder="Enter admin username" required autofocus value="<?php echo htmlspecialchars($_POST['username'] ?? 'admin'); ?>">
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Enter admin username" required autofocus value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>">
                     <i class="fas fa-user input-icon"></i>
                 </div>
             </div>
@@ -355,11 +334,6 @@ $csrfToken = getCsrfToken();
                 <span>Sign In to Dashboard</span>
             </button>
         </form>
-
-        <div class="login-hints">
-            <i class="fas fa-key" style="margin-right: 4px; color: var(--accent-gold);"></i> 
-            Default Access: User <code>admin</code> &bull; Password <code>fescon@2026</code>
-        </div>
 
         <a href="../" class="back-link">
             <i class="fas fa-arrow-left"></i>
