@@ -192,7 +192,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (projPrevBtn) {
       projPrevBtn.addEventListener('click', () => {
         isPaused = true;
-        const scrollDelta = isRTL ? 380 : -380;
+        const scrollStep = window.innerWidth <= 480 ? 280 : (window.innerWidth <= 768 ? 305 : 380);
+        const scrollDelta = isRTL ? scrollStep : -scrollStep;
         marqueeWrapper.scrollBy({ left: scrollDelta, behavior: 'smooth' });
         clearTimeout(pauseTimeout);
         pauseTimeout = setTimeout(() => { isPaused = false; }, 2500);
@@ -202,7 +203,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (projNextBtn) {
       projNextBtn.addEventListener('click', () => {
         isPaused = true;
-        const scrollDelta = isRTL ? -380 : 380;
+        const scrollStep = window.innerWidth <= 480 ? 280 : (window.innerWidth <= 768 ? 305 : 380);
+        const scrollDelta = isRTL ? -scrollStep : scrollStep;
         marqueeWrapper.scrollBy({ left: scrollDelta, behavior: 'smooth' });
         clearTimeout(pauseTimeout);
         pauseTimeout = setTimeout(() => { isPaused = false; }, 2500);
