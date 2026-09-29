@@ -36,9 +36,9 @@
                 <div>
                     <h4 class="footer-title"><?php echo t('footer_cert'); ?></h4>
                     <ul class="footer-links">
-                        <li><i class="fas fa-shield-alt text-gold"></i> CR No: 1667600</li>
-                        <li><i class="fas fa-award text-gold"></i> OCCI Grade: Excellent</li>
-                        <li><i class="fas fa-file-invoice text-gold"></i> Tax Card: 151400492</li>
+                        <li><i class="fas fa-shield-alt text-gold"></i> <?php echo t('footer_cr'); ?></li>
+                        <li><i class="fas fa-award text-gold"></i> <?php echo t('footer_occi_grade'); ?></li>
+                        <li><i class="fas fa-file-invoice text-gold"></i> <?php echo t('footer_tax_card'); ?></li>
                         <li><i class="fas fa-phone-alt text-gold"></i> +968 9919 9710</li>
                         <li><i class="fas fa-envelope text-gold"></i> info@fesconinternational.com</li>
                     </ul>
@@ -46,7 +46,7 @@
             </div>
 
             <div class="footer-bottom">
-                <div>&copy; <?php echo date('Y'); ?> <?php echo t('footer_rights'); ?> &bull; <a href="admin/" style="color: inherit; text-decoration: none; opacity: 0.6; font-size: 0.85em;" title="Admin Portal"><i class="fas fa-lock" style="font-size: 0.8em;"></i> Admin</a></div>
+                <div>&copy; <?php echo date('Y'); ?> <?php echo t('footer_rights'); ?> &bull; <a href="admin/" style="color: inherit; text-decoration: none; opacity: 0.6; font-size: 0.85em;" title="Admin Portal"><i class="fas fa-lock" style="font-size: 0.8em;"></i> <?php echo t('footer_admin'); ?></a></div>
                 <div class="text-gold" style="font-weight:700;"><?php echo t('footer_tagline'); ?></div>
             </div>
         </div>
@@ -56,7 +56,7 @@
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-container">
             <div class="modal-header">
-                <h3 id="modalTitle">Document Preview</h3>
+                <h3 id="modalTitle"><?php echo t('modal_doc_title'); ?></h3>
                 <button class="modal-close" id="modalClose">&times;</button>
             </div>
             <div class="modal-body" id="modalBody">

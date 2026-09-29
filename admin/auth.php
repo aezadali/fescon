@@ -99,7 +99,7 @@ function getDefaultCategories(): array {
         ],
         'epc' => [
             'en' => 'Turnkey EPC',
-            'ar' => 'مشاريع تسليم المفتاح EPC',
+            'ar' => 'مشاريع تسليم المفتاح',
             'color' => '#059669'
         ],
         'om' => [

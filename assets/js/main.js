@@ -298,9 +298,10 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       
       const formData = new FormData(contactForm);
+      const isArabic = document.documentElement.getAttribute('lang') === 'ar';
       if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Processing...</span>';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>' + (isArabic ? 'جاري الإرسال...' : 'Processing...') + '</span>';
       }
 
       fetch('contact_submit.php', {
@@ -325,7 +326,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (formAlert) {
           formAlert.style.display = 'block';
           formAlert.className = 'form-alert error';
-          formAlert.textContent = 'An unexpected error occurred. Please call +968 9919 9710 directly.';
+          formAlert.textContent = isArabic
+            ? 'حدث خطأ غير متوقع. يرجى الاتصال بنا مباشرة على 9919 9919 968+.'
+            : 'An unexpected error occurred. Please call +968 9919 9710 directly.';
         }
       })
       .finally(() => {

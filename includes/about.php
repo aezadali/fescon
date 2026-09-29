@@ -28,7 +28,7 @@
                     <img src="assets/images/project_civil.jpg" alt="Fescon Civil Construction Landmark">
                 </div>
                 <div class="about-experience-badge">
-                    <div class="num">15+</div>
+                    <div class="num"><?php echo ($lang === 'ar') ? '+١٥' : '15+'; ?></div>
                     <div class="txt"><?php echo ($lang === 'ar') ? 'سنوات من الريادة' : 'Years of Excellence'; ?></div>
                 </div>
             </div>

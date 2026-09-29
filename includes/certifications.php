@@ -9,7 +9,7 @@
                 <div>
                     <div class="cert-badge">
                         <i class="fas fa-award"></i>
-                        <span>Grade: Excellent (الممتازة)</span>
+                        <span><?php echo t('cert_1_badge'); ?></span>
                     </div>
                     <div class="cert-header">
                         <h3><?php echo t('cert_1_title'); ?></h3>
@@ -33,7 +33,7 @@
                 <div>
                     <div class="cert-badge" style="background:var(--primary-red); color:#FFFFFF;">
                         <i class="fas fa-shield-alt"></i>
-                        <span>Tax Registered Entity</span>
+                        <span><?php echo t('cert_2_badge'); ?></span>
                     </div>
                     <div class="cert-header">
                         <h3><?php echo t('cert_2_title'); ?></h3>
