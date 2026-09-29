@@ -112,8 +112,8 @@ $translations = [
         'serv_2_title' => 'Electrical Distribution Networks',
         'serv_2_desc' => 'Turnkey Medium Voltage (MV) and Low Voltage (LV) distribution networks, ring main units (RMUs), feeder pillars, transformer installations, and cable jointing.',
         
-        'serv_3_title' => 'Grid Stations & Substations',
-        'serv_3_desc' => 'Engineering service execution of 132kV, 33kV, and 11kV Grid Substations, Gas-Insulated Switchgears (GIS), power transformers, control & protection relay panels, and SCADA integration.',
+        'serv_3_title' => 'Substations & Transmission',
+        'serv_3_desc' => 'Engineering services for 400 kV, 220 kV and 132 kV transmission grid stations, as well as 33 kV and 11 kV distribution substations, including GIS, power transformers, protection and control systems, and SCADA integration.',
         
         'serv_4_title' => 'Civil Infrastructure & Construction',
         'serv_4_desc' => 'Highways, arterial roads, structural foundations, earthworks, drainage systems, substation civil structures, and comprehensive municipal infrastructure.',
@@ -124,8 +124,8 @@ $translations = [
         'serv_6_title' => 'Oil & Gas Sector Services',
         'serv_6_desc' => 'Specialized electrical, civil, piping, and instrumentation engineering support for upstream, downstream, and petrochemical oilfield facilities.',
         
-        'serv_7_title' => 'Turnkey EPC Projects',
-        'serv_7_desc' => 'End-to-end Engineering, Procurement, and Construction management from computational design and civil execution to electrical commissioning and energization.',
+        'serv_7_title' => 'Lagoon-Centered Urban Planning',
+        'serv_7_desc' => 'Integrating lagoons, canals, waterfront promenades, and mixed-use developments to create sustainable, connected, and vibrant coastal communities.',
         
         'serv_8_title' => 'Operation & Maintenance (O&M)',
         'serv_8_desc' => '24/7 preventive, corrective, and predictive maintenance, thermographic imaging, relay calibration, and emergency repair for power grids, street lighting, and utility assets.',
@@ -339,8 +339,8 @@ $translations = [
         'serv_2_title' => 'شبكات التوزيع الكهربائي',
         'serv_2_desc' => 'مشاريع متكاملة لشبكات التوزيع للجهد المتوسط والمنخفض، وحدات الربط الحلقي، كبائن التوزيع، وتوصيل المحولات والكابلات.',
         
-        'serv_3_title' => 'محطات المحولات والجهد العالي',
-        'serv_3_desc' => 'خدمات هندسية لمحطات المحولات بجهد ١٣٢ و ٣٣ و ١١ كيلوفولت، المفاتيح المعزولة بالغاز، محولات الطاقة، لوحات الحماية والتحكم، وأنظمة التحكم والمراقبة.',
+        'serv_3_title' => 'محطات المحولات ونقل الطاقة',
+        'serv_3_desc' => 'خدمات هندسية متكاملة لمحطات نقل الطاقة بجهد ٤٠٠ و ٢٢٠ و ١٣٢ كيلوفولت، ومحطات التوزيع بجهد ٣٣ و ١١ كيلوفولت، بما في ذلك المفاتيح المعزولة بالغاز، محولات القدرة، أنظمة الحماية والتحكم، وربط أنظمة التحكم والمراقبة عن بعد.',
         
         'serv_4_title' => 'البنية التحتية المدنية والإنشاءات',
         'serv_4_desc' => 'إنشاء الطرق السريعة والرئيسية، الأساسات الإنشائية، الأعمال الترابية، شبكات تصريف المياه، والأعمال المدنية المتكاملة للمحطات والمرافق البلدية.',
@@ -351,8 +351,8 @@ $translations = [
         'serv_6_title' => 'خدمات قطاع النفط والغاز',
         'serv_6_desc' => 'خدمات هندسية متخصصة في الأعمال الكهربائية، المدنية، خطوط الأنابيب، وأجهزة القياس والتحكم لدعم منشآت النفط والغاز ومصافي التكرير.',
         
-        'serv_7_title' => 'مشاريع تسليم المفتاح المتكاملة',
-        'serv_7_desc' => 'إدارة شاملة للهندسة والتوريد والإنشاءات بدءاً من التصاميم الحسابية والأعمال المدنية وحتى الفحص والتشغيل وإطلاق التيار للمشاريع.',
+        'serv_7_title' => 'التخطيط الحضري المتمحور حول البحيرات',
+        'serv_7_desc' => 'دمج البحيرات والقنوات المائية والمماشي البحرية والمشاريع متعددة الاستخدامات لبناء مجتمعات ساحلية مستدامة ومترابطة ونابضة بالحياة.',
         
         'serv_8_title' => 'خدمات التشغيل والصيانة',
         'serv_8_desc' => 'صيانة وقائية وعلاجية وتنبؤية على مدار الساعة، فحص حراري، معايرة مرحلات الحماية، واستجابة طارئة لشبكات الكهرباء والإنارة والمرافق.',

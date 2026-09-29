@@ -18,9 +18,9 @@
                 <p class="service-desc"><?php echo t('serv_2_desc'); ?></p>
             </div>
 
-            <?php // Service 3: Grid Stations ?>
+            <?php // Service 3: Substations & Transmission ?>
             <div class="service-card">
-                <div class="service-icon"><i class="fas fa-bolt"></i></div>
+                <div class="service-icon"><i class="fas fa-tower-broadcast"></i></div>
                 <h3 class="service-title"><?php echo t('serv_3_title'); ?></h3>
                 <p class="service-desc"><?php echo t('serv_3_desc'); ?></p>
             </div>
@@ -46,9 +46,9 @@
                 <p class="service-desc"><?php echo t('serv_6_desc'); ?></p>
             </div>
 
-            <?php // Service 7: Turnkey Projects ?>
+            <?php // Service 7: Lagoon-Centered Urban Planning ?>
             <div class="service-card">
-                <div class="service-icon"><i class="fas fa-cogs"></i></div>
+                <div class="service-icon"><i class="fas fa-water"></i></div>
                 <h3 class="service-title"><?php echo t('serv_7_title'); ?></h3>
                 <p class="service-desc"><?php echo t('serv_7_desc'); ?></p>
             </div>

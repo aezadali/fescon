@@ -106,6 +106,11 @@ function getDefaultCategories(): array {
             'en' => 'Operation & Maintenance',
             'ar' => 'التشغيل والصيانة',
             'color' => '#4f46e5'
+        ],
+        'lagoon' => [
+            'en' => 'Lagoon & Waterfront',
+            'ar' => 'البحيرات والواجهات البحرية',
+            'color' => '#0284c7'
         ]
     ];
 }
