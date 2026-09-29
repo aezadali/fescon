@@ -1704,9 +1704,16 @@ textarea.form-control {
 }
 
 .footer-brand img {
-  height: 48px;
-  margin-bottom: 1.2rem;
-  filter: brightness(0) invert(1);
+  height: 52px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  margin-bottom: 1.4rem;
+  background: #FFFFFF;
+  padding: 6px 14px;
+  border-radius: 8px;
+  display: inline-block;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
 }
 
 .footer-brand p {
@@ -2395,36 +2402,65 @@ html[dir="rtl"] .footer-links a:hover {
   /* Services Section Mobile */
   .services-section {
     padding: 3.5rem 0;
+    background-color: #F8FAFC;
   }
   .services-grid {
     grid-template-columns: 1fr;
-    gap: 1.1rem;
+    gap: 1.2rem;
   }
   .service-card {
-    padding: 1.6rem 1.3rem;
+    background: #FFFFFF !important;
+    padding: 1.6rem 1.4rem;
     border-radius: var(--radius-md);
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(27, 42, 74, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+  }
+  html[dir="rtl"] .service-card {
+    text-align: right;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-red), var(--accent-gold));
+    opacity: 1 !important;
   }
   .service-card.featured-service {
     border-color: rgba(197, 155, 39, 0.4);
-    background: linear-gradient(145deg, rgba(197, 155, 39, 0.08), rgba(255, 255, 255, 0.03));
+    box-shadow: 0 6px 20px rgba(197, 155, 39, 0.12);
   }
   .service-icon {
-    width: 50px;
-    height: 50px;
-    font-size: 1.35rem;
+    width: 52px;
+    height: 52px;
+    font-size: 1.4rem;
     margin-bottom: 1rem;
     border-radius: 12px;
+    background: rgba(185, 28, 28, 0.08) !important;
+    color: var(--primary-red) !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(185, 28, 28, 0.1);
   }
   .service-title {
-    font-size: 1.15rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-navy) !important;
+    margin-bottom: 0.6rem;
+    line-height: 1.35;
   }
   .service-desc {
-    font-size: 0.88rem;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: #475569 !important;
+    font-weight: 400;
+    margin-bottom: 0;
   }
 
   /* Certifications Section Mobile */
@@ -2601,7 +2637,10 @@ html[dir="rtl"] .footer-links a:hover {
     margin-bottom: 1.8rem;
   }
   .footer-brand img {
-    height: 38px;
+    height: 44px;
+    max-width: 190px;
+    padding: 5px 12px;
+    margin-bottom: 1.2rem;
   }
   .footer-brand p {
     font-size: 0.85rem;
@@ -2769,6 +2808,24 @@ html[dir="rtl"] .footer-links a:hover {
   }
   .tagline-text p {
     font-size: 0.82rem;
+  }
+
+  .service-card {
+    padding: 1.35rem 1.15rem;
+  }
+  .service-icon {
+    width: 46px;
+    height: 46px;
+    font-size: 1.25rem;
+    margin-bottom: 0.85rem;
+  }
+  .service-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.45rem;
+  }
+  .service-desc {
+    font-size: 0.85rem;
+    line-height: 1.55;
   }
 
   .projects-marquee-track .project-card,
