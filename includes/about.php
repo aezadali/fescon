@@ -41,17 +41,17 @@
     <div class="container">
         <div class="values-grid">
             <div class="value-card">
-                <div class="value-icon"><i class="fas fa-user-shield"></i></div>
+                <div class="value-icon"><i class="fas fa-building"></i></div>
                 <h4 class="value-title"><?php echo t('val_prof_title'); ?></h4>
                 <p class="value-desc"><?php echo t('val_prof_desc'); ?></p>
             </div>
             <div class="value-card">
-                <div class="value-icon"><i class="fas fa-medal"></i></div>
+                <div class="value-icon"><i class="fas fa-water"></i></div>
                 <h4 class="value-title"><?php echo t('val_qual_title'); ?></h4>
                 <p class="value-desc"><?php echo t('val_qual_desc'); ?></p>
             </div>
             <div class="value-card">
-                <div class="value-icon"><i class="fas fa-clock"></i></div>
+                <div class="value-icon"><i class="fas fa-compass-drafting"></i></div>
                 <h4 class="value-title"><?php echo t('val_time_title'); ?></h4>
                 <p class="value-desc"><?php echo t('val_time_desc'); ?></p>
             </div>
