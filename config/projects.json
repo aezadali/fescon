@@ -19,14 +19,14 @@
         "category": "grid",
         "image": "assets/images/project_substation.jpg",
         "en": {
-            "title": "132kV Primary Grid Station Turnkey Services",
+            "title": "132kV Primary Grid Station Delivery",
             "category_label": "Grid Stations",
-            "desc": "Turnkey engineering execution for 132kV primary grid station including GIS switchgear rooms, 2x20MVA power transformers, protection relays, and SCADA integration."
+            "desc": "End-to-end engineering and execution of a 132kV primary grid station, including GIS switchgear rooms, 2×20MVA power transformers, protection relays, and SCADA integration."
         },
         "ar": {
-            "title": "خدمات محطة محولات رئيسية جهد ١٣٢ كيلوفولت",
+            "title": "تنفيذ محطة شبكة رئيسية 132 كيلو فولت",
             "category_label": "محطات المحولات",
-            "desc": "تنفيذ خدمات هندسية لمحطة محولات رئيسية جهد ١٣٢ كيلوفولت تشمل مبنى المفاتيح المعزولة بالغاز، محولات الطاقة، أنظمة البطاريات، وربط أنظمة التحكم والمراقبة."
+            "desc": "هندسة وتنفيذ متكاملان لمحطة شبكة رئيسية 132 كيلو فولت، تشمل غرف مفاتيح GIS، ومحولات قدرة 2×20 ميجا فولت أمبير، وأجهزة الحماية، وتكامل نظام SCADA."
         }
     },
     {
@@ -75,21 +75,6 @@
         }
     },
     {
-        "id": 7,
-        "category": "epc",
-        "image": "assets/images/project_transmission_epc.jpg",
-        "en": {
-            "title": "High-Voltage Power Transmission Line EPC",
-            "category_label": "Turnkey EPC",
-            "desc": "Turnkey EPC engineering for high-voltage overhead power transmission lines, lattice towers, stringing, and substation grid interconnections."
-        },
-        "ar": {
-            "title": "مشروع متكامل لخطوط نقل الطاقة الهوائية",
-            "category_label": "مشاريع تسليم المفتاح",
-            "desc": "تنفيذ متكامل لخطوط نقل الطاقة الكهربائية ذات الجهد العالي، الأبراج الفولاذية، شد الكابلات وربط المحطات بالشبكة الرئيسية."
-        }
-    },
-    {
         "id": 6,
         "category": "oilgas",
         "image": "assets/images/project_oilgas.jpg",
@@ -117,6 +102,21 @@
             "title": "تشغيل وصيانة المحطات والمرافق الصناعية",
             "category_label": "التشغيل والصيانة",
             "desc": "صيانة وقائية على مدار الساعة، فحص وتشخيص حراري بالأشعة تحت الحمراء، معايرة مرحلات الحماية، واستجابة طارئة لإعادة تشغيل الشبكة."
+        }
+    },
+    {
+        "id": 9,
+        "category": "lagoon",
+        "image": "assets/images/proj_1790702706_lagoon_urban_project_1790701555886.jpg",
+        "en": {
+            "title": "Lagoon Centered Coastal Urban Master Plan",
+            "category_label": "Lagoon & Waterfront",
+            "desc": "Integrating artificial crystal lagoons, navigational canals, waterfront promenades, pedestrian bridges, and sustainable mixed-use infrastructure to create vibrant coastal communities."
+        },
+        "ar": {
+            "title": "مشروع التخطيط الحضري للبحيرات والواجهات البحرية",
+            "category_label": "البحيرات والواجهات البحرية",
+            "desc": "تطوير حضري متكامل يشمل إنشاء بحيرات مائية اصطناعية وقنوات مائية بطول ٨ كم، مماشي ساحلية مرصوفة، شبكات تصريف متطورة، وجسور للمشاة لربط المجمعات السكنية والتجارية الساحلية."
         }
     }
 ]
