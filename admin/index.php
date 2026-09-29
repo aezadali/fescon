@@ -1659,7 +1659,7 @@ foreach ($projects as $p) {
                     <div class="tab-content-panel" id="add_tab_en">
                         <div class="modal-form-group">
                             <label class="modal-form-label">Project Title (English)</label>
-                            <input type="text" name="en_title" id="add_en_title" class="modal-form-control" placeholder="e.g. 132kV Primary Grid Station Turnkey Services">
+                            <input type="text" name="en_title" id="add_en_title" class="modal-form-control" placeholder="e.g. 132kV Primary Grid Station">
                         </div>
 
                         <div class="modal-form-group">
