@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // Fescon International Limited - Bilingual Language Configuration (English & Arabic)
 session_start();
 
@@ -51,7 +51,7 @@ $translations = [
         // Why Choose Us Section
         'why_tag' => 'WHY CHOOSE FESCON',
         'why_title' => 'Why Choose Us?',
-        'why_desc' => 'At Fescon, we combine multidisciplinary expertise with innovative solutions to deliver excellence in every project. Our commitment to quality, sustainability, and client satisfaction sets us apart as a trusted partner in Engineering and Technology.',
+        'why_desc' => 'At Fescon, we combine multidisciplinary expertise with innovative solutions to deliver excellence in every project. Our commitment to quality, sustainability, and client satisfaction sets us apart as a trusted partner in Engineering and Pre-Construction Services.',
         'why_motto_header' => 'No compromise on:',
         'why_list_1' => 'Quality',
         'why_list_2' => 'Quantity',
@@ -92,13 +92,13 @@ $translations = [
         'ceo_name' => 'Engr. Ehsan Ullah',
         'ceo_title' => 'Chief Executive Officer',
         'ceo_msg_title' => 'Message from the CEO',
-        'ceo_msg_p1' => 'Welcome to FESCON Oman. We are committed to delivering engineering excellence through innovative, reliable, and sustainable solutions across infrastructure, energy, industrial, building projects and Oil and Gas field. Our success is built on professionalism, quality, safety, and long-term partnerships.',
+        'ceo_msg_p1' => 'Welcome to Fescon International. We are committed to delivering engineering excellence through innovative, reliable, and sustainable solutions across infrastructure, energy, industrial, building projects and Oil and Gas field. Our success is built on professionalism, quality, safety, and long-term partnerships.',
         'ceo_msg_p2' => 'With a highly skilled team and a client-focused approach, we strive to exceed expectations by delivering every project with precision, integrity, and technical expertise—contributing to Oman’s continued growth and development.',
         
         'dir_name' => 'Abdullah Muhammad Salim Al-Basrawi',
         'dir_title' => 'Director',
         'dir_msg_title' => 'Message from the Director',
-        'dir_msg_p1' => 'At FESCON Oman, we believe that great engineering creates lasting value. Our mission is to provide dependable engineering and construction services that support the nation’s progress while maintaining the highest standards of quality, safety, and environmental responsibility.',
+        'dir_msg_p1' => 'At Fescon International, we believe that great engineering creates lasting value. Our mission is to provide dependable engineering and construction services that support the nation’s progress while maintaining the highest standards of quality, safety, and environmental responsibility.',
         'dir_msg_p2' => 'Together with our clients, partners, and dedicated professionals, we are building sustainable infrastructure and delivering solutions that shape a stronger future for the Sultanate of Oman.',
 
         // Services Section
