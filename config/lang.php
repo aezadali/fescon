@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // Fescon International Limited - Bilingual Language Configuration (English & Arabic)
 session_start();
 
