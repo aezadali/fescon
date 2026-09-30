@@ -41,7 +41,7 @@
 
             <?php // Service 6: Oil & Gas ?>
             <div class="service-card">
-                <div class="service-icon"><i class="fas fa-gas-pump"></i></div>
+                <div class="service-icon"><i class="fas fa-oil-well"></i></div>
                 <h3 class="service-title"><?php echo t('serv_6_title'); ?></h3>
                 <p class="service-desc"><?php echo t('serv_6_desc'); ?></p>
             </div>

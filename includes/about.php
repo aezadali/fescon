@@ -71,7 +71,7 @@
                 <p class="value-desc"><?php echo t('val_mep_desc'); ?></p>
             </div>
             <div class="value-card">
-                <div class="value-icon"><i class="fas fa-gas-pump"></i></div>
+                <div class="value-icon"><i class="fas fa-oil-well"></i></div>
                 <h4 class="value-title"><?php echo t('val_oilgas_title'); ?></h4>
                 <p class="value-desc"><?php echo t('val_oilgas_desc'); ?></p>
             </div>
