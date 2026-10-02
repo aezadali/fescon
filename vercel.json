@@ -28,6 +28,10 @@
       "dest": "/admin/$1"
     },
     {
+      "src": "/ceo-bio.php",
+      "dest": "/ceo-bio.php"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.php"
     }

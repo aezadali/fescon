@@ -1,14 +1,19 @@
 <?php
 require_once __DIR__ . '/../config/lang.php';
 $logoSrc = ($lang === 'ar') ? 'assets/images/logo_arabic.jpg' : 'assets/images/logo_english.jpg';
+$isHomePage = basename($_SERVER['SCRIPT_NAME']) === 'index.php';
+$sectionBaseUrl = $isHomePage ? '' : 'index.php?lang=' . rawurlencode($lang);
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang; ?>" dir="<?php echo $dir; ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo t('site_title'); ?></title>
-    <meta name="description" content="<?php echo t('site_desc'); ?>">
+    <title><?php echo isset($pageTitle) ? htmlspecialchars($pageTitle) : t('site_title'); ?></title>
+    <meta name="description" content="<?php echo isset($pageDescription) ? htmlspecialchars($pageDescription) : t('site_desc'); ?>">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="theme-color" content="#1B2A4A">
+    <link rel="icon" type="image/jpeg" href="assets/images/logo_english.jpg">
     
     <!-- FontAwesome 6 Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -54,13 +59,13 @@ $logoSrc = ($lang === 'ar') ? 'assets/images/logo_arabic.jpg' : 'assets/images/l
 
             <nav>
                 <ul class="nav-menu" id="navMenu">
-                    <li><a href="#home" class="nav-link active"><?php echo t('nav_home'); ?></a></li>
-                    <li><a href="#about" class="nav-link"><?php echo t('nav_about'); ?></a></li>
-                    <li><a href="#leadership" class="nav-link"><?php echo t('nav_leadership'); ?></a></li>
-                    <li><a href="#services" class="nav-link"><?php echo t('nav_services'); ?></a></li>
-                    <li><a href="#certifications" class="nav-link"><?php echo t('nav_certifications'); ?></a></li>
-                    <li><a href="#projects" class="nav-link"><?php echo t('nav_projects'); ?></a></li>
-                    <li><a href="#contact" class="nav-link"><?php echo t('nav_contact'); ?></a></li>
+                    <li><a href="<?php echo $sectionBaseUrl; ?>#home" class="nav-link<?php echo $isHomePage ? ' active' : ''; ?>"><?php echo t('nav_home'); ?></a></li>
+                    <li><a href="<?php echo $sectionBaseUrl; ?>#about" class="nav-link"><?php echo t('nav_about'); ?></a></li>
+                    <li><a href="<?php echo $sectionBaseUrl; ?>#leadership" class="nav-link"><?php echo t('nav_leadership'); ?></a></li>
+                    <li><a href="<?php echo $sectionBaseUrl; ?>#services" class="nav-link"><?php echo t('nav_services'); ?></a></li>
+                    <li><a href="<?php echo $sectionBaseUrl; ?>#certifications" class="nav-link"><?php echo t('nav_certifications'); ?></a></li>
+                    <li><a href="<?php echo $sectionBaseUrl; ?>#projects" class="nav-link"><?php echo t('nav_projects'); ?></a></li>
+                    <li><a href="<?php echo $sectionBaseUrl; ?>#contact" class="nav-link"><?php echo t('nav_contact'); ?></a></li>
                 </ul>
             </nav>
 

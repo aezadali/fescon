@@ -1,3 +1,11 @@
+<?php
+if (empty($_SESSION['fescon_contact_csrf_token'])) {
+    $_SESSION['fescon_contact_csrf_token'] = bin2hex(random_bytes(32));
+}
+$contactPrivacyText = $lang === 'ar'
+    ? 'أوافق على معالجة بياناتي وفقاً لإشعار الخصوصية.'
+    : 'I agree to the processing of my information under the Privacy Notice.';
+?>
 <section class="contact-section" id="contact">
     <div class="container">
         <div class="text-center">
@@ -23,7 +31,7 @@
                 <div class="contact-office-card">
                     <h4><i class="fas fa-code-branch"></i> <?php echo t('contact_pak_title'); ?></h4>
                     <p><i class="fas fa-info-circle"></i> <?php echo t('contact_pak_desc'); ?></p>
-                    <p><i class="fas fa-globe"></i> <a href="https://fescon.com.pk/" target="_blank" style="color:var(--accent-gold-light);"><?php echo t('contact_pak_website'); ?></a></p>
+                    <p><i class="fas fa-globe"></i> <a href="https://fescon.com.pk/" target="_blank" rel="noopener noreferrer" style="color:var(--accent-gold-light);"><?php echo t('contact_pak_website'); ?></a></p>
                 </div>
             </div>
 
@@ -32,6 +40,12 @@
                 <div class="form-alert" id="formAlert"></div>
                 
                 <form id="contactForm" method="POST">
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['fescon_contact_csrf_token']); ?>">
+                    <input type="hidden" name="lang" value="<?php echo htmlspecialchars($lang); ?>">
+                    <div class="contact-honeypot" aria-hidden="true">
+                        <label for="website">Website</label>
+                        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
                     <div class="form-group">
                         <label class="form-label"><?php echo t('form_name'); ?> *</label>
                         <input type="text" name="name" class="form-control" placeholder="<?php echo t('form_name_ph'); ?>" required>
@@ -57,6 +71,11 @@
                         <label class="form-label"><?php echo t('form_message'); ?> *</label>
                         <textarea name="message" class="form-control" placeholder="<?php echo t('form_message_ph'); ?>" required></textarea>
                     </div>
+
+                    <label class="contact-consent">
+                        <input type="checkbox" name="privacy_consent" value="1" required>
+                        <span><?php echo $contactPrivacyText; ?> <a href="privacy.php?lang=<?php echo rawurlencode($lang); ?>" target="_blank" rel="noopener"><?php echo $lang === 'ar' ? 'إشعار الخصوصية' : 'Privacy Notice'; ?></a></span>
+                    </label>
 
                     <button type="submit" id="submitBtn" class="submit-btn-theme">
                         <i class="fas fa-paper-plane"></i>

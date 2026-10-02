@@ -3,9 +3,8 @@
  * Fescon Admin Authentication & Data Store Helper
  */
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/../config/security.php';
+startSecureSession();
 
 // UTF-8 settings
 ini_set('default_charset', 'UTF-8');
@@ -13,9 +12,9 @@ if (function_exists('mb_internal_encoding')) {
     mb_internal_encoding('UTF-8');
 }
 
-// Admin Credentials - Strictly fescon@2026
-define('ADMIN_USER', 'admin');
-define('ADMIN_PASS', 'fescon@2026');
+define('ADMIN_SESSION_TIMEOUT', 1800);
+define('ADMIN_LOGIN_MAX_ATTEMPTS', 5);
+define('ADMIN_LOGIN_WINDOW', 900);
 
 define('PROJECTS_JSON_PATH', dirname(__DIR__) . '/config/projects.json');
 define('CATEGORIES_JSON_PATH', dirname(__DIR__) . '/config/categories.json');
@@ -25,7 +24,18 @@ define('IMAGES_UPLOAD_DIR', dirname(__DIR__) . '/assets/images/');
  * Check if admin is authenticated
  */
 function isAdminLoggedIn(): bool {
-    return !empty($_SESSION['fescon_admin_logged_in']) && $_SESSION['fescon_admin_logged_in'] === true;
+    if (empty($_SESSION['fescon_admin_logged_in']) || $_SESSION['fescon_admin_logged_in'] !== true) {
+        return false;
+    }
+
+    $lastActivity = (int)($_SESSION['fescon_admin_last_activity'] ?? 0);
+    if ($lastActivity === 0 || (time() - $lastActivity) > ADMIN_SESSION_TIMEOUT) {
+        $_SESSION = [];
+        return false;
+    }
+
+    $_SESSION['fescon_admin_last_activity'] = time();
+    return true;
 }
 
 /**
@@ -39,10 +49,82 @@ function requireAdminLogin(): void {
 }
 
 /**
- * Validate admin credentials - Strictly fescon@2026
+ * Validate administrator credentials supplied outside the web root.
  */
 function verifyAdminCredentials(string $username, string $password): bool {
-    return (trim($username) === ADMIN_USER && $password === ADMIN_PASS);
+    $configuredUsername = getAppConfig('ADMIN_USERNAME');
+    $configuredPasswordHash = getAppConfig('ADMIN_PASSWORD_HASH');
+
+    return $configuredUsername !== null
+        && $configuredPasswordHash !== null
+        && hash_equals($configuredUsername, trim($username))
+        && password_verify($password, $configuredPasswordHash);
+}
+
+function getClientRateLimitKey(): string {
+    return hash('sha256', $_SERVER['REMOTE_ADDR'] ?? 'unknown');
+}
+
+function withAdminLoginAttempts(callable $callback) {
+    $rateLimitFile = dirname(__DIR__) . '/config/admin-login-rate-limit.json';
+    $handle = @fopen($rateLimitFile, 'c+');
+    if ($handle === false || !flock($handle, LOCK_EX)) {
+        if (is_resource($handle)) {
+            fclose($handle);
+        }
+        return null;
+    }
+
+    $rawData = stream_get_contents($handle);
+    $attempts = json_decode($rawData ?: '[]', true);
+    $attempts = is_array($attempts) ? $attempts : [];
+    $cutoff = time() - ADMIN_LOGIN_WINDOW;
+
+    foreach ($attempts as $key => $timestamps) {
+        $recent = array_values(array_filter((array)$timestamps, static function ($timestamp) use ($cutoff): bool {
+            return is_int($timestamp) && $timestamp >= $cutoff;
+        }));
+        if ($recent) {
+            $attempts[$key] = $recent;
+        } else {
+            unset($attempts[$key]);
+        }
+    }
+
+    $result = $callback($attempts, getClientRateLimitKey());
+    rewind($handle);
+    ftruncate($handle, 0);
+    fwrite($handle, json_encode($attempts, JSON_UNESCAPED_SLASHES));
+    fflush($handle);
+    flock($handle, LOCK_UN);
+    fclose($handle);
+
+    return $result;
+}
+
+function isAdminLoginRateLimited(): bool {
+    $result = withAdminLoginAttempts(static function (array &$attempts, string $clientKey): bool {
+        return count($attempts[$clientKey] ?? []) >= ADMIN_LOGIN_MAX_ATTEMPTS;
+    });
+
+    return $result === true;
+}
+
+function recordAdminLoginFailure(): void {
+    withAdminLoginAttempts(static function (array &$attempts, string $clientKey): void {
+        $attempts[$clientKey][] = time();
+    });
+}
+
+function clearAdminLoginFailures(): void {
+    withAdminLoginAttempts(static function (array &$attempts, string $clientKey): void {
+        unset($attempts[$clientKey]);
+    });
+}
+
+function normalizeCategoryColor(string $color): string {
+    $color = trim($color);
+    return preg_match('/^#[a-fA-F0-9]{6}$/', $color) ? $color : '#3b82f6';
 }
 
 /**

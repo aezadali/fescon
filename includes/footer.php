@@ -1,3 +1,4 @@
+    <?php $footerSectionBaseUrl = basename($_SERVER['SCRIPT_NAME']) === 'index.php' ? '' : 'index.php?lang=' . rawurlencode($lang); ?>
     <!-- Footer -->
     <footer class="main-footer">
         <div class="container">
@@ -10,26 +11,26 @@
                 <div>
                     <h4 class="footer-title"><?php echo t('footer_quick_links'); ?></h4>
                     <ul class="footer-links">
-                        <li><a href="#home"><?php echo t('nav_home'); ?></a></li>
-                        <li><a href="#about"><?php echo t('nav_about'); ?></a></li>
-                        <li><a href="#leadership"><?php echo t('nav_leadership'); ?></a></li>
-                        <li><a href="#certifications"><?php echo t('nav_certifications'); ?></a></li>
-                        <li><a href="#projects"><?php echo t('nav_projects'); ?></a></li>
-                        <li><a href="#contact"><?php echo t('nav_contact'); ?></a></li>
+                        <li><a href="<?php echo $footerSectionBaseUrl; ?>#home"><?php echo t('nav_home'); ?></a></li>
+                        <li><a href="<?php echo $footerSectionBaseUrl; ?>#about"><?php echo t('nav_about'); ?></a></li>
+                        <li><a href="<?php echo $footerSectionBaseUrl; ?>#leadership"><?php echo t('nav_leadership'); ?></a></li>
+                        <li><a href="<?php echo $footerSectionBaseUrl; ?>#certifications"><?php echo t('nav_certifications'); ?></a></li>
+                        <li><a href="<?php echo $footerSectionBaseUrl; ?>#projects"><?php echo t('nav_projects'); ?></a></li>
+                        <li><a href="<?php echo $footerSectionBaseUrl; ?>#contact"><?php echo t('nav_contact'); ?></a></li>
                     </ul>
                 </div>
 
                 <div>
                     <h4 class="footer-title"><?php echo t('footer_services'); ?></h4>
                     <ul class="footer-links">
-                        <li><a href="#services"><?php echo t('serv_1_title'); ?></a></li>
-                        <li><a href="#services"><?php echo t('serv_2_title'); ?></a></li>
-                        <li><a href="#services"><?php echo t('serv_3_title'); ?></a></li>
-                        <li><a href="#services"><?php echo t('serv_4_title'); ?></a></li>
-                        <li><a href="#services"><?php echo t('serv_5_title'); ?></a></li>
-                        <li><a href="#services"><?php echo t('serv_6_title'); ?></a></li>
-                        <li><a href="#services"><?php echo t('serv_7_title'); ?></a></li>
-                        <li><a href="#services"><?php echo t('serv_8_title'); ?></a></li>
+                        <li><a href="<?php echo $footerSectionBaseUrl; ?>#services"><?php echo t('serv_1_title'); ?></a></li>
+                        <li><a href="<?php echo $footerSectionBaseUrl; ?>#services"><?php echo t('serv_2_title'); ?></a></li>
+                        <li><a href="<?php echo $footerSectionBaseUrl; ?>#services"><?php echo t('serv_3_title'); ?></a></li>
+                        <li><a href="<?php echo $footerSectionBaseUrl; ?>#services"><?php echo t('serv_4_title'); ?></a></li>
+                        <li><a href="<?php echo $footerSectionBaseUrl; ?>#services"><?php echo t('serv_5_title'); ?></a></li>
+                        <li><a href="<?php echo $footerSectionBaseUrl; ?>#services"><?php echo t('serv_6_title'); ?></a></li>
+                        <li><a href="<?php echo $footerSectionBaseUrl; ?>#services"><?php echo t('serv_7_title'); ?></a></li>
+                        <li><a href="<?php echo $footerSectionBaseUrl; ?>#services"><?php echo t('serv_8_title'); ?></a></li>
                     </ul>
                 </div>
 
@@ -46,7 +47,7 @@
             </div>
 
             <div class="footer-bottom">
-                <div>&copy; <?php echo date('Y'); ?> <?php echo t('footer_rights'); ?> &bull; <a href="admin/" style="color: inherit; text-decoration: none; opacity: 0.6; font-size: 0.85em;" title="Admin Portal"><i class="fas fa-lock" style="font-size: 0.8em;"></i> <?php echo t('footer_admin'); ?></a></div>
+                <div>&copy; <?php echo date('Y'); ?> <?php echo t('footer_rights'); ?> &bull; <a href="privacy.php?lang=<?php echo rawurlencode($lang); ?>" style="color: inherit; text-decoration: none; opacity: 0.75; font-size: 0.85em;"><?php echo $lang === 'ar' ? 'إشعار الخصوصية' : 'Privacy Notice'; ?></a> &bull; <a href="admin/" style="color: inherit; text-decoration: none; opacity: 0.6; font-size: 0.85em;" title="Admin Portal"><i class="fas fa-lock" style="font-size: 0.8em;"></i> <?php echo t('footer_admin'); ?></a></div>
                 <div class="text-gold" style="font-weight:700;"><?php echo t('footer_tagline'); ?></div>
             </div>
         </div>

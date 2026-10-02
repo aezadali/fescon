@@ -21,16 +21,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!verifyCsrfToken($token)) {
         $error = 'Security session expired. Please refresh and try again.';
+    } elseif (isAdminLoginRateLimited()) {
+        $error = 'Too many unsuccessful attempts. Please try again in 15 minutes.';
     } elseif (empty($username) || empty($password)) {
         $error = 'Please enter both username and password.';
     } elseif (verifyAdminCredentials($username, $password)) {
         // Successful login
+        clearAdminLoginFailures();
+        session_regenerate_id(true);
         $_SESSION['fescon_admin_logged_in'] = true;
         $_SESSION['fescon_admin_user'] = $username;
         $_SESSION['fescon_admin_login_time'] = time();
+        $_SESSION['fescon_admin_last_activity'] = time();
         header('Location: index.php');
         exit;
     } else {
+        recordAdminLoginFailure();
         $error = 'Invalid username or password. Please try again.';
     }
 }

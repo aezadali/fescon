@@ -6,12 +6,15 @@
         <div class="leadership-grid">
             <!-- CEO Card -->
             <div class="executive-card">
-                <div class="executive-header">
+                <div class="executive-header executive-header-with-bio">
                     <img src="assets/images/ehsan_ullah.jpg" alt="<?php echo htmlspecialchars(t('ceo_name')); ?>" class="executive-avatar" style="cursor:pointer;" title="<?php echo ($lang === 'ar') ? 'انقر لعرض الصورة' : 'Click to view photo'; ?>" onclick="openModal('<?php echo htmlspecialchars(t('ceo_name') . ' - ' . t('ceo_title'), ENT_QUOTES); ?>', 'assets/images/ehsan_ullah.jpg')">
                     <div class="executive-meta text-left">
                         <h3><?php echo t('ceo_name'); ?></h3>
                         <div class="executive-title"><?php echo t('ceo_title'); ?></div>
                     </div>
+                    <a class="executive-bio-link" href="ceo-bio.php?lang=<?php echo rawurlencode($lang); ?>">
+                        <?php echo ($lang === 'ar') ? 'عرض السيرة الذاتية' : 'View Bio'; ?> <i class="fas fa-arrow-<?php echo ($lang === 'ar') ? 'left' : 'right'; ?>" aria-hidden="true"></i>
+                    </a>
                 </div>
                 <div class="executive-body">
                     <div class="executive-quote">

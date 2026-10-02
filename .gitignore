@@ -8,3 +8,9 @@ Thumbs.db
 # Temp files
 *.tmp
 *.bak
+
+# Deployment-only secrets and contact-form rate-limit state
+/config/contact-rate-limit.json
+/config/admin-login-rate-limit.json
+/config/private-config.php
+/fescon-private-config.php

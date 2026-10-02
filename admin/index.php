@@ -47,12 +47,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $origName = $_FILES['image_file']['name'];
             $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
             $allowedExts = ['jpg', 'jpeg', 'png', 'webp'];
+            $allowedMimes = [
+                'image/jpeg' => 'jpg',
+                'image/png' => 'png',
+                'image/webp' => 'webp',
+            ];
 
-            if (!in_array($ext, $allowedExts)) {
+            if (!in_array($ext, $allowedExts, true)) {
                 return ['error' => 'Invalid image format. Allowed: JPG, PNG, WEBP.'];
             }
 
-            $safeName = 'proj_' . time() . '_' . preg_replace('/[^a-zA-Z0-9_\-]/', '', pathinfo($origName, PATHINFO_FILENAME)) . '.' . $ext;
+            if ((int)$_FILES['image_file']['size'] > 5 * 1024 * 1024) {
+                return ['error' => 'Image size must not exceed 5 MB.'];
+            }
+
+            if (!class_exists('finfo')) {
+                return ['error' => 'Server image validation is unavailable. Please contact the site administrator.'];
+            }
+
+            $imageInfo = @getimagesize($tmpName);
+            $mimeType = (new finfo(FILEINFO_MIME_TYPE))->file($tmpName);
+            if ($imageInfo === false || !isset($allowedMimes[$mimeType]) || $imageInfo[0] > 6000 || $imageInfo[1] > 6000) {
+                return ['error' => 'Invalid image file or unsupported image dimensions.'];
+            }
+
+            $safeName = 'proj_' . bin2hex(random_bytes(12)) . '.' . $allowedMimes[$mimeType];
             $destPath = $assetsImgDir . $safeName;
 
             if (move_uploaded_file($tmpName, $destPath)) {
@@ -64,7 +83,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $selectedExisting = trim($_POST['existing_image'] ?? '');
         if (!empty($selectedExisting)) {
-            return ['path' => $selectedExisting];
+            $selectedFilename = basename($selectedExisting);
+            $selectedPath = $assetsImgDir . $selectedFilename;
+            if (is_file($selectedPath) && preg_match('/\.(jpg|jpeg|png|webp|gif)$/i', $selectedFilename)) {
+                return ['path' => 'assets/images/' . $selectedFilename];
+            }
+            return ['error' => 'Selected image is not available.'];
         }
 
         return ['path' => !empty($currentImage) ? $currentImage : 'assets/images/project_civil_infra.jpg'];
@@ -285,7 +309,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $catKey = preg_replace('/[^a-z0-9_\-]/', '', strtolower($rawKey));
         $catEn = trim($_POST['cat_en'] ?? '');
         $catAr = trim($_POST['cat_ar'] ?? '');
-        $catColor = trim($_POST['cat_color'] ?? '#3b82f6');
+        $catColor = normalizeCategoryColor($_POST['cat_color'] ?? '#3b82f6');
 
         if (empty($catKey)) {
             $_SESSION['flash_message'] = 'Category key/code is required (letters and numbers only).';
@@ -310,8 +334,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (empty($catEn)) $catEn = $catAr;
         if (empty($catAr)) $catAr = $catEn;
-        if (empty($catColor)) $catColor = '#3b82f6';
-
         $categories[$catKey] = [
             'en' => $catEn,
             'ar' => $catAr,
@@ -330,7 +352,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $catKey = trim($_POST['cat_key'] ?? '');
         $catEn = trim($_POST['cat_en'] ?? '');
         $catAr = trim($_POST['cat_ar'] ?? '');
-        $catColor = trim($_POST['cat_color'] ?? '#3b82f6');
+        $catColor = normalizeCategoryColor($_POST['cat_color'] ?? '#3b82f6');
 
         if (!isset($categories[$catKey])) {
             $_SESSION['flash_message'] = 'Category not found.';
@@ -348,8 +370,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (empty($catEn)) $catEn = $catAr;
         if (empty($catAr)) $catAr = $catEn;
-        if (empty($catColor)) $catColor = '#3b82f6';
-
         $categories[$catKey] = [
             'en' => $catEn,
             'ar' => $catAr,
@@ -1376,6 +1396,359 @@ foreach ($projects as $p) {
                 max-width: 100%;
             }
         }
+
+        /* =========================================
+           CONTROL CENTER THEME REFINEMENT
+           ========================================= */
+        :root {
+            --bg-body: #07111f;
+            --bg-surface: rgba(15, 34, 56, 0.88);
+            --bg-card: #112a46;
+            --bg-hover: #193957;
+            --shadow-panel: 0 18px 45px rgba(1, 9, 20, 0.28);
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 12% -10%, rgba(197, 160, 89, 0.17), transparent 30rem),
+                radial-gradient(circle at 96% 0%, rgba(37, 99, 235, 0.14), transparent 28rem),
+                linear-gradient(150deg, #07111f 0%, #0a192c 47%, #08131f 100%);
+            letter-spacing: 0.01em;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.18;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+            background-size: 28px 28px;
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 68%);
+        }
+
+        .admin-nav {
+            min-height: 78px;
+            padding: 0.8rem clamp(1rem, 3vw, 3rem);
+            background: rgba(7, 17, 31, 0.82);
+            border-bottom-color: rgba(197, 160, 89, 0.23);
+            box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18);
+        }
+
+        .nav-logo {
+            padding: 0.38rem 0.82rem;
+            border: 1px solid rgba(197, 160, 89, 0.32);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-title-group h1 {
+            font-size: 1.2rem;
+        }
+
+        .nav-title-group p {
+            margin-top: 0.15rem;
+        }
+
+        .btn-live-site,
+        .btn-logout,
+        .btn-manage-cats,
+        .btn-add-project,
+        .btn-save,
+        .btn-cancel,
+        .btn-action,
+        .btn-order {
+            outline: none;
+        }
+
+        .btn-live-site:focus-visible,
+        .btn-logout:focus-visible,
+        .btn-manage-cats:focus-visible,
+        .btn-add-project:focus-visible,
+        .btn-save:focus-visible,
+        .btn-cancel:focus-visible,
+        .btn-action:focus-visible,
+        .btn-order:focus-visible,
+        .pill-btn:focus-visible {
+            box-shadow: 0 0 0 3px rgba(224, 190, 119, 0.4);
+        }
+
+        .admin-main {
+            max-width: 1440px;
+            padding: clamp(1.25rem, 3vw, 2.75rem);
+            position: relative;
+        }
+
+        .dashboard-hero {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1.5rem;
+            margin: 0.25rem 0 2rem;
+        }
+
+        .dashboard-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-gold-light);
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .dashboard-eyebrow::before {
+            content: '';
+            width: 1.85rem;
+            height: 1px;
+            background: var(--accent-gold);
+        }
+
+        .dashboard-hero h2 {
+            margin-top: 0.35rem;
+            color: #ffffff;
+            font-size: clamp(1.75rem, 3vw, 2.4rem);
+            letter-spacing: -0.035em;
+            line-height: 1.12;
+        }
+
+        .dashboard-hero p {
+            max-width: 670px;
+            margin-top: 0.6rem;
+            color: var(--text-muted);
+            font-size: 0.94rem;
+        }
+
+        .dashboard-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.62rem 0.85rem;
+            color: #b8f5d9;
+            border: 1px solid rgba(16, 185, 129, 0.28);
+            border-radius: 999px;
+            background: rgba(16, 185, 129, 0.08);
+            font-size: 0.78rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .dashboard-status i {
+            font-size: 0.62rem;
+            color: #34d399;
+        }
+
+        .stats-grid {
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            min-height: 112px;
+            padding: 1.2rem 1.3rem;
+            border-radius: 16px;
+            background: linear-gradient(145deg, rgba(21, 46, 74, 0.92), rgba(10, 28, 47, 0.92));
+            box-shadow: var(--shadow-panel);
+            transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .stat-card::after {
+            width: 3px;
+            background: linear-gradient(to bottom, var(--accent-gold-light), var(--accent-gold));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(197, 160, 89, 0.42);
+            box-shadow: 0 22px 44px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+        }
+
+        .stat-content .stat-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.09em;
+        }
+
+        .stat-content .stat-val {
+            margin-top: 0.35rem;
+            font-size: 1.85rem;
+        }
+
+        .toolbar {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 16px;
+            background: rgba(13, 31, 51, 0.78);
+            box-shadow: var(--shadow-panel);
+        }
+
+        .search-box input {
+            min-height: 43px;
+            border-radius: 10px;
+            background: rgba(5, 18, 33, 0.56);
+        }
+
+        .filter-pills {
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-gold) transparent;
+        }
+
+        .pill-btn {
+            min-height: 34px;
+            border-radius: 999px;
+        }
+
+        .btn-manage-cats,
+        .btn-add-project {
+            min-height: 43px;
+            border-radius: 10px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 16px;
+            background: rgba(13, 31, 51, 0.82);
+            box-shadow: var(--shadow-panel);
+        }
+
+        .projects-table {
+            min-width: 920px;
+        }
+
+        .projects-table th {
+            padding-top: 1.05rem;
+            padding-bottom: 1.05rem;
+            background: rgba(5, 18, 33, 0.75);
+            color: #aab8cb;
+        }
+
+        .projects-table tr {
+            transition: background 0.2s ease;
+        }
+
+        .projects-table td {
+            padding-top: 1.1rem;
+            padding-bottom: 1.1rem;
+        }
+
+        .proj-thumb-wrap {
+            width: 88px;
+            height: 60px;
+            border-radius: 9px;
+        }
+
+        .action-btns {
+            justify-content: flex-end;
+        }
+
+        .modal-card {
+            border-radius: 18px;
+            background: #0d2138;
+        }
+
+        .modal-header,
+        .modal-footer {
+            background: rgba(5, 18, 33, 0.78);
+        }
+
+        @media (max-width: 760px) {
+            .admin-nav {
+                min-height: auto;
+                align-items: flex-start;
+                gap: 0.8rem;
+                flex-direction: column;
+            }
+
+            .nav-actions {
+                width: 100%;
+            }
+
+            .btn-live-site,
+            .btn-logout {
+                flex: 1;
+                justify-content: center;
+            }
+
+            .dashboard-hero {
+                align-items: flex-start;
+                flex-direction: column;
+                margin-bottom: 1.5rem;
+            }
+
+            .dashboard-status {
+                white-space: normal;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .stat-card {
+                min-height: 100px;
+                padding: 1rem;
+                gap: 0.8rem;
+            }
+
+            .stat-icon {
+                width: 42px;
+                height: 42px;
+                font-size: 1.05rem;
+            }
+
+            .stat-content .stat-val {
+                font-size: 1.55rem;
+            }
+
+            .toolbar-left {
+                min-width: 0;
+            }
+
+            .toolbar-right-btns {
+                width: 100%;
+            }
+
+            .btn-manage-cats,
+            .btn-add-project {
+                flex: 1;
+                justify-content: center;
+                padding: 0.65rem 0.75rem;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-title-group p {
+                display: none;
+            }
+
+            .toolbar-right-btns {
+                flex-direction: column;
+            }
+
+            .btn-manage-cats,
+            .btn-add-project {
+                width: 100%;
+            }
+
+            .modal-overlay {
+                padding: 0.7rem;
+            }
+
+            .modal-header,
+            .modal-body,
+            .modal-footer {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1406,6 +1779,15 @@ foreach ($projects as $p) {
 
     <!-- Main Content Container -->
     <main class="admin-main">
+
+        <section class="dashboard-hero" aria-labelledby="dashboard-heading">
+            <div>
+                <span class="dashboard-eyebrow">Administration workspace</span>
+                <h2 id="dashboard-heading">Portfolio control center</h2>
+                <p>Manage your projects, categories, visuals, and ordering from one focused workspace.</p>
+            </div>
+            <div class="dashboard-status"><i class="fas fa-circle" aria-hidden="true"></i> Secure session active · <?php echo htmlspecialchars($_SESSION['fescon_admin_user'] ?? 'Administrator'); ?></div>
+        </section>
 
         <!-- Flash Toast Notification -->
         <?php if (!empty($message)): ?>
@@ -1466,7 +1848,7 @@ foreach ($projects as $p) {
             <div class="toolbar-left">
                 <div class="search-box">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="projectSearchInput" placeholder="Search projects by title, category, description...">
+                    <input type="text" id="projectSearchInput" aria-label="Search projects">
                 </div>
 
                 <div class="filter-pills">
@@ -1559,7 +1941,7 @@ foreach ($projects as $p) {
 
                                 <!-- Category Badge -->
                                 <td>
-                                    <span class="cat-badge" style="background: <?php echo $catBadge['color']; ?>22; color: <?php echo $catBadge['color']; ?>; border: 1px solid <?php echo $catBadge['color']; ?>55;">
+                                    <span class="cat-badge" style="background: <?php echo htmlspecialchars($catBadge['color']); ?>22; color: <?php echo htmlspecialchars($catBadge['color']); ?>; border: 1px solid <?php echo htmlspecialchars($catBadge['color']); ?>55;">
                                         <?php echo htmlspecialchars($catBadge['en']); ?>
                                     </span>
                                 </td>
@@ -1641,17 +2023,17 @@ foreach ($projects as $p) {
                     <div class="tab-content-panel active" id="add_tab_ar">
                         <div class="modal-form-group">
                             <label class="modal-form-label">عنوان المشروع (بالعربية) *</label>
-                            <input type="text" name="ar_title" id="add_ar_title" class="modal-form-control rtl-input" placeholder="مثال: محطة محولات رئيسية جهد 132 كيلوفولت">
+                            <input type="text" name="ar_title" id="add_ar_title" class="modal-form-control rtl-input" aria-label="Project title in Arabic">
                         </div>
 
                         <div class="modal-form-group">
                             <label class="modal-form-label">مسمى التصنيف (بالعربية)</label>
-                            <input type="text" name="ar_cat_label" id="add_ar_cat_label" class="modal-form-control rtl-input" placeholder="محطات المحولات">
+                            <input type="text" name="ar_cat_label" id="add_ar_cat_label" class="modal-form-control rtl-input" aria-label="Category label in Arabic">
                         </div>
 
                         <div class="modal-form-group">
                             <label class="modal-form-label">وصف وتفاصيل المشروع (بالعربية)</label>
-                            <textarea name="ar_desc" id="add_ar_desc" class="modal-form-control rtl-input" placeholder="وصف الأعمال الهندسية، المعدات المنفذة، ونطاق المشروع..."></textarea>
+                            <textarea name="ar_desc" id="add_ar_desc" class="modal-form-control rtl-input" aria-label="Project description in Arabic"></textarea>
                         </div>
                     </div>
 
@@ -1659,17 +2041,17 @@ foreach ($projects as $p) {
                     <div class="tab-content-panel" id="add_tab_en">
                         <div class="modal-form-group">
                             <label class="modal-form-label">Project Title (English)</label>
-                            <input type="text" name="en_title" id="add_en_title" class="modal-form-control" placeholder="e.g. 132kV Primary Grid Station">
+                            <input type="text" name="en_title" id="add_en_title" class="modal-form-control" aria-label="Project title in English">
                         </div>
 
                         <div class="modal-form-group">
                             <label class="modal-form-label">Category Label (English)</label>
-                            <input type="text" name="en_cat_label" id="add_en_cat_label" class="modal-form-control" placeholder="Grid Stations">
+                            <input type="text" name="en_cat_label" id="add_en_cat_label" class="modal-form-control" aria-label="Category label in English">
                         </div>
 
                         <div class="modal-form-group">
                             <label class="modal-form-label">Description (English)</label>
-                            <textarea name="en_desc" id="add_en_desc" class="modal-form-control" placeholder="Detailed engineering summary, technical specifications, equipment installed..."></textarea>
+                            <textarea name="en_desc" id="add_en_desc" class="modal-form-control" aria-label="Project description in English"></textarea>
                         </div>
                     </div>
 
@@ -1735,17 +2117,17 @@ foreach ($projects as $p) {
                     <div class="tab-content-panel active" id="edit_tab_ar">
                         <div class="modal-form-group">
                             <label class="modal-form-label">عنوان المشروع (بالعربية) *</label>
-                            <input type="text" name="ar_title" id="edit_ar_title" class="modal-form-control rtl-input" placeholder="اسم المشروع بالعربية">
+                            <input type="text" name="ar_title" id="edit_ar_title" class="modal-form-control rtl-input" aria-label="Project title in Arabic">
                         </div>
 
                         <div class="modal-form-group">
                             <label class="modal-form-label">تصنيف المشروع (بالعربية)</label>
-                            <input type="text" name="ar_cat_label" id="edit_ar_cat_label" class="modal-form-control rtl-input" placeholder="محطات المحولات">
+                            <input type="text" name="ar_cat_label" id="edit_ar_cat_label" class="modal-form-control rtl-input" aria-label="Category label in Arabic">
                         </div>
 
                         <div class="modal-form-group">
                             <label class="modal-form-label">تفاصيل ووصف المشروع (بالعربية)</label>
-                            <textarea name="ar_desc" id="edit_ar_desc" class="modal-form-control rtl-input" placeholder="تفاصيل الأعمال الهندسية والتنفيذية..."></textarea>
+                            <textarea name="ar_desc" id="edit_ar_desc" class="modal-form-control rtl-input" aria-label="Project description in Arabic"></textarea>
                         </div>
                     </div>
 
@@ -1823,7 +2205,7 @@ foreach ($projects as $p) {
                         <div class="form-grid">
                             <div class="modal-form-group">
                                 <label class="modal-form-label">Category Code / Key * (e.g. solar, marine)</label>
-                                <input type="text" name="cat_key" id="cat_key_input" class="modal-form-control" placeholder="e.g. solar" required pattern="[a-zA-Z0-9_\-]+" title="Letters, numbers and hyphens only">
+                                <input type="text" name="cat_key" id="cat_key_input" class="modal-form-control" aria-label="Category code" required pattern="[a-zA-Z0-9_\-]+" title="Letters, numbers and hyphens only">
                             </div>
 
                             <div class="modal-form-group">
@@ -1836,12 +2218,12 @@ foreach ($projects as $p) {
 
                             <div class="modal-form-group">
                                 <label class="modal-form-label">English Name *</label>
-                                <input type="text" name="cat_en" id="cat_en_input" class="modal-form-control" placeholder="e.g. Solar Power Systems" required>
+                                <input type="text" name="cat_en" id="cat_en_input" class="modal-form-control" aria-label="Category name in English" required>
                             </div>
 
                             <div class="modal-form-group">
                                 <label class="modal-form-label">الاسم بالعربية (Arabic Name) *</label>
-                                <input type="text" name="cat_ar" id="cat_ar_input" class="modal-form-control rtl-input" placeholder="مثال: أنظمة الطاقة الشمسية" required>
+                                <input type="text" name="cat_ar" id="cat_ar_input" class="modal-form-control rtl-input" aria-label="Category name in Arabic" required>
                             </div>
                         </div>
 
@@ -1889,7 +2271,7 @@ foreach ($projects as $p) {
                                 </td>
                                 <td style="text-align: right;">
                                     <div class="action-btns" style="justify-content: flex-end;">
-                                        <button type="button" class="btn-action btn-edit" title="Edit Category" onclick='editCategory(<?php echo json_encode($cKey); ?>, <?php echo json_encode($cInfo['en']); ?>, <?php echo json_encode($cInfo['ar']); ?>, <?php echo json_encode($cInfo['color']); ?>)'>
+                                        <button type="button" class="btn-action btn-edit" title="Edit Category" onclick='editCategory(<?php echo json_encode($cKey, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>, <?php echo json_encode($cInfo['en'], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>, <?php echo json_encode($cInfo['ar'], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>, <?php echo json_encode($cInfo['color'], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>)'>
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button type="button" class="btn-action btn-delete" title="Delete Category" onclick="confirmDeleteCategory('<?php echo htmlspecialchars(addslashes($cKey)); ?>', '<?php echo htmlspecialchars(addslashes($cInfo['en'])); ?>', <?php echo $pCount; ?>)">
@@ -1974,8 +2356,8 @@ foreach ($projects as $p) {
 
     <!-- Client-side Scripts -->
     <script>
-        const categoriesMap = <?php echo json_encode($categories, JSON_UNESCAPED_UNICODE); ?>;
-        const allProjectsData = <?php echo json_encode($projects, JSON_UNESCAPED_UNICODE); ?>;
+        const categoriesMap = <?php echo json_encode($categories, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
+        const allProjectsData = <?php echo json_encode($projects, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
 
         // Modal Management
         function openModal(id) {
